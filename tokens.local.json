@@ -1,0 +1,7 @@
+{
+  "access_token": "BQBXL-Y08GystFzOA1LzdETtUbad914lUS624SubE0nqBCaqljCOZjOZwxerBO317yyTLJE0OwJQK41VotUTLusWCiGOWlHHMvw21JNsUrWf9fBl2YOjYi8b57HrfyTA4pf3g_hWiD80Dm5JIbcNNZnXD2XaqeFwaEcEz09dDgL9waF3LfyBgM3DiJJFLWSajiBd41rlTZNPATtTmf-o6p_TOvy73bFvUu5H_Vuirdji84kvxIzCUBA9Wfp3roQp",
+  "token_type": "Bearer",
+  "expires_in": 3600,
+  "refresh_token": "AQCPi83xvqfNWv5-GWzZOgl_fFz6UCJm10-yukeyXwkvJZcYnzF8CHaDJHZDlGDUWUaQ_YjnDAB-ZeQgHP1JmMW-uYTrsHzg12IV1VNgvs061eiyyhhVMqIdJF82GmO1TqE",
+  "scope": "app-remote-control streaming user-modify-playback-state user-read-playback-state user-read-currently-playing"
+}

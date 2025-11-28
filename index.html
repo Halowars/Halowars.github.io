@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Road DJ · Spotify Remote</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="bg"></div>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo-dot"></div>
+      <div>
+        <div class="brand-title">Road DJ</div>
+        <div class="brand-sub">Spotify car controller</div>
+      </div>
+    </div>
+    <div class="status-group">
+      <span class="pill" id="networkStatus">Checking network…</span>
+      <span class="pill" id="authStatus">Not signed in</span>
+      <span class="pill pill-muted" id="pendingBadge">Queue ready</span>
+    </div>
+    <button class="primary" id="authButton">Connect Spotify</button>
+  </header>
+
+  <main class="layout">
+    <section class="panel hero">
+      <div>
+        <p class="eyebrow">Now playing</p>
+        <h1 id="trackTitle">Nothing playing</h1>
+        <p class="muted" id="trackMeta">Sign in to see playback</p>
+        <div class="progress">
+          <span id="progressStart">0:00</span>
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+          <span id="progressEnd">0:00</span>
+        </div>
+        <div class="controls">
+          <button class="ghost" id="btnRewind" title="Rewind 10 seconds">Rewind 10s</button>
+          <button class="ghost" id="btnBack" title="Previous track">Previous</button>
+          <button class="ghost" id="btnPlayPause" title="Play / Pause">Play</button>
+          <button class="ghost" id="btnSkip" title="Next track">Next</button>
+        </div>
+      </div>
+      <div class="artwork-shell">
+        <img id="albumArt" src="" alt="Album art">
+        <div class="device-select">
+          <label for="deviceSelect">Send to</label>
+          <div class="device-row">
+            <select id="deviceSelect"></select>
+            <button class="ghost small" id="refreshDevices">↻</button>
+          </div>
+          <p class="micro muted">Make sure Spotify is open on your phone or car display.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel search">
+      <div class="search-head">
+        <div>
+          <p class="eyebrow">Search &amp; queue</p>
+          <h2>Add songs fast</h2>
+        </div>
+        <div id="searchStatus" class="muted micro">Start typing to search Spotify</div>
+      </div>
+      <div class="search-box">
+        <input id="searchInput" type="search" placeholder="Search by song, artist, or mood…" autocomplete="off" />
+      </div>
+      <div id="searchResults" class="results-grid"></div>
+    </section>
+
+    <section class="panel queue">
+      <div class="queue-head">
+        <div>
+          <p class="eyebrow">Connectivity</p>
+          <h2>Pending actions</h2>
+        </div>
+        <button class="ghost small" id="flushPending">Send now</button>
+      </div>
+      <div id="pendingList" class="pending-list">
+        <p class="muted micro">No pending actions.</p>
+      </div>
+    </section>
+  </main>
+
+  <template id="resultCard">
+    <div class="result-card">
+      <div class="thumb">
+        <img data-art src="" alt="">
+      </div>
+      <div class="meta">
+        <div class="title" data-title></div>
+        <div class="muted micro" data-artist></div>
+      </div>
+      <button class="primary ghost" data-queue>Queue</button>
+    </div>
+  </template>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
