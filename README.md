@@ -28,7 +28,7 @@ Single-page controller for your Spotify account that can be hosted on GitHub Pag
 - Open Spotify on your phone or car screen so there's an active device; select it in the dropdown if needed.
 - If the page goes offline, queued actions will show in "Pending actions" and send automatically when back online (or tap "Send now").
 - To change styling, edit `style.css`; HTML lives in `index.html`, logic in `app.js`.
-- For local testing, serve the folder over HTTP (e.g., `python -m http.server 3000`) and add `http://127.0.0.1:3000/` as a Redirect URI in Spotify while testing. Update `REDIRECT_URI` in `app.js` if you change hosts.
+- For local testing, serve the folder over HTTP (e.g., `python -m http.server 3000`) and add `http://127.0.0.1:3000/` as a Redirect URI in Spotify while testing. The app auto-uses the current page URL for `REDIRECT_URI`; make sure that exact URL is in Spotify.
 - If you want to pre-authorize and skip login prompts, run `node fetch_refresh_token.js` (with `SPOTIFY_CLIENT_ID` and `SPOTIFY_CLIENT_SECRET` set) to obtain a refresh token, then paste it into `PREFILLED_REFRESH_TOKEN` in `app.js`. Do **not** commit secrets or refresh tokens to a public repo.
 
 ## Notes
