@@ -2,7 +2,7 @@ const CLIENT_ID = '00c2bd4d6a7e45efbc4a766bf80e54c7';
 const PREFILLED_REFRESH_TOKEN = 'AQCPi83xvqfNWv5-GWzZOgl_fFz6UCJm10-yukeyXwkvJZcYnzF8CHaDJHZDlGDUWUaQ_YjnDAB-ZeQgHP1JmMW-uYTrsHzg12IV1VNgvs061eiyyhhVMqIdJF82GmO1TqE'; // pre-authorized refresh token to auto-connect
 const AUTO_AUTH = true; // auto-open Spotify login when no tokens are stored
 // Must exactly match a Redirect URI in your Spotify app settings.
-const REDIRECT_URI = `${window.location.origin}${window.location.pathname.replace(/index\\.html?$/, '')}`;
+const REDIRECT_URI = `https://halowars.github.io/`;
 const SCOPES = [
   'user-read-playback-state',
   'user-modify-playback-state',
