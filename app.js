@@ -1,5 +1,6 @@
 const CLIENT_ID = '00c2bd4d6a7e45efbc4a766bf80e54c7';
-const PREFILLED_REFRESH_TOKEN = 'AQCPi83xvqfNWv5-GWzZOgl_fFz6UCJm10-yukeyXwkvJZcYnzF8CHaDJHZDlGDUWUaQ_YjnDAB-ZeQgHP1JmMW-uYTrsHzg12IV1VNgvs061eiyyhhVMqIdJF82GmO1TqE'; // pre-authorized refresh token to auto-connect
+const PREFILLED_REFRESH_TOKEN = 'AQBc77K5SgFag0X24flTg0KeEJCUoTcQmnd6DmuorUQg-crDZhSc1ZnpAKC0RI0qmf9VM9s0yql5UZeWgxv_cZPh_e1Nbvi-MS1DlgEOr044jNbxbPuMUy8ibrow7II6QxM'; // pre-authorized refresh token to auto-connect
+const BACKEND_TOKEN_URL = ''; // optional: backend endpoint that returns a fresh access token
 const AUTO_AUTH = false; // keep guests from being redirected; owner can reconnect if needed
 // Must exactly match a Redirect URI in your Spotify app settings.
 const REDIRECT_URI = `https://halowars.github.io/`;
@@ -489,6 +490,18 @@ async function ensureAccessToken() {
     saveTokens(refreshed);
     return refreshed.access_token;
   }
+  if (BACKEND_TOKEN_URL) {
+    const backend = await fetchBackendToken();
+    if (backend?.access_token) {
+      const fromBackend = {
+        access_token: backend.access_token,
+        refresh_token: tokens?.refresh_token || null,
+        expires_at: Date.now() + (backend.expires_in || 3000) * 1000
+      };
+      saveTokens(fromBackend);
+      return backend.access_token;
+    }
+  }
   setAuthStatus('Owner needs to connect Spotify.');
   throw new Error('Auth required: no refresh token available');
 }
@@ -513,6 +526,17 @@ async function apiFetch(path, options = {}, attempt = 0) {
     throw new Error(text || `Request failed: ${resp.status}`);
   }
   return resp.json();
+}
+
+async function fetchBackendToken() {
+  try {
+    const resp = await fetch(BACKEND_TOKEN_URL, { cache: 'no-store' });
+    if (!resp.ok) throw new Error(`Backend token failed: ${resp.status}`);
+    return resp.json();
+  } catch (err) {
+    console.error('Backend token fetch failed', err);
+    return null;
+  }
 }
 
 async function startAuth() {

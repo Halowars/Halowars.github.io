@@ -31,6 +31,21 @@ Single-page controller for your Spotify account that can be hosted on GitHub Pag
 - For local testing, serve the folder over HTTP (e.g., `python -m http.server 3000`) and add `http://127.0.0.1:3000/` as a Redirect URI in Spotify while testing. The app auto-uses the current page URL for `REDIRECT_URI`; make sure that exact URL is in Spotify.
 - If you want to pre-authorize and skip login prompts for guests, run `node fetch_refresh_token.js` (with `SPOTIFY_CLIENT_ID` and `SPOTIFY_CLIENT_SECRET` set) to obtain a refresh token, then paste it into `PREFILLED_REFRESH_TOKEN` in `app.js`. Do **not** commit secrets or refresh tokens to a public repo.
 
+### Quick: generate a refresh token
+1) In Spotify Dashboard, add `http://127.0.0.1:8888/callback` as a redirect.  
+2) Run (Windows):  
+   `set SPOTIFY_CLIENT_ID=<id> && set SPOTIFY_CLIENT_SECRET=<secret> && set SPOTIFY_REDIRECT_URI=http://127.0.0.1:8888/callback && node fetch_refresh_token.js`  
+   Or Mac/Linux:  
+   `SPOTIFY_CLIENT_ID=<id> SPOTIFY_CLIENT_SECRET=<secret> SPOTIFY_REDIRECT_URI=http://127.0.0.1:8888/callback node fetch_refresh_token.js`  
+3) Approve in the browser; copy the printed refresh token into `PREFILLED_REFRESH_TOKEN` at the top of `app.js`.  
+4) Redeploy (or reload locally). Guests won’t be prompted as long as that token stays valid.
+
+## Optional: backend token endpoint (no guest logins)
+- GitHub Pages is static, so you need a tiny backend/worker to keep your client secret and refresh token safe while handing out short-lived access tokens to guests.
+- Example: deploy `backend-worker.js` to Cloudflare Workers (or similar) with env vars `SPOTIFY_CLIENT_ID`, `SPOTIFY_CLIENT_SECRET`, `SPOTIFY_REFRESH_TOKEN`.
+- Set `BACKEND_TOKEN_URL` in `app.js` to the worker URL. The frontend will fetch fresh access tokens from it and never redirect guests to Spotify.
+- Keep the worker URL private if you add rate limiting/auth; otherwise guests can still call it (but it only returns short-lived access tokens).
+
 ## Notes
 - Never commit your client secret to GitHub or expose it on the front end. PKCE avoids needing the secret here; secrets in browser code can be stolen by anyone who opens the page.
 - Spotify playback control requires a Premium account and an active device.
