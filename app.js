@@ -1,6 +1,6 @@
 const CLIENT_ID = '00c2bd4d6a7e45efbc4a766bf80e54c7';
 const PREFILLED_REFRESH_TOKEN = 'AQCPi83xvqfNWv5-GWzZOgl_fFz6UCJm10-yukeyXwkvJZcYnzF8CHaDJHZDlGDUWUaQ_YjnDAB-ZeQgHP1JmMW-uYTrsHzg12IV1VNgvs061eiyyhhVMqIdJF82GmO1TqE'; // pre-authorized refresh token to auto-connect
-const AUTO_AUTH = true; // auto-open Spotify login when no tokens are stored
+const AUTO_AUTH = false; // keep guests from being redirected; owner can reconnect if needed
 // Must exactly match a Redirect URI in your Spotify app settings.
 const REDIRECT_URI = `https://halowars.github.io/`;
 const SCOPES = [
@@ -62,7 +62,7 @@ function init() {
   updateNetworkStatus();
   renderPending();
   const isCallback = new URLSearchParams(window.location.search).has('code');
-  if (AUTO_AUTH && !tokens && !isCallback) {
+  if (AUTO_AUTH && !tokens && !isCallback && !PREFILLED_REFRESH_TOKEN) {
     // Kick off login automatically so passengers just tap "Continue" in Spotify.
     setTimeout(() => startAuth(), 400);
   }
@@ -135,6 +135,10 @@ function updateNetworkStatus() {
 function setAuthStatus(text) {
   els.authStatus.textContent = text;
   els.authButton.textContent = text.includes('Signed in') ? 'Re-connect' : 'Connect Spotify';
+  // If running with a shared refresh token, keep the button available only for the owner to re-auth.
+  if (PREFILLED_REFRESH_TOKEN) {
+    els.authButton.textContent = 'Owner re-connect';
+  }
 }
 
 function setSearchStatus(text) {
@@ -485,8 +489,8 @@ async function ensureAccessToken() {
     saveTokens(refreshed);
     return refreshed.access_token;
   }
-  startAuth();
-  throw new Error('Auth required');
+  setAuthStatus('Owner needs to connect Spotify.');
+  throw new Error('Auth required: no refresh token available');
 }
 
 async function apiFetch(path, options = {}, attempt = 0) {
