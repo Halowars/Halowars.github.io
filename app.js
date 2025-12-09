@@ -145,6 +145,7 @@ function bindEvents() {
   if (els.profileSelect) {
     els.profileSelect.addEventListener('change', () => handleProfileSelect());
   }
+  document.addEventListener('click', handleMaddieButtonConfetti, { capture: true });
 
   disableControls();
 }
@@ -186,6 +187,14 @@ function setProfileStatus(text) {
 
 function isMaddieProfile() {
   return (activeProfileName || '').toLowerCase() === 'maddie';
+}
+
+function handleMaddieButtonConfetti(event) {
+  const target = event.target;
+  if (!target) return;
+  const button = target.closest && target.closest('button');
+  if (!button) return;
+  triggerConfetti();
 }
 
 function triggerConfetti() {
