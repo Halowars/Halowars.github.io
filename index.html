@@ -11,6 +11,7 @@
 </head>
 <body>
   <div class="bg"></div>
+  <div id="confettiHost" aria-hidden="true"></div>
   <header class="topbar">
     <div class="brand">
       <div class="logo-dot"></div>
@@ -60,6 +61,30 @@
       </div>
     </section>
 
+    <section class="panel profiles">
+      <div class="profile-head">
+        <div>
+          <p class="eyebrow">Profiles</p>
+          <h2>Quick picks</h2>
+        </div>
+        <div id="profileStatus" class="muted micro">Create a profile to store go-to songs.</div>
+      </div>
+      <div class="profile-form">
+        <input id="profileNameInput" type="text" placeholder="Type a name, e.g. Tristan" autocomplete="off" />
+        <button class="primary" id="profileSaveBtn">Save / load profile</button>
+        <select id="profileSelect"></select>
+      </div>
+      <div class="saved-head">
+        <div>
+          <p class="eyebrow">Saved songs</p>
+          <h2>Instant queue</h2>
+        </div>
+      </div>
+      <div id="savedSongsList" class="saved-list">
+        <p class="muted micro">Create a profile to save songs.</p>
+      </div>
+    </section>
+
     <section class="panel search">
       <div class="search-head">
         <div>
@@ -97,7 +122,10 @@
         <div class="title" data-title></div>
         <div class="muted micro" data-artist></div>
       </div>
-      <button class="primary ghost" data-queue>Queue</button>
+      <div class="result-actions">
+        <button class="primary ghost" data-queue>Queue</button>
+        <button class="ghost" data-save>Save</button>
+      </div>
     </div>
   </template>
 

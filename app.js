@@ -15,7 +15,9 @@ const STORAGE_KEYS = {
   tokens: 'road_dj_tokens',
   verifier: 'road_dj_code_verifier',
   state: 'road_dj_auth_state',
-  pending: 'road_dj_pending'
+  pending: 'road_dj_pending',
+  profiles: 'road_dj_profiles',
+  activeProfile: 'road_dj_active_profile'
 };
 
 const els = {
@@ -40,11 +42,18 @@ const els = {
   deviceSelect: document.getElementById('deviceSelect'),
   refreshDevices: document.getElementById('refreshDevices'),
   pendingList: document.getElementById('pendingList'),
-  flushPending: document.getElementById('flushPending')
+  flushPending: document.getElementById('flushPending'),
+  profileNameInput: document.getElementById('profileNameInput'),
+  profileSaveBtn: document.getElementById('profileSaveBtn'),
+  profileSelect: document.getElementById('profileSelect'),
+  profileStatus: document.getElementById('profileStatus'),
+  savedSongsList: document.getElementById('savedSongsList')
 };
 
 let tokens = loadTokens();
 let profile = null;
+let profiles = loadProfiles();
+let activeProfileName = loadActiveProfile();
 let playback = null;
 let devices = [];
 let activeDeviceId = null;
@@ -59,9 +68,18 @@ function init() {
     tokens = { refresh_token: PREFILLED_REFRESH_TOKEN, expires_at: 0 };
     saveTokens(tokens);
   }
+  if (activeProfileName && !profiles[activeProfileName]) {
+    profiles[activeProfileName] = { tracks: [] };
+    saveProfiles();
+  }
   bindEvents();
   updateNetworkStatus();
   renderPending();
+  renderProfiles();
+  renderSavedTracks();
+  if (isMaddieProfile()) {
+    triggerConfetti();
+  }
   const isCallback = new URLSearchParams(window.location.search).has('code');
   if (AUTO_AUTH && !tokens && !isCallback && !PREFILLED_REFRESH_TOKEN) {
     // Kick off login automatically so passengers just tap "Continue" in Spotify.
@@ -113,6 +131,20 @@ function bindEvents() {
     activeDeviceId = els.deviceSelect.value || null;
   });
   els.flushPending.addEventListener('click', () => flushPendingActions());
+  if (els.profileSaveBtn) {
+    els.profileSaveBtn.addEventListener('click', () => handleProfileSubmit());
+  }
+  if (els.profileNameInput) {
+    els.profileNameInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        handleProfileSubmit();
+      }
+    });
+  }
+  if (els.profileSelect) {
+    els.profileSelect.addEventListener('change', () => handleProfileSelect());
+  }
 
   disableControls();
 }
@@ -144,6 +176,38 @@ function setAuthStatus(text) {
 
 function setSearchStatus(text) {
   els.searchStatus.textContent = text;
+}
+
+function setProfileStatus(text) {
+  if (els.profileStatus) {
+    els.profileStatus.textContent = text;
+  }
+}
+
+function isMaddieProfile() {
+  return (activeProfileName || '').toLowerCase() === 'maddie';
+}
+
+function triggerConfetti() {
+  if (!isMaddieProfile()) return;
+  const host = document.getElementById('confettiHost');
+  if (!host) return;
+  const colors = ['#5df0c2', '#4ab1ff', '#ff9de4', '#ffd166', '#7cf4ff'];
+  const pieces = 60;
+  for (let i = 0; i < pieces; i++) {
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    const size = 6 + Math.random() * 6;
+    piece.style.width = `${size}px`;
+    piece.style.height = `${size * 1.6}px`;
+    piece.style.left = `${Math.random() * 100}%`;
+    piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    piece.style.animationDelay = `${Math.random() * 0.2}s`;
+    piece.style.animationDuration = `${1.2 + Math.random() * 0.6}s`;
+    piece.style.transform = `rotate(${Math.random() * 360}deg)`;
+    host.appendChild(piece);
+    setTimeout(() => piece.remove(), 2000);
+  }
 }
 
 function seconds(ms) {
@@ -225,6 +289,154 @@ function renderPending() {
   updateNetworkStatus();
 }
 
+function handleProfileSubmit() {
+  const name = (els.profileNameInput?.value || '').trim();
+  if (!name) {
+    setProfileStatus('Type a name to create a profile.');
+    return;
+  }
+  setActiveProfile(name);
+}
+
+function handleProfileSelect() {
+  const selected = els.profileSelect?.value || '';
+  if (selected) {
+    setActiveProfile(selected);
+  }
+}
+
+function renderProfiles() {
+  if (!els.profileSelect) return;
+  const names = Object.keys(profiles);
+  els.profileSelect.innerHTML = '';
+  const placeholder = document.createElement('option');
+  placeholder.value = '';
+  placeholder.textContent = names.length ? 'Switch profile' : 'No profiles yet';
+  placeholder.disabled = true;
+  placeholder.selected = !activeProfileName;
+  els.profileSelect.appendChild(placeholder);
+  names.forEach((name) => {
+    const opt = document.createElement('option');
+    opt.value = name;
+    opt.textContent = name;
+    if (name === activeProfileName) opt.selected = true;
+    els.profileSelect.appendChild(opt);
+  });
+  if (els.profileNameInput && activeProfileName) {
+    els.profileNameInput.value = activeProfileName;
+  }
+  setProfileStatus(activeProfileName ? `Profile ready: ${activeProfileName}` : 'Create a profile to store quick queues.');
+}
+
+function getActiveProfileTracks() {
+  if (!activeProfileName) return [];
+  return profiles[activeProfileName]?.tracks || [];
+}
+
+function renderSavedTracks() {
+  if (!els.savedSongsList) return;
+  els.savedSongsList.innerHTML = '';
+  if (!activeProfileName) {
+    const p = document.createElement('p');
+    p.className = 'muted micro';
+    p.textContent = 'Create or pick a profile to save songs.';
+    els.savedSongsList.appendChild(p);
+    return;
+  }
+  const tracks = getActiveProfileTracks();
+  if (!tracks.length) {
+    const p = document.createElement('p');
+    p.className = 'muted micro';
+    p.textContent = 'No saved songs yet. Save from search for instant queuing.';
+    els.savedSongsList.appendChild(p);
+    return;
+  }
+  tracks.forEach((track) => {
+    const row = document.createElement('div');
+    row.className = 'result-card saved-card';
+    const thumb = document.createElement('div');
+    thumb.className = 'thumb';
+    const img = document.createElement('img');
+    img.src = track.art || '';
+    img.alt = track.name;
+    thumb.appendChild(img);
+    const meta = document.createElement('div');
+    meta.className = 'meta';
+    const title = document.createElement('div');
+    title.className = 'title';
+    title.textContent = track.name;
+    const artist = document.createElement('div');
+    artist.className = 'muted micro';
+    artist.textContent = track.artist;
+    meta.appendChild(title);
+    meta.appendChild(artist);
+    const actions = document.createElement('div');
+    actions.className = 'result-actions';
+    const queueBtn = document.createElement('button');
+    queueBtn.className = 'primary ghost small';
+    queueBtn.textContent = 'Queue';
+    queueBtn.addEventListener('click', () => {
+      const desc = `Queue ${track.name} - ${track.artist}`;
+      performAction('queue', { uri: track.uri }, () => addToQueue(track.uri), desc);
+    });
+    const removeBtn = document.createElement('button');
+    removeBtn.className = 'ghost small';
+    removeBtn.textContent = 'Remove';
+    removeBtn.addEventListener('click', () => removeTrackFromProfile(track.uri));
+    actions.appendChild(queueBtn);
+    actions.appendChild(removeBtn);
+    row.appendChild(thumb);
+    row.appendChild(meta);
+    row.appendChild(actions);
+    els.savedSongsList.appendChild(row);
+  });
+}
+
+function setActiveProfile(name) {
+  const clean = name.trim();
+  if (!clean) return;
+  if (!profiles[clean]) {
+    profiles[clean] = { tracks: [] };
+  }
+  activeProfileName = clean;
+  if (els.profileNameInput) {
+    els.profileNameInput.value = clean;
+  }
+  saveProfiles();
+  localStorage.setItem(STORAGE_KEYS.activeProfile, clean);
+  renderProfiles();
+  renderSavedTracks();
+  setProfileStatus(`Profile ready: ${clean}`);
+  triggerConfetti();
+}
+
+function addTrackToProfile(track) {
+  if (!activeProfileName) {
+    setProfileStatus('Pick or create a profile before saving songs.');
+    return;
+  }
+  if (!profiles[activeProfileName]) {
+    profiles[activeProfileName] = { tracks: [] };
+  }
+  const list = profiles[activeProfileName].tracks || [];
+  const existingIndex = list.findIndex((t) => t.uri === track.uri);
+  if (existingIndex !== -1) {
+    list.splice(existingIndex, 1);
+  }
+  list.unshift(track);
+  profiles[activeProfileName].tracks = list.slice(0, 30);
+  saveProfiles();
+  renderSavedTracks();
+  setProfileStatus(`Saved to ${activeProfileName}`);
+}
+
+function removeTrackFromProfile(uri) {
+  if (!activeProfileName || !profiles[activeProfileName]) return;
+  profiles[activeProfileName].tracks = profiles[activeProfileName].tracks.filter((t) => t.uri !== uri);
+  saveProfiles();
+  renderSavedTracks();
+}
+
 async function searchTracks(query) {
   try {
     setSearchStatus('Searching...');
@@ -249,6 +461,17 @@ function renderSearchResults(items) {
       const desc = `Queue ${item.name} - ${item.artists[0].name}`;
       performAction('queue', { uri: item.uri }, () => addToQueue(item.uri), desc);
     });
+    const saveButton = card.querySelector('[data-save]');
+    if (saveButton) {
+      saveButton.addEventListener('click', () => {
+        addTrackToProfile({
+          uri: item.uri,
+          name: item.name,
+          artist: item.artists.map((a) => a.name).join(', '),
+          art
+        });
+      });
+    }
     els.searchResults.appendChild(card);
   });
 }
@@ -293,6 +516,7 @@ async function addToQueue(uri) {
   const qs = new URLSearchParams({ uri });
   if (activeDeviceId) qs.set('device_id', activeDeviceId);
   await apiFetch(`/v1/me/player/queue?${qs.toString()}`, { method: 'POST' });
+  triggerConfetti();
 }
 
 async function skipNext() {
@@ -358,6 +582,27 @@ function saveTokens(data) {
 function clearTokens() {
   tokens = null;
   localStorage.removeItem(STORAGE_KEYS.tokens);
+}
+
+function loadProfiles() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEYS.profiles);
+    return raw ? JSON.parse(raw) : {};
+  } catch {
+    return {};
+  }
+}
+
+function saveProfiles() {
+  localStorage.setItem(STORAGE_KEYS.profiles, JSON.stringify(profiles));
+}
+
+function loadActiveProfile() {
+  try {
+    return localStorage.getItem(STORAGE_KEYS.activeProfile) || '';
+  } catch {
+    return '';
+  }
 }
 
 function loadPendingActions() {
