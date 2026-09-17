@@ -9,6 +9,7 @@ const els = {
   authButton: document.getElementById('authButton'),
   authStatus: document.getElementById('authStatus'),
   networkStatus: document.getElementById('networkStatus'),
+  liveStatus: document.getElementById('liveStatus'),
   searchStatus: document.getElementById('searchStatus'),
   searchInput: document.getElementById('searchInput'),
   searchResults: document.getElementById('searchResults'),
@@ -31,19 +32,30 @@ const els = {
   profileSelect: document.getElementById('profileSelect'),
   profileStatus: document.getElementById('profileStatus'),
   savedSongsList: document.getElementById('savedSongsList'),
+  liveQueueList: document.getElementById('liveQueueList'),
+  activityLine: document.getElementById('activityLine'),
   toastStack: document.getElementById('toastStack')
 };
 
 let playback = null;
+let playbackReceivedAt = Date.now();
 let devices = [];
 let activeDeviceId = null;
 let profiles = loadProfiles();
 let activeProfileName = loadActiveProfile();
+let liveQueue = [];
+let lastActivityId = '';
 let searchTimer = null;
 let searchController = null;
 let pollTimer = null;
 let pollInFlight = false;
+let progressTimer = null;
+let liveSocket = null;
+let liveSyncTimer = null;
+let liveReconnectTimer = null;
 let backendConnected = false;
+let liveSupported = false;
+let reconnectAttempt = 0;
 let devicesLoaded = false;
 const searchCache = new Map();
 
@@ -55,10 +67,13 @@ async function init() {
   renderProfiles();
   renderSavedTracks();
   renderDevices();
+  renderLiveQueue();
   disableSpotifyControls();
+  startProgressClock();
 
   if (!API_BASE) {
     setAuthStatus('Server not configured');
+    setLiveStatus('Live unavailable');
     setSearchStatus('Road DJ server is not configured.');
     return;
   }
@@ -69,8 +84,13 @@ async function init() {
   enableSpotifyControls();
   setSearchStatus('Search Spotify');
 
-  await pollPlayback();
-  startPolling();
+  if (liveSupported) {
+    connectLive();
+  } else {
+    setLiveStatus('Fallback mode');
+    await Promise.allSettled([pollPlayback(), refreshQueueFallback()]);
+    startPolling();
+  }
 }
 
 function bindEvents() {
@@ -84,9 +104,14 @@ function bindEvents() {
 
   window.addEventListener('online', () => {
     updateNetworkStatus();
-    if (backendConnected) pollPlayback();
+    if (!backendConnected) return;
+    if (liveSupported) connectLive();
+    else pollPlayback();
   });
-  window.addEventListener('offline', updateNetworkStatus);
+  window.addEventListener('offline', () => {
+    updateNetworkStatus();
+    setLiveStatus('Offline');
+  });
 
   els.searchInput.addEventListener('input', (event) => {
     const query = event.target.value.trim();
@@ -136,12 +161,15 @@ async function checkBackendStatus() {
     if (!response.ok) throw httpError(response.status, await response.text());
     const status = await response.json();
     backendConnected = Boolean(status.connected);
+    liveSupported = Boolean(status.live);
     setAuthStatus(backendConnected ? 'Connected' : 'Owner connection needed');
+    setLiveStatus(liveSupported ? 'Connecting live…' : 'Fallback mode');
     els.authButton.textContent = backendConnected ? 'Owner' : 'Connect owner';
     return backendConnected;
   } catch (error) {
     console.error('Road DJ backend unavailable', error);
     setAuthStatus('Server unavailable');
+    setLiveStatus('Server unavailable');
     setSearchStatus('Server unavailable');
     return false;
   }
@@ -156,10 +184,103 @@ function updateNetworkStatus() {
 function setAuthStatus(text) { els.authStatus.textContent = text; }
 function setSearchStatus(text) { els.searchStatus.textContent = text; }
 function setProfileStatus(text) { els.profileStatus.textContent = text; }
+function setLiveStatus(text) {
+  if (!els.liveStatus) return;
+  els.liveStatus.textContent = text;
+  els.liveStatus.classList.toggle('live-on', text === 'Live');
+}
+
+function connectLive() {
+  if (!API_BASE || !navigator.onLine || !backendConnected || !liveSupported) return;
+  if (liveSocket && [WebSocket.OPEN, WebSocket.CONNECTING].includes(liveSocket.readyState)) return;
+
+  clearTimeout(liveReconnectTimer);
+  clearInterval(pollTimer);
+  setLiveStatus(reconnectAttempt ? 'Reconnecting…' : 'Connecting live…');
+
+  const liveUrl = new URL('/api/live', `${API_BASE}/`);
+  liveUrl.protocol = liveUrl.protocol === 'https:' ? 'wss:' : 'ws:';
+  const socket = new WebSocket(liveUrl.toString());
+  liveSocket = socket;
+
+  socket.addEventListener('open', () => {
+    reconnectAttempt = 0;
+    setLiveStatus('Live');
+    clearInterval(liveSyncTimer);
+    liveSyncTimer = setInterval(() => {
+      if (socket.readyState === WebSocket.OPEN) socket.send(JSON.stringify({ type: 'sync' }));
+    }, 3000);
+    socket.send(JSON.stringify({ type: 'refresh' }));
+  });
+
+  socket.addEventListener('message', (event) => {
+    let message;
+    try { message = JSON.parse(event.data); } catch { return; }
+
+    if (message.type === 'state') {
+      if ('playback' in message) applyPlayback(message.playback);
+      if (Array.isArray(message.queue)) {
+        liveQueue = message.queue;
+        renderLiveQueue();
+      }
+      if (message.activity) handleLiveActivity(message.activity);
+      return;
+    }
+
+    if (message.type === 'activity' && message.activity) handleLiveActivity(message.activity);
+  });
+
+  socket.addEventListener('close', () => {
+    if (liveSocket === socket) liveSocket = null;
+    clearInterval(liveSyncTimer);
+    setLiveStatus(navigator.onLine ? 'Reconnecting…' : 'Offline');
+    if (navigator.onLine) {
+      startPolling();
+      reconnectAttempt += 1;
+      const delay = Math.min(15000, 1000 * (2 ** Math.min(reconnectAttempt, 4)));
+      liveReconnectTimer = setTimeout(connectLive, delay);
+    }
+  });
+
+  socket.addEventListener('error', () => {
+    setLiveStatus('Fallback mode');
+  });
+}
+
+function handleLiveActivity(activity) {
+  const id = `${activity.at || ''}:${activity.by || ''}:${activity.track?.uri || activity.track?.name || ''}`;
+  if (id && id === lastActivityId) return;
+  lastActivityId = id;
+
+  if (els.activityLine && activity.type === 'queued') {
+    const who = activity.by || 'Guest';
+    const title = activity.track?.name || 'a song';
+    els.activityLine.textContent = `${who} added ${title}`;
+  }
+
+  if (activity.type === 'queued' && activity.at && Date.now() - activity.at < 8000) {
+    showToast(
+      `${activity.by || 'Guest'} added a song`,
+      `${activity.track?.name || ''}${activity.track?.artist ? ` · ${activity.track.artist}` : ''}`,
+      'success'
+    );
+  }
+}
+
+function startProgressClock() {
+  clearInterval(progressTimer);
+  progressTimer = setInterval(renderProgressOnly, 500);
+}
 
 function formatTime(ms = 0) {
   const total = Math.max(0, Math.floor(ms / 1000));
   return `${Math.floor(total / 60)}:${String(total % 60).padStart(2, '0')}`;
+}
+
+function applyPlayback(nextPlayback) {
+  playback = nextPlayback || null;
+  playbackReceivedAt = Date.now();
+  renderPlayback();
 }
 
 function renderPlayback() {
@@ -175,7 +296,7 @@ function renderPlayback() {
     return;
   }
 
-  const { item, progress_ms: progress = 0, is_playing: isPlaying } = playback;
+  const { item, is_playing: isPlaying } = playback;
   els.trackTitle.textContent = item.name;
   els.trackMeta.textContent = `${item.artists.map((artist) => artist.name).join(', ')} · ${item.album.name}`;
   const art = item.album.images?.[1]?.url || item.album.images?.[0]?.url || '';
@@ -183,10 +304,20 @@ function renderPlayback() {
   else els.albumArt.removeAttribute('src');
   els.albumArt.alt = `${item.name} artwork`;
   els.albumArt.classList.toggle('has-art', Boolean(art));
-  els.progressFill.style.width = `${Math.min(100, (progress / item.duration_ms) * 100)}%`;
-  els.progressStart.textContent = formatTime(progress);
   els.progressEnd.textContent = formatTime(item.duration_ms);
   els.btnPlayPause.textContent = isPlaying ? 'Pause' : 'Play';
+  renderProgressOnly();
+}
+
+function renderProgressOnly() {
+  if (!playback?.item) return;
+  const elapsed = playback.is_playing ? Date.now() - playbackReceivedAt : 0;
+  const progress = Math.min(
+    playback.item.duration_ms,
+    Math.max(0, (playback.progress_ms || 0) + elapsed)
+  );
+  els.progressFill.style.width = `${Math.min(100, (progress / playback.item.duration_ms) * 100)}%`;
+  els.progressStart.textContent = formatTime(progress);
 }
 
 function renderDevices() {
@@ -215,12 +346,36 @@ function renderDevices() {
   });
 }
 
+function renderLiveQueue() {
+  if (!els.liveQueueList) return;
+  els.liveQueueList.innerHTML = '';
+
+  if (!liveQueue.length) {
+    els.liveQueueList.innerHTML = '<p class="empty-state">Nothing is lined up yet. Add something.</p>';
+    return;
+  }
+
+  const fragment = document.createDocumentFragment();
+  liveQueue.slice(0, 6).forEach((track, index) => {
+    const row = document.createElement('article');
+    row.className = 'queue-preview-row';
+    row.innerHTML = `
+      <span class="queue-number">${index + 1}</span>
+      <div class="song-art small"><img alt="" loading="lazy" decoding="async"></div>
+      <div class="song-info"><strong></strong><span></span></div>`;
+    row.querySelector('img').src = track.art || '';
+    row.querySelector('strong').textContent = track.name || 'Unknown track';
+    row.querySelector('.song-info span').textContent = track.artist || '';
+    fragment.appendChild(row);
+  });
+  els.liveQueueList.appendChild(fragment);
+}
+
 async function pollPlayback() {
   if (pollInFlight || !navigator.onLine || !backendConnected) return;
   pollInFlight = true;
   try {
-    playback = await apiFetch('/v1/me/player');
-    renderPlayback();
+    applyPlayback(await apiFetch('/v1/me/player'));
   } catch (error) {
     if (error.name !== 'AbortError') console.warn('Playback poll failed', error);
   } finally {
@@ -228,9 +383,26 @@ async function pollPlayback() {
   }
 }
 
+async function refreshQueueFallback() {
+  try {
+    const data = await apiFetch('/v1/me/player/queue');
+    liveQueue = (data.queue || []).slice(0, 8).map((item) => ({
+      uri: item.uri || '',
+      name: item.name || 'Unknown track',
+      artist: (item.artists || []).map((artist) => artist.name).join(', '),
+      art: item.album?.images?.[2]?.url || item.album?.images?.[1]?.url || item.album?.images?.[0]?.url || ''
+    }));
+    renderLiveQueue();
+  } catch (error) {
+    console.warn('Queue refresh failed', error);
+  }
+}
+
 function startPolling() {
   clearInterval(pollTimer);
-  pollTimer = setInterval(pollPlayback, 8000);
+  pollTimer = setInterval(() => {
+    if (!liveSocket || liveSocket.readyState !== WebSocket.OPEN) pollPlayback();
+  }, 8000);
 }
 
 async function refreshDevices(showFeedback = false) {
@@ -336,7 +508,7 @@ async function queueTrackWithFeedback(button, row, track) {
   label.textContent = 'Adding';
 
   try {
-    await addToQueue(track.uri);
+    await addToQueue(track);
     button.classList.remove('is-loading');
     button.classList.add('is-success');
     icon.textContent = '✓';
@@ -345,6 +517,7 @@ async function queueTrackWithFeedback(button, row, track) {
     showToast('Added to queue', `${track.name} · ${track.artist}`, 'success');
     setTimeout(() => row?.classList.remove('queued-flash'), 650);
     setTimeout(() => resetQueueButton(button), 1100);
+    if (!liveSupported) setTimeout(refreshQueueFallback, 300);
   } catch (error) {
     console.error(error);
     animateQueueError(button, error.status === 404 ? 'No device' : 'Try again');
@@ -373,16 +546,22 @@ function resetQueueButton(button) {
   button.querySelector('.queue-label').textContent = 'Queue';
 }
 
-async function addToQueue(uri) {
-  const firstParams = new URLSearchParams({ uri });
+async function addToQueue(track) {
+  const firstParams = new URLSearchParams({ uri: track.uri });
   if (activeDeviceId) firstParams.set('device_id', activeDeviceId);
 
+  const headers = {
+    'X-Road-DJ-Name': activeProfileName || 'Guest',
+    'X-Road-DJ-Track-Name': track.name,
+    'X-Road-DJ-Track-Artist': track.artist
+  };
+
   try {
-    await apiFetch(`/v1/me/player/queue?${firstParams}`, { method: 'POST' });
+    await apiFetch(`/v1/me/player/queue?${firstParams}`, { method: 'POST', headers });
   } catch (error) {
     if (error.status === 404 && activeDeviceId) {
       activeDeviceId = null;
-      await apiFetch(`/v1/me/player/queue?${new URLSearchParams({ uri })}`, { method: 'POST' });
+      await apiFetch(`/v1/me/player/queue?${new URLSearchParams({ uri: track.uri })}`, { method: 'POST', headers });
       return;
     }
     throw error;
@@ -393,9 +572,13 @@ async function togglePlayPause() {
   const isPlaying = Boolean(playback?.is_playing);
   await runPlaybackAction(async () => {
     await apiFetch(`/v1/me/player/${isPlaying ? 'pause' : 'play'}`, { method: 'PUT' });
-    if (playback) playback.is_playing = !isPlaying;
+    if (playback) {
+      playback.is_playing = !isPlaying;
+      playback.progress_ms = currentPlaybackProgress();
+      playbackReceivedAt = Date.now();
+    }
     renderPlayback();
-    setTimeout(pollPlayback, 250);
+    if (!liveSupported) setTimeout(pollPlayback, 250);
   }, isPlaying ? 'Paused' : 'Playing');
 }
 
@@ -404,12 +587,19 @@ async function rewindTen() {
     showToast('Nothing playing', 'Open Spotify and start a track first.', 'info');
     return;
   }
-  const target = Math.max(0, (playback.progress_ms || 0) - 10000);
+  const target = Math.max(0, currentPlaybackProgress() - 10000);
   await runPlaybackAction(async () => {
-    await apiFetch(`/v1/me/player/seek?position_ms=${target}`, { method: 'PUT' });
+    await apiFetch(`/v1/me/player/seek?position_ms=${Math.floor(target)}`, { method: 'PUT' });
     playback.progress_ms = target;
+    playbackReceivedAt = Date.now();
     renderPlayback();
   }, 'Rewound 10 seconds');
+}
+
+function currentPlaybackProgress() {
+  if (!playback?.item) return 0;
+  const elapsed = playback.is_playing ? Date.now() - playbackReceivedAt : 0;
+  return Math.min(playback.item.duration_ms, Math.max(0, (playback.progress_ms || 0) + elapsed));
 }
 
 async function runPlaybackAction(executor, successText) {
