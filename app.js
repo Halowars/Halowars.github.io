@@ -208,7 +208,7 @@ function startPolling() {
   clearInterval(pollTimer);
   pollTimer = setInterval(() => {
     if (navigator.onLine) pollPlayback();
-  }, 5000);
+  }, 8000);
 }
 
 async function refreshProfile() {
