@@ -1,0 +1,31 @@
+name: Check Road DJ Worker
+
+on:
+  push:
+    branches:
+      - road-dj-v2-auto-login-ui
+    paths:
+      - .github/workflows/check-road-dj-worker.yml
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check health endpoint
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --show-error --silent https://road-dj-api.workable-swamp.workers.dev/health | tee health.json
+          echo
+          grep -q '"ok":true' health.json
+
+      - name: Check auth status endpoint
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --show-error --silent https://road-dj-api.workable-swamp.workers.dev/api/status | tee status.json
+          echo
+          grep -q '"connected":false' status.json
