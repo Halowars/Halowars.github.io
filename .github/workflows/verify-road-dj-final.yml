@@ -1,0 +1,27 @@
+name: Verify Road DJ final backend
+
+on:
+  push:
+    branches:
+      - road-dj-v2-auto-login-ui
+    paths:
+      - .github/workflows/verify-road-dj-final.yml
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify Worker and Spotify connection
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE='https://road-dj-api.workable-swamp.workers.dev'
+          curl --fail --show-error --silent "$BASE/health" | tee health.json
+          grep -q '"ok":true' health.json
+          curl --fail --show-error --silent "$BASE/api/status" | tee status.json
+          grep -q '"connected":true' status.json
+          curl --fail --show-error --silent "$BASE/api/spotify/v1/me" | tee profile.json
+          grep -q '"id"' profile.json
