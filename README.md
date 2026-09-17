@@ -2,15 +2,15 @@
 
 Road DJ is a shared Spotify controller designed for a car, party, or room where guests should be able to search and queue music without ever receiving the Spotify owner's email, password, refresh token, reusable access token, or client secret.
 
-## Architecture
+## Live setup
 
-- **Frontend:** GitHub Pages (`https://halowars.github.io/`)
-- **Backend:** Cloudflare Worker (`backend-worker.js`)
+- **Frontend:** `https://halowars.github.io/`
+- **Backend:** `https://road-dj-api.workable-swamp.workers.dev`
 - **Private auth storage:** Cloudflare Workers KV (`ROAD_DJ_AUTH`)
 - **Spotify authorization:** OAuth Authorization Code with PKCE; no Spotify client secret is required
 - **Spotify API:** only the Worker talks directly to Spotify with the owner's authorization
 
-Guests open the Road DJ site and use it immediately. The owner authorizes Spotify from the Worker's `/owner/login` page. The Worker stores the refresh token in KV and automatically refreshes short-lived Spotify access tokens. The browser only calls the limited Road DJ proxy endpoints.
+The backend and Spotify owner authorization are already connected. Guests can open the Road DJ site and use it without logging in to Spotify. The Worker stores the refresh token in KV and automatically refreshes short-lived Spotify access tokens.
 
 ## Changes in v2
 
@@ -20,35 +20,35 @@ Guests open the Road DJ site and use it immediately. The owner authorizes Spotif
 - Profiles and saved songs still persist in the guest's browser and automatically reload on that device.
 - Removed Spotify refresh tokens from frontend code.
 - Added an allowlisted Spotify proxy so guests cannot use the Road DJ backend as an unrestricted Spotify API token.
-- Added owner-only PKCE login, so the deployed server does not require your Spotify client secret.
+- Added owner-only PKCE login, so the deployed server does not require a Spotify client secret.
 
-## Cloudflare Worker setup (free tier)
+## Cloudflare Worker maintenance
 
-The repository is configured so Wrangler automatically provisions the `ROAD_DJ_AUTH` KV namespace on the first deployment.
+The repository is configured so Wrangler can deploy the Worker and preserve variables already configured in Cloudflare.
 
 1. Install Wrangler and sign in to Cloudflare:
    ```bash
    npm install -g wrangler
    wrangler login
    ```
-2. The Spotify client ID is already configured in `wrangler.toml`. Set a private Road DJ owner key:
+2. For best security, store the Road DJ owner key as a Worker secret:
    ```bash
    wrangler secret put ADMIN_KEY
    ```
-   `ADMIN_KEY` is a private password you choose for the Road DJ owner setup page. Guests do not need it.
-3. Deploy:
+   Guests do not need this key.
+3. Deploy future backend changes with:
    ```bash
    wrangler deploy
    ```
-4. Wrangler prints a URL similar to:
-   `https://road-dj-api.<your-workers-subdomain>.workers.dev`
-5. In the Spotify Developer Dashboard, add this exact redirect URI:
-   `https://road-dj-api.<your-workers-subdomain>.workers.dev/owner/callback`
-6. Put the Worker base URL into the `road-dj-backend` meta tag in `index.html`.
-7. Open the Road DJ site, tap **Owner setup**, enter your `ADMIN_KEY`, and approve Spotify once.
 
-After that, guests do not log in to Spotify. The Worker refreshes access automatically until Spotify eventually requires owner re-authorization.
+The Spotify Developer Dashboard redirect URI for the current deployment is:
+
+```text
+https://road-dj-api.workable-swamp.workers.dev/owner/callback
+```
+
+The frontend backend URL is configured in the `road-dj-backend` meta tag in `index.html`.
 
 ## Security note
 
-An older revision of this repository contained a Spotify refresh token in public frontend source and tracked `tokens.local.json`. Those credentials should be considered exposed. Rotate/re-authorize the Spotify connection after deploying this version. Removing the file from the latest commit does not erase it from Git history.
+An older revision of this repository contained a Spotify refresh token in public frontend source and tracked `tokens.local.json`. Those old credentials should be considered exposed. The current deployment uses a newly authorized server-side token instead, and removing the old token from the latest commit does not erase it from Git history.
