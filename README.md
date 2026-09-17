@@ -32,13 +32,12 @@ Guests open the Road DJ site and use it immediately. The owner authorizes Spotif
    wrangler kv namespace create ROAD_DJ_AUTH
    ```
 3. Put the returned namespace id into `wrangler.toml`.
-4. Add the three private Worker secrets:
+4. The Spotify client ID is already configured in `wrangler.toml`. Add only the private values:
    ```bash
-   wrangler secret put SPOTIFY_CLIENT_ID
    wrangler secret put SPOTIFY_CLIENT_SECRET
    wrangler secret put ADMIN_KEY
    ```
-   `ADMIN_KEY` is your private Road DJ owner password. Guests do not need it.
+   `ADMIN_KEY` is the private Road DJ owner password you choose. Guests do not need it.
 5. Deploy:
    ```bash
    wrangler deploy
