@@ -1,0 +1,11 @@
+name = "road-dj-api"
+main = "backend-worker.js"
+compatibility_date = "2026-09-01"
+
+[vars]
+FRONTEND_ORIGIN = "https://halowars.github.io"
+
+# After `wrangler kv namespace create ROAD_DJ_AUTH`, paste the returned id here.
+[[kv_namespaces]]
+binding = "ROAD_DJ_AUTH"
+id = "REPLACE_WITH_KV_NAMESPACE_ID"
