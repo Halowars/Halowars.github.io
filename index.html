@@ -26,6 +26,7 @@
 
     <div class="topbar-actions">
       <span class="status-pill" id="networkStatus"><span class="status-dot"></span>Checking…</span>
+      <span class="status-pill live-pill" id="liveStatus">Connecting live…</span>
       <span class="status-pill subtle" id="authStatus">Connecting…</span>
       <button class="button button-secondary" id="authButton">Owner setup</button>
     </div>
@@ -34,7 +35,7 @@
   <main class="shell">
     <section class="player-card">
       <div class="art-wrap">
-        <div class="art-placeholder" id="artPlaceholder">RD</div>
+        <div class="art-placeholder">RD</div>
         <img id="albumArt" src="" alt="Album art">
         <span class="live-chip">NOW PLAYING</span>
       </div>
@@ -64,6 +65,19 @@
           <select id="deviceSelect"></select>
           <button class="mini-button" id="refreshDevices" title="Refresh devices" aria-label="Refresh devices">↻</button>
         </div>
+      </div>
+    </section>
+
+    <section class="live-card">
+      <div class="section-heading live-heading">
+        <div>
+          <p class="kicker">Shared live queue</p>
+          <h2>Up next</h2>
+        </div>
+        <p id="activityLine" class="section-status">Everyone connected sees queue changes together.</p>
+      </div>
+      <div id="liveQueueList" class="live-queue-list">
+        <p class="empty-state">Nothing is lined up yet. Add something.</p>
       </div>
     </section>
 
