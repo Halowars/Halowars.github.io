@@ -22,32 +22,29 @@ Guests open the Road DJ site and use it immediately. The owner authorizes Spotif
 
 ## Cloudflare Worker setup (free tier)
 
-1. Create a free Cloudflare account if needed and install Wrangler:
+The repository is configured so Wrangler automatically provisions the `ROAD_DJ_AUTH` KV namespace on the first deployment.
+
+1. Install Wrangler and sign in to Cloudflare:
    ```bash
    npm install -g wrangler
    wrangler login
    ```
-2. Create the KV namespace:
-   ```bash
-   wrangler kv namespace create ROAD_DJ_AUTH
-   ```
-3. Put the returned namespace id into `wrangler.toml`.
-4. The Spotify client ID is already configured in `wrangler.toml`. Add only the private values:
+2. The Spotify client ID is already configured in `wrangler.toml`. Add only the private values:
    ```bash
    wrangler secret put SPOTIFY_CLIENT_SECRET
    wrangler secret put ADMIN_KEY
    ```
    `ADMIN_KEY` is the private Road DJ owner password you choose. Guests do not need it.
-5. Deploy:
+3. Deploy:
    ```bash
    wrangler deploy
    ```
-6. Wrangler prints a URL similar to:
+4. Wrangler prints a URL similar to:
    `https://road-dj-api.<your-workers-subdomain>.workers.dev`
-7. In the Spotify Developer Dashboard, add this exact redirect URI:
+5. In the Spotify Developer Dashboard, add this exact redirect URI:
    `https://road-dj-api.<your-workers-subdomain>.workers.dev/owner/callback`
-8. Put the Worker base URL into the `road-dj-backend` meta tag in `index.html`.
-9. Open the Road DJ site, tap **Owner setup**, enter your `ADMIN_KEY`, and approve Spotify once.
+6. Put the Worker base URL into the `road-dj-backend` meta tag in `index.html`.
+7. Open the Road DJ site, tap **Owner setup**, enter your `ADMIN_KEY`, and approve Spotify once.
 
 After that, guests do not log in to Spotify. The Worker refreshes access automatically until Spotify eventually requires owner re-authorization.
 
