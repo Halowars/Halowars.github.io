@@ -1,7 +1,0 @@
-{
-  "access_token": "BQDImcj0JrrK-jb36RxrnyG3u9TSANSkhIQxSCXIP-xCHkXiklndDHJwLoj0PattCH3luyUNKdWVyJ1QLZAuQhPKJrV3A99t_Zfajm6ov15HWym_np_Khxt1ZVzft9SO5bIn90R38LgQURRFxVjpOxXSGm91sP7OqjGKWrGHN2QR-k0dfN5vdM51yy1LnGd6pWEorkSNJf6lxeMcia_exzo9wHfrFt6b4DTJM5MHuwdG7qw0Zl4p-e_Yifkc72Uj",
-  "token_type": "Bearer",
-  "expires_in": 3600,
-  "refresh_token": "AQBc77K5SgFag0X24flTg0KeEJCUoTcQmnd6DmuorUQg-crDZhSc1ZnpAKC0RI0qmf9VM9s0yql5UZeWgxv_cZPh_e1Nbvi-MS1DlgEOr044jNbxbPuMUy8ibrow7II6QxM",
-  "scope": "app-remote-control streaming user-modify-playback-state user-read-playback-state user-read-currently-playing"
-}
