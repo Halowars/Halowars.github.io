@@ -6,7 +6,6 @@ compatibility_date = "2026-09-01"
 FRONTEND_ORIGIN = "https://halowars.github.io"
 SPOTIFY_CLIENT_ID = "00c2bd4d6a7e45efbc4a766bf80e54c7"
 
-# After `wrangler kv namespace create ROAD_DJ_AUTH`, paste the returned id here.
+# Wrangler automatically provisions this KV namespace on first deploy.
 [[kv_namespaces]]
 binding = "ROAD_DJ_AUTH"
-id = "REPLACE_WITH_KV_NAMESPACE_ID"
