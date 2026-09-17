@@ -1,0 +1,38 @@
+name: Road DJ latency diagnostic
+
+on:
+  push:
+    branches:
+      - road-dj-v2-auto-login-ui
+    paths:
+      - .github/workflows/road-dj-latency-diagnostic.yml
+
+permissions:
+  contents: read
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Measure Road DJ endpoints
+        shell: bash
+        run: |
+          set -u
+          BASE='https://road-dj-api.workable-swamp.workers.dev'
+          ORIGIN='https://halowars.github.io'
+          measure() {
+            label="$1"
+            url="$2"
+            echo "=== $label ==="
+            for i in 1 2 3 4 5; do
+              curl -sS -o /tmp/body -H "Origin: $ORIGIN" -w "run=$i status=%{http_code} connect=%{time_connect}s ttfb=%{time_starttransfer}s total=%{time_total}s\n" "$url" || true
+              head -c 180 /tmp/body | tr '\n' ' '; echo
+              sleep 1
+            done
+          }
+          measure health "$BASE/health"
+          measure status "$BASE/api/status"
+          measure me "$BASE/api/spotify/v1/me"
+          measure player "$BASE/api/spotify/v1/me/player"
+          measure devices "$BASE/api/spotify/v1/me/player/devices"
+          measure search "$BASE/api/spotify/v1/search?type=track&limit=10&q=queen"
