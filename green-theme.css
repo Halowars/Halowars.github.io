@@ -1,0 +1,80 @@
+:root {
+  --bg: #0b0f0c;
+  --panel: #121713;
+  --panel-raised: #18201a;
+  --line: #2b382f;
+  --line-soft: #202a23;
+  --text: #f1f5f2;
+  --muted: #96a09a;
+  --accent: #3ddc84;
+  --accent-strong: #69e7a2;
+  --green: #3ddc84;
+}
+
+body { background: var(--bg); }
+.topbar { background: rgba(11, 15, 12, .95); }
+.brand-badge {
+  color: var(--accent-strong);
+  background: #142019;
+  border-color: #31513d;
+}
+.owner-button:hover,
+.secondary-button:hover,
+.control-button:hover,
+.refresh-button:hover,
+.save-button:hover {
+  background: #1b2820;
+  border-color: #365542;
+}
+.album-shell { background: #0e1510; }
+.art-placeholder { color: #395141; background: #111a14; }
+.play-button,
+.queue-button { color: #07130c; }
+.search-box:focus-within { border-color: #3f8e5d; }
+.song-row:hover { background: #151f18; border-color: #243429; }
+.progress-track { background: #243028; }
+.queue-button.is-success {
+  color: #07130c;
+  background: #72e7a4;
+  border-color: #72e7a4;
+}
+.toast-icon {
+  background: #173020;
+  color: #87ecad;
+}
+.toast.info .toast-icon {
+  background: #173020;
+  color: #87ecad;
+}
+
+#confettiHost {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  overflow: hidden;
+  pointer-events: none;
+}
+.confetti-piece {
+  position: absolute;
+  top: -18px;
+  width: 8px;
+  height: 13px;
+  border-radius: 1px;
+  opacity: .98;
+  will-change: transform;
+  animation: roadDjConfettiFall var(--duration, 1.55s) cubic-bezier(.2,.7,.25,1) forwards;
+}
+@keyframes roadDjConfettiFall {
+  0% {
+    transform: translate3d(0, -24px, 0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(var(--drift, 0px), 108vh, 0) rotate(var(--spin, 720deg));
+    opacity: .88;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .confetti-piece { animation-duration: .35s; }
+}
