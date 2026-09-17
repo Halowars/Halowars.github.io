@@ -1,0 +1,2 @@
+# Road DJ owner setup password. Replace this locally; never commit the real value.
+ADMIN_KEY=replace-with-a-long-random-owner-password
