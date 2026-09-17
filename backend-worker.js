@@ -100,7 +100,9 @@ async function startOwnerLogin(request, env) {
   }
 
   const state = crypto.randomUUID();
-  await env.ROAD_DJ_AUTH.put(`${STATE_PREFIX}${state}`, '1', { expirationTtl: 600 });
+  const verifier = generateCodeVerifier();
+  const challenge = await deriveChallenge(verifier);
+  await env.ROAD_DJ_AUTH.put(`${STATE_PREFIX}${state}`, JSON.stringify({ verifier }), { expirationTtl: 600 });
 
   const redirectUri = new URL('/owner/callback', request.url).toString();
   const params = new URLSearchParams({
@@ -109,6 +111,8 @@ async function startOwnerLogin(request, env) {
     scope: env.SPOTIFY_SCOPES || DEFAULT_SCOPES,
     redirect_uri: redirectUri,
     state,
+    code_challenge_method: 'S256',
+    code_challenge: challenge,
     show_dialog: 'true'
   });
 
@@ -125,18 +129,24 @@ async function finishOwnerLogin(request, env) {
   if (!code || !state) return new Response('Missing Spotify authorization data.', { status: 400 });
 
   const stateKey = `${STATE_PREFIX}${state}`;
-  const validState = await env.ROAD_DJ_AUTH.get(stateKey);
+  const stateDataRaw = await env.ROAD_DJ_AUTH.get(stateKey);
   await env.ROAD_DJ_AUTH.delete(stateKey);
-  if (!validState) return new Response('Expired or invalid login state. Start again.', { status: 400 });
+  if (!stateDataRaw) return new Response('Expired or invalid login state. Start again.', { status: 400 });
+  let stateData;
+  try { stateData = JSON.parse(stateDataRaw); } catch { stateData = null; }
+  if (!stateData?.verifier) return new Response('Invalid login state. Start again.', { status: 400 });
 
   const redirectUri = new URL('/owner/callback', request.url).toString();
   const tokenResponse = await fetch('https://accounts.spotify.com/api/token', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'Authorization': `Basic ${btoa(`${env.SPOTIFY_CLIENT_ID}:${env.SPOTIFY_CLIENT_SECRET}`)}`
-    },
-    body: new URLSearchParams({ grant_type: 'authorization_code', code, redirect_uri: redirectUri })
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({
+      grant_type: 'authorization_code',
+      code,
+      redirect_uri: redirectUri,
+      client_id: env.SPOTIFY_CLIENT_ID,
+      code_verifier: stateData.verifier
+    })
   });
 
   if (!tokenResponse.ok) {
@@ -240,11 +250,12 @@ async function getSpotifyAccessToken(env, forceRefresh = false) {
 
   const response = await fetch('https://accounts.spotify.com/api/token', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'Authorization': `Basic ${btoa(`${env.SPOTIFY_CLIENT_ID}:${env.SPOTIFY_CLIENT_SECRET}`)}`
-    },
-    body: new URLSearchParams({ grant_type: 'refresh_token', refresh_token: refreshToken })
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({
+      grant_type: 'refresh_token',
+      refresh_token: refreshToken,
+      client_id: env.SPOTIFY_CLIENT_ID
+    })
   });
 
   if (!response.ok) {
@@ -268,4 +279,23 @@ async function storeSpotifyTokens(env, tokens) {
   if (tokens.refresh_token) {
     await env.ROAD_DJ_AUTH.put(TOKEN_KEY, tokens.refresh_token);
   }
+}
+
+function generateCodeVerifier() {
+  const bytes = new Uint8Array(64);
+  crypto.getRandomValues(bytes);
+  return base64UrlEncode(bytes.buffer);
+}
+
+async function deriveChallenge(verifier) {
+  const data = new TextEncoder().encode(verifier);
+  const digest = await crypto.subtle.digest('SHA-256', data);
+  return base64UrlEncode(digest);
+}
+
+function base64UrlEncode(buffer) {
+  return btoa(String.fromCharCode(...new Uint8Array(buffer)))
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_')
+    .replace(/=+$/g, '');
 }
