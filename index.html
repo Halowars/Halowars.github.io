@@ -3,104 +3,95 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#09090d">
+  <meta name="theme-color" content="#0e0f10">
   <meta name="road-dj-backend" content="https://road-dj-api.workable-swamp.workers.dev">
   <title>Road DJ</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="ambient ambient-one"></div>
-  <div class="ambient ambient-two"></div>
-
   <header class="topbar">
     <a class="brand" href="./" aria-label="Road DJ home">
-      <span class="brand-mark" aria-hidden="true"><span></span></span>
-      <span class="brand-copy">
-        <strong>Road DJ</strong>
-        <small>Everyone gets the aux. Nobody gets your password.</small>
-      </span>
+      <span class="brand-badge" aria-hidden="true">R</span>
+      <span>Road DJ</span>
     </a>
-
     <div class="topbar-actions">
       <span class="status-pill" id="networkStatus"><span class="status-dot"></span>Checking…</span>
-      <span class="status-pill subtle" id="authStatus">Connecting…</span>
-      <button class="button button-secondary" id="authButton">Owner setup</button>
+      <span class="auth-copy" id="authStatus">Connecting…</span>
+      <button class="owner-button" id="authButton">Owner</button>
     </div>
   </header>
 
-  <main class="shell">
-    <section class="player-card">
-      <div class="art-wrap">
+  <main class="layout">
+    <aside class="player-panel">
+      <div class="album-shell">
         <div class="art-placeholder" id="artPlaceholder">RD</div>
-        <img id="albumArt" src="" alt="Album art">
-        <span class="live-chip">NOW PLAYING</span>
+        <img id="albumArt" alt="Album art">
       </div>
 
-      <div class="player-copy">
-        <p class="kicker">Road DJ session</p>
+      <div class="now-playing-copy">
+        <span class="eyebrow">NOW PLAYING</span>
         <h1 id="trackTitle">Nothing playing</h1>
-        <p class="track-meta" id="trackMeta">Start Spotify on the car or phone.</p>
+        <p id="trackMeta">Open Spotify on the phone or car to start a session.</p>
+      </div>
 
-        <div class="progress-row">
-          <span id="progressStart">0:00</span>
-          <div class="progress-track" aria-label="Playback progress">
-            <div class="progress-fill" id="progressFill"></div>
+      <div class="progress-row">
+        <span id="progressStart">0:00</span>
+        <div class="progress-track" aria-label="Playback progress">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <span id="progressEnd">0:00</span>
+      </div>
+
+      <div class="transport">
+        <button class="control-button" id="btnBack" title="Previous track" aria-label="Previous track">Prev</button>
+        <button class="control-button compact" id="btnRewind" title="Rewind 10 seconds" aria-label="Rewind 10 seconds">-10</button>
+        <button class="play-button" id="btnPlayPause">Play</button>
+        <button class="control-button" id="btnSkip" title="Next track" aria-label="Next track">Next</button>
+      </div>
+
+      <div class="device-row">
+        <span>Output</span>
+        <select id="deviceSelect" aria-label="Spotify output device"></select>
+        <button class="refresh-button" id="refreshDevices" title="Refresh devices" aria-label="Refresh devices">↻</button>
+      </div>
+    </aside>
+
+    <section class="content-column">
+      <section class="search-panel">
+        <div class="section-head">
+          <div>
+            <h2>Add a song</h2>
+            <p>Search Spotify and send it straight to the queue.</p>
           </div>
-          <span id="progressEnd">0:00</span>
+          <span id="searchStatus">Search Spotify</span>
         </div>
 
-        <div class="transport">
-          <button class="icon-button" id="btnBack" title="Previous track" aria-label="Previous track">↶</button>
-          <button class="icon-button" id="btnRewind" title="Rewind 10 seconds" aria-label="Rewind 10 seconds">−10</button>
-          <button class="play-button" id="btnPlayPause">Play</button>
-          <button class="icon-button" id="btnSkip" title="Next track" aria-label="Next track">↷</button>
+        <label class="search-box">
+          <span aria-hidden="true">⌕</span>
+          <input id="searchInput" type="search" placeholder="Search songs, artists, albums" autocomplete="off" spellcheck="false">
+        </label>
+
+        <div id="searchResults" class="song-list"></div>
+      </section>
+
+      <section class="quick-panel">
+        <div class="section-head">
+          <div>
+            <h2>Quick picks</h2>
+            <p id="profileStatus">Profiles stay on this device.</p>
+          </div>
         </div>
 
-        <div class="device-line">
-          <label for="deviceSelect">Playing on</label>
-          <select id="deviceSelect"></select>
-          <button class="mini-button" id="refreshDevices" title="Refresh devices" aria-label="Refresh devices">↻</button>
+        <div class="profile-row">
+          <input id="profileNameInput" type="text" placeholder="Profile name" autocomplete="off">
+          <button class="secondary-button" id="profileSaveBtn">Use profile</button>
+          <select id="profileSelect" aria-label="Switch profile"></select>
         </div>
-      </div>
-    </section>
 
-    <section class="search-card">
-      <div class="section-heading">
-        <div>
-          <p class="kicker">Find a song</p>
-          <h2>What should play next?</h2>
+        <div id="savedSongsList" class="song-list saved-list">
+          <p class="empty-state">Create a profile to keep quick picks on this device.</p>
         </div>
-        <p id="searchStatus" class="section-status">Start typing to search Spotify.</p>
-      </div>
-
-      <div class="search-input-wrap">
-        <span aria-hidden="true">⌕</span>
-        <input id="searchInput" type="search" placeholder="Song, artist, album…" autocomplete="off">
-      </div>
-      <div id="searchResults" class="results-grid"></div>
-    </section>
-
-    <section class="library-card">
-      <div class="section-heading">
-        <div>
-          <p class="kicker">Your shortcuts</p>
-          <h2>Profiles & saved songs</h2>
-        </div>
-        <p id="profileStatus" class="section-status">Profiles stay on this device.</p>
-      </div>
-
-      <div class="profile-row">
-        <input id="profileNameInput" type="text" placeholder="Profile name" autocomplete="off">
-        <button class="button button-primary" id="profileSaveBtn">Use profile</button>
-        <select id="profileSelect" aria-label="Switch profile"></select>
-      </div>
-
-      <div id="savedSongsList" class="saved-list">
-        <p class="empty-state">Create a profile to save quick picks.</p>
-      </div>
+      </section>
     </section>
   </main>
 
@@ -108,14 +99,14 @@
 
   <template id="resultCard">
     <article class="song-row">
-      <div class="song-art"><img data-art src="" alt=""></div>
+      <div class="song-art"><img data-art alt=""></div>
       <div class="song-info">
         <strong data-title></strong>
         <span data-artist></span>
       </div>
       <div class="song-actions">
         <button class="queue-button" data-queue>
-          <span class="queue-icon">＋</span>
+          <span class="queue-icon">+</span>
           <span class="queue-label">Queue</span>
         </button>
         <button class="save-button" data-save>Save</button>
