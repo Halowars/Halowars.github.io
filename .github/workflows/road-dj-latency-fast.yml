@@ -1,0 +1,36 @@
+name: Road DJ fast latency diagnostic
+
+on:
+  push:
+    branches:
+      - road-dj-v2-auto-login-ui
+    paths:
+      - .github/workflows/road-dj-latency-fast.yml
+
+permissions:
+  contents: read
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Measure endpoints with hard timeouts
+        shell: bash
+        run: |
+          BASE='https://road-dj-api.workable-swamp.workers.dev'
+          ORIGIN='https://halowars.github.io'
+          for spec in \
+            'health|/health' \
+            'status|/api/status' \
+            'me|/api/spotify/v1/me' \
+            'player|/api/spotify/v1/me/player' \
+            'devices|/api/spotify/v1/me/player/devices' \
+            'search|/api/spotify/v1/search?type=track&limit=10&q=queen'; do
+            label="${spec%%|*}"
+            path="${spec#*|}"
+            echo "=== $label ==="
+            for i in 1 2; do
+              curl --max-time 5 -sS -o /tmp/body -H "Origin: $ORIGIN" -w "run=$i status=%{http_code} ttfb=%{time_starttransfer}s total=%{time_total}s exit=%{exitcode}\n" "$BASE$path" || true
+              [ -f /tmp/body ] && { head -c 120 /tmp/body | tr '\n' ' '; echo; }
+            done
+          done
