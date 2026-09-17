@@ -1,6 +1,6 @@
 const TOKEN_KEY = 'spotify_refresh_token';
-const ACCESS_KEY = 'spotify_access_token';
-const ACCESS_EXPIRY_KEY = 'spotify_access_expires_at';
+let cachedAccessToken = null;
+let cachedAccessExpiresAt = 0;
 const STATE_PREFIX = 'oauth_state:';
 
 const DEFAULT_SCOPES = [
@@ -178,8 +178,8 @@ async function proxySpotify(request, env, origin) {
   });
 
   if (upstream.status === 401) {
-    await env.ROAD_DJ_AUTH.delete(ACCESS_KEY);
-    await env.ROAD_DJ_AUTH.delete(ACCESS_EXPIRY_KEY);
+    cachedAccessToken = null;
+    cachedAccessExpiresAt = 0;
     const retryToken = await getSpotifyAccessToken(env, true);
     if (!retryToken) return json({ error: 'Owner needs to reconnect Spotify' }, 401, origin);
     const retry = await fetch(spotifyUrl.toString(), {
@@ -231,12 +231,8 @@ async function relaySpotifyResponse(upstream, origin) {
 }
 
 async function getSpotifyAccessToken(env, forceRefresh = false) {
-  if (!forceRefresh) {
-    const [token, expiresAt] = await Promise.all([
-      env.ROAD_DJ_AUTH.get(ACCESS_KEY),
-      env.ROAD_DJ_AUTH.get(ACCESS_EXPIRY_KEY)
-    ]);
-    if (token && Number(expiresAt) > Date.now() + 60000) return token;
+  if (!forceRefresh && cachedAccessToken && cachedAccessExpiresAt > Date.now() + 60000) {
+    return cachedAccessToken;
   }
 
   const refreshToken = await env.ROAD_DJ_AUTH.get(TOKEN_KEY);
@@ -267,11 +263,9 @@ async function getSpotifyAccessToken(env, forceRefresh = false) {
 
 async function storeSpotifyTokens(env, tokens) {
   const expiresIn = Number(tokens.expires_in || 3600);
-  const expiresAt = Date.now() + expiresIn * 1000;
-  const writes = [
-    env.ROAD_DJ_AUTH.put(ACCESS_KEY, tokens.access_token, { expirationTtl: Math.max(60, expiresIn) }),
-    env.ROAD_DJ_AUTH.put(ACCESS_EXPIRY_KEY, String(expiresAt), { expirationTtl: Math.max(60, expiresIn) })
-  ];
-  if (tokens.refresh_token) writes.push(env.ROAD_DJ_AUTH.put(TOKEN_KEY, tokens.refresh_token));
-  await Promise.all(writes);
+  cachedAccessToken = tokens.access_token;
+  cachedAccessExpiresAt = Date.now() + expiresIn * 1000;
+  if (tokens.refresh_token) {
+    await env.ROAD_DJ_AUTH.put(TOKEN_KEY, tokens.refresh_token);
+  }
 }
