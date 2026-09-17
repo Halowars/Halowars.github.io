@@ -1,15 +1,16 @@
 # Road DJ
 
-Road DJ is a shared Spotify controller designed for a car, party, or room where guests should be able to search and queue music without ever receiving the Spotify owner's email, password, refresh token, or reusable access token.
+Road DJ is a shared Spotify controller designed for a car, party, or room where guests should be able to search and queue music without ever receiving the Spotify owner's email, password, refresh token, reusable access token, or client secret.
 
 ## Architecture
 
 - **Frontend:** GitHub Pages (`https://halowars.github.io/`)
 - **Backend:** Cloudflare Worker (`backend-worker.js`)
 - **Private auth storage:** Cloudflare Workers KV (`ROAD_DJ_AUTH`)
-- **Spotify:** only the Worker talks directly to Spotify with the owner's authorization
+- **Spotify authorization:** OAuth Authorization Code with PKCE; no Spotify client secret is required
+- **Spotify API:** only the Worker talks directly to Spotify with the owner's authorization
 
-Guests open the Road DJ site and use it immediately. The owner authorizes Spotify from the Worker's `/owner/login` page. The Worker stores the refresh token in KV and automatically refreshes Spotify access tokens. The browser only calls the limited Road DJ proxy endpoints.
+Guests open the Road DJ site and use it immediately. The owner authorizes Spotify from the Worker's `/owner/login` page. The Worker stores the refresh token in KV and automatically refreshes short-lived Spotify access tokens. The browser only calls the limited Road DJ proxy endpoints.
 
 ## Changes in v2
 
@@ -19,6 +20,7 @@ Guests open the Road DJ site and use it immediately. The owner authorizes Spotif
 - Profiles and saved songs still persist in the guest's browser and automatically reload on that device.
 - Removed Spotify refresh tokens from frontend code.
 - Added an allowlisted Spotify proxy so guests cannot use the Road DJ backend as an unrestricted Spotify API token.
+- Added owner-only PKCE login, so the deployed server does not require your Spotify client secret.
 
 ## Cloudflare Worker setup (free tier)
 
@@ -29,12 +31,11 @@ The repository is configured so Wrangler automatically provisions the `ROAD_DJ_A
    npm install -g wrangler
    wrangler login
    ```
-2. The Spotify client ID is already configured in `wrangler.toml`. Add only the private values:
+2. The Spotify client ID is already configured in `wrangler.toml`. Set a private Road DJ owner key:
    ```bash
-   wrangler secret put SPOTIFY_CLIENT_SECRET
    wrangler secret put ADMIN_KEY
    ```
-   `ADMIN_KEY` is the private Road DJ owner password you choose. Guests do not need it.
+   `ADMIN_KEY` is a private password you choose for the Road DJ owner setup page. Guests do not need it.
 3. Deploy:
    ```bash
    wrangler deploy
