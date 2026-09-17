@@ -7,6 +7,13 @@ keep_vars = true
 FRONTEND_ORIGIN = "https://halowars.github.io"
 SPOTIFY_CLIENT_ID = "00c2bd4d6a7e45efbc4a766bf80e54c7"
 
-# Wrangler automatically provisions this KV namespace on first deploy.
 [[kv_namespaces]]
 binding = "ROAD_DJ_AUTH"
+
+[[durable_objects.bindings]]
+name = "ROAD_DJ_LIVE"
+class_name = "RoadDJLive"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["RoadDJLive"]
