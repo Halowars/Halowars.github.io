@@ -1,0 +1,51 @@
+.live-pill { color: var(--muted); }
+.live-pill.live-on {
+  color: var(--lime);
+  border-color: rgba(183, 255, 74, .25);
+  background: rgba(183, 255, 74, .06);
+}
+
+.live-card {
+  padding: 24px;
+  border: 1px solid var(--line);
+  background: linear-gradient(145deg, rgba(24,24,34,.88), rgba(13,13,20,.88));
+  box-shadow: var(--shadow);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.live-heading { margin-bottom: 10px; }
+.live-queue-list { display: grid; gap: 7px; }
+.queue-preview-row {
+  display: grid;
+  grid-template-columns: 28px 44px minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+  padding: 8px 10px;
+  border-radius: 14px;
+  background: rgba(255,255,255,.025);
+  border: 1px solid transparent;
+}
+.queue-preview-row:hover {
+  border-color: var(--line);
+  background: rgba(255,255,255,.04);
+}
+.queue-number {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 800;
+  text-align: center;
+}
+.song-art.small {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+}
+
+@media (max-width: 620px) {
+  .live-card { padding: 16px; border-radius: 22px; }
+  .queue-preview-row {
+    grid-template-columns: 24px 40px minmax(0, 1fr);
+    padding: 7px 4px;
+  }
+  .song-art.small { width: 40px; height: 40px; }
+}
