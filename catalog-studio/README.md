@@ -52,11 +52,12 @@ Requires Node.js 20 or newer; no third-party dependencies.
 ```sh
 node tests.cjs
 node build.cjs
+python3 verify-package.py
 ```
 
-The first command runs 75 engine tests and 18 interface-state tests using a simulated DOM. The second rebuilds the standalone studio from its source files. Run `node tests.cjs` again only if source changes.
+The first command runs 75 engine tests and 18 interface-state tests using a simulated DOM. The second rebuilds the standalone studio from its source files. The Python command checks ZIP integrity and exact source-file contents on a clean release checkout or extraction. Run `node tests.cjs` again only if source changes.
 
-The checks were executed in the available JavaScript V8 runtime on October 20, 2026. The shell/Node wrapper and real browsers could not be executed in this session because the local execution environment was unavailable. See `test-report.json` and `BROWSER_ACCEPTANCE.md`.
+The 93 checks passed in both the available V8 runtime and GitHub Actions on Node.js 22.23.3 / Ubuntu 24.04. The generated bundle rebuilt identically. Verified CI run: https://github.com/Halowars/Halowars.github.io/actions/runs/39500814003. The local execution environment was unavailable, so real-browser, native image, download, and PDF appearance checks remain pending. See `test-report.json` and `BROWSER_ACCEPTANCE.md`.
 
 ## Files to read
 

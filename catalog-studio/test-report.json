@@ -430,12 +430,19 @@
   ],
   "automatedLogicAndStateTotal": 93,
   "remaining": {
-    "shellNodeWrapper": "CI verification pending; see GitHub checks",
+    "shellNodeWrapper": "Passed in GitHub Actions on Node.js 22.23.3 / Ubuntu 24.04",
     "realBrowser": "pending",
     "nativeImageDecoding": "pending",
     "actualFileDownloads": "pending",
     "PDFVisualInspection": "pending",
     "customerTrials": "pending"
   },
-  "commercialStatus": "Proposed service; no customers, measured economics, or validated pricing."
+  "commercialStatus": "Proposed service; no customers, measured economics, or validated pricing.",
+  "remoteCI": {
+    "status": "success",
+    "url": "https://github.com/Halowars/Halowars.github.io/actions/runs/39500814003",
+    "runId": 39500814003,
+    "verifiedCodeCommit": "9fc1769132443ae943944adb6056cb91fd799e85",
+    "note": "Subsequent release packaging/documentation does not change the tested engine, interface, or bundle sources."
+  }
 }

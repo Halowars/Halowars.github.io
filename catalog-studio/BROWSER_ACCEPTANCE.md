@@ -2,7 +2,7 @@
 
 Date prepared: October 20, 2026.
 
-The current execution environment could run JavaScript logic but not a shell, real browser, screenshots, native image decoding, downloads, or PDF printing. Do not mark these checks passed without executing them.
+The local execution environment was unavailable. GitHub Actions verified the Node test runner and bundle build, but real browsers, screenshots, native image decoding, downloads, and PDF printing have not been exercised. Do not mark those checks passed without executing them.
 
 ## Required browser matrix
 

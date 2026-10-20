@@ -26,3 +26,5 @@ jobs:
         run: node catalog-studio/build.cjs
       - name: Verify generated bundle matches source
         run: git diff --exit-code -- catalog-studio/index.html
+      - name: Verify ZIP integrity and release contents
+        run: python3 catalog-studio/verify-package.py
