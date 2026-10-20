@@ -1,0 +1,431 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; connect-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'"><meta name="referrer" content="no-referrer"><title>Fieldnote — Catalog production studio</title><meta name="description" content="Local catalog production workbench for a managed distributor catalog service."><style>*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#f5f4ef;color:#252b25;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:1.5}button,input,textarea,select{font:inherit}button,a{touch-action:manipulation}button{cursor:pointer}button:disabled{cursor:not-allowed;opacity:.4}button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid #ba4c2f;outline-offset:3px}a{color:inherit}button{border:1px solid #cecec4;background:transparent;border-radius:4px;padding:10px 15px;color:inherit;font-weight:600}button:hover:not(:disabled){background:#e9e9df}.primary{background:#ba4c2f;border-color:#ba4c2f;color:white}.primary:hover:not(:disabled){background:#943b25}.dark{background:#252b25;color:white;border-color:#252b25}.dark:hover:not(:disabled){background:#414a3d}.small{font-size:12px;padding:7px 11px}.shell{display:grid;grid-template-columns:225px minmax(0,1fr);min-height:100vh}.rail{position:sticky;top:0;height:100vh;background:#242b25;color:#eeefe6;padding:32px 24px;display:flex;flex-direction:column}.wordmark{font-family:Georgia,serif;font-size:33px;letter-spacing:-1.8px;margin:0}.rail .sub{font-size:10px;text-transform:uppercase;letter-spacing:.18em;opacity:.6;margin-top:2px}.rail nav{display:grid;gap:8px;margin-top:50px}.rail nav button{text-align:left;font-weight:400;color:#d8dccf;border:0;padding:12px}.rail nav button[aria-current="page"]{background:#e4e6db;color:#252b25}.rail nav button:hover{background:#384135}.rail nav button[aria-current="page"]:hover{background:#e4e6db}.rail-note{margin-top:auto;font-size:11px;line-height:1.65;color:#a5ad9f;border-top:1px solid #4a5346;padding-top:20px}.rail-note strong{display:block;color:#d6dccf;font-weight:400}.main{min-width:0;max-width:1500px;width:100%;margin:auto;padding:32px 48px 70px}.topline{display:flex;justify-content:space-between;align-items:center;gap:15px;border-bottom:1px solid #d3d5ca;padding-bottom:22px;margin-bottom:30px}.eyebrow{text-transform:uppercase;letter-spacing:.17em;font-size:10px;font-weight:700;color:#6a7263}.topline .eyebrow{margin:0}.pill{display:inline-block;border:1px solid #c2c9b5;border-radius:30px;padding:5px 10px;color:#56624b;font-size:11px;background:#ecf0e2}.pill.demo{background:#f6e5cb;border-color:#e7c99c;color:#865328}h1{font:clamp(34px,4.8vw,62px)/1.02 Georgia,serif;letter-spacing:-1.7px;margin:0 0 18px}h2{font:29px/1.15 Georgia,serif;letter-spacing:-.5px;margin:0}h3{font-size:14px;margin:0 0 10px}.intro{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(210px,.7fr);gap:35px;align-items:center;margin-bottom:32px}.intro p{max-width:520px;font-size:15px;color:#656e5d}.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}.book-visual{height:215px;max-width:230px;position:relative;justify-self:end;transform:rotate(6deg);margin:6px 20px 5px 0;width:100%;background:#d7d8ce;box-shadow:5px 5px 0 #cccfc1,10px 10px 0 #e7e7dd}.book{position:absolute;inset:0;background:#ba4c2f;color:#fff9e7;display:flex;flex-direction:column;justify-content:space-between;padding:18px;border-left:7px solid #9e3f28}.book .title{font:36px/.95 Georgia,serif;letter-spacing:-1.5px}.book .smalltype{font-size:9px;letter-spacing:.12em;text-transform:uppercase}.book .index{border-top:1px solid #ffffff80;padding-top:8px;font-size:10px;display:flex;justify-content:space-between}.metrics{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid #d2d5c8;background:#efefe6;margin-bottom:16px}.metric{padding:18px 22px;border-right:1px solid #d2d5c8}.metric:last-child{border:0}.metric .n{display:block;font:31px/1.1 Georgia,serif;margin-bottom:6px}.metric .label{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#6a7263}.metric.error .n{color:#b54329}.status{border-left:3px solid #76855d;background:#e9ecdf;padding:12px 15px;margin:0 0 20px;font-size:12px;color:#46543d;overflow-wrap:anywhere}.status.error{background:#f5e4dc;border-color:#bb4b2d;color:#873d28}.section{border-top:1px solid #d0d4c5;padding:26px 0 28px}.section-head{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;margin-bottom:18px}.section-title{display:flex;gap:17px;align-items:baseline}.number{font:12px monospace;color:#8a947e}.help{max-width:420px;font-size:12px;color:#69705f;margin:6px 0 0}.columns{display:grid;grid-template-columns:1fr 1fr;gap:25px}.field{display:grid;gap:6px;font-size:12px;color:#555f4e;margin-bottom:14px}.field input:not([type=file]):not([type=color]),.field select,.field textarea{width:100%;min-width:0;border:1px solid #c7ceba;background:#fcfcf7;border-radius:3px;padding:10px;color:#252b25}.field textarea{resize:vertical}.field input[type=color]{height:42px;width:85px;border:1px solid #c7ceba;background:white;padding:4px}.field input[type=file]{font-size:12px;max-width:100%}.file-area{background:#eaece0;border:1px dashed #aab49a;padding:22px;margin-bottom:15px;min-height:140px}.file-area p{font-size:12px;color:#69705f;max-width:36em}.file-area label{display:block;font-weight:600;margin-bottom:15px}.file-area input{max-width:100%;font-size:12px}.mono{font-family:ui-monospace,Consolas,monospace;font-size:11px}.source-editor{font:11px/1.6 ui-monospace,Consolas,monospace;white-space:pre;min-height:200px}.subtle{font-size:11px;color:#6c7561}.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}.mapping-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.mapping{display:grid;gap:5px;font-size:11px}.mapping span{text-transform:capitalize;color:#69705f}.mapping b{color:#a94027}.mapping select{width:100%;min-width:0;border:1px solid #c6ceb6;background:#fcfcf7;border-radius:3px;padding:9px;color:#252b25}.table-wrap{overflow:auto;max-height:360px;border:1px solid #d0d6c4;background:#fbfcf5}table{width:100%;border-collapse:collapse;font-size:11px;min-width:650px}th{text-align:left;color:#6b765d;background:#e9edde;font-weight:600;padding:11px 13px;position:sticky;top:0;z-index:1}td{border-top:1px solid #dfe4d3;padding:11px 13px;vertical-align:top;overflow-wrap:anywhere;max-width:420px}.severity{display:inline-block;padding:2px 7px;font-size:10px;border-radius:3px;background:#eee5cf;color:#83661d}.severity.error{background:#f4ddd4;color:#993e25}.release{display:grid;grid-template-columns:1fr 1fr;gap:25px}.export-set{background:#e8ecde;padding:22px}.export-set h3{font:24px Georgia,serif;letter-spacing:-.3px}.check{display:flex;align-items:flex-start;gap:10px;font-size:12px;margin:18px 0;color:#4c5942}.check input{margin-top:4px;accent-color:#4d603b;width:18px;height:18px;flex:none}.export-set button{margin-top:7px}.doc{max-width:850px}.doc .lead{font-size:17px;color:#5f6a55;max-width:650px;margin:25px 0 35px}.doc section{border-top:1px solid #cdd4bf;padding:24px 0}.doc h2{margin:0 0 17px}.doc h3{margin-top:24px}.doc ol,.doc ul{padding-left:23px}.doc li{margin:10px 0}.doc blockquote{margin:15px 0;background:#e9eddf;border-left:3px solid #899878;padding:18px 22px;font-size:15px;line-height:1.7}.doc .callout{border-left:3px solid #ba4c2f;padding:13px 20px;background:#f0e6d8}.doc table{min-width:500px}.test-box{padding:20px;border:1px solid #becaaa;background:#f8faf2}.footer{margin-top:30px;display:flex;justify-content:space-between;gap:20px;font-size:10px;color:#7c8571}details{margin:12px 0}summary{cursor:pointer;font-weight:600}summary:focus-visible{outline:3px solid #ba4c2f;outline-offset:3px}[hidden]{display:none!important}@media(min-width:1500px){.main{padding-left:65px;padding-right:65px}}@media(max-width:1050px){.shell{grid-template-columns:185px 1fr}.main{padding:26px}.rail{padding:28px 18px}.intro{grid-template-columns:1fr}.book-visual{display:none}.columns,.release{grid-template-columns:1fr}.mapping-grid{grid-template-columns:repeat(3,1fr)}.section-head{flex-wrap:wrap}.help{max-width:none}}@media(max-width:700px){.shell{display:block}.rail{height:auto;position:static;padding:17px 20px}.wordmark{font-size:29px}.rail nav{display:flex;gap:6px;margin-top:18px;overflow-x:auto}.rail nav button{font-size:11px;white-space:nowrap;padding:9px}.rail-note,.rail .sub{display:none}.main{padding:24px 18px 50px}.topline{align-items:flex-start;margin-bottom:22px}.topline .eyebrow{font-size:9px}.metrics{grid-template-columns:1fr 1fr}.metric{border-bottom:1px solid #d2d5c8}.metric:nth-child(2){border-right:0}.metric:nth-child(3){border-bottom:0}.metric{padding:14px}.mapping-grid{grid-template-columns:1fr 1fr}.section-title{gap:10px}h2{font-size:25px}.intro p{font-size:14px}.footer{display:block}.doc .lead{font-size:15px}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}</style></head><body><div class="shell">
+<aside class="rail"><div><div class="wordmark">Fieldnote.</div><div class="sub">Catalog production studio</div></div>
+<nav aria-label="Studio navigation"><button data-view="workbench" aria-current="page" type="button">01 &nbsp; Workbench</button><button data-view="delivery" aria-current="false" type="button">02 &nbsp; Delivery checklist</button><button data-view="selling" aria-current="false" type="button">03 &nbsp; Tristan's sales guide</button></nav>
+<div class="rail-note"><strong>Production tool · v0.1</strong>Files stay in browser memory.<br>No account or server upload.<br>Download your work before closing.</div></aside>
+<main class="main"><div class="topline"><p class="eyebrow">Independent distributors / Finished sales materials</p><span class="pill">Local processing</span></div>
+<div class="intro"><div><p class="eyebrow">From product export to finished collection</p><h1 id="main-heading">Catalog production.</h1><p>A repeatable production desk for turning approved product data into branded catalogs and matching price sheets.</p><div class="hero-actions"><button id="load-demo" type="button" class="primary">Load fictional sample</button><button id="template-csv" type="button">Get CSV template</button><button id="reset" type="button" class="small">Clear session</button></div></div>
+<div class="book-visual" aria-hidden="true"><div class="book"><div class="smalltype">Northline / Sample collection</div><div class="title">Workshop<br>essentials.</div><div class="index"><span>Product collection</span><span>01—12</span></div></div></div></div>
+<div data-panel="workbench">
+<div class="metrics" aria-label="Current audit results"><div class="metric"><span class="n" id="count-products">—</span><span class="label">Products</span></div><div class="metric"><span class="n" id="count-categories">—</span><span class="label">Categories</span></div><div class="metric error"><span class="n" id="count-errors">—</span><span class="label">Blocking issues</span></div><div class="metric"><span class="n" id="count-warnings">—</span><span class="label">Review warnings</span></div></div>
+<p id="status" class="status" role="status" aria-live="polite">Loading studio…</p>
+<div class="row"><span id="demo-badge" class="pill demo">Fictional sample · Not for sale</span><span class="subtle" id="source-label">No source loaded</span><span class="pill" id="draft-badge">Needs source review</span></div>
+<section class="section"><div class="section-head"><div class="section-title"><span class="number">01</span><h2>Start with the source.</h2></div><p class="help">UTF-8 CSV, TSV, or semicolon-separated data. Up to 1,000 products. Export an Excel sheet as CSV first.</p></div>
+<div class="columns"><div><div class="file-area"><label for="csv-file">Choose the customer's product export</label><input id="csv-file" type="file" accept=".csv,.tsv,text/csv,text/tab-separated-values"><p>Required: SKU, product name, category, and selling unit. Prices are optional and must be USD. A blank price stays “Price on request”.</p></div><label class="field" for="delimiter">Column separator<select id="delimiter"><option value="">Detect automatically</option><option value=",">Comma</option><option value=";">Semicolon</option><option value="&#9;">Tab</option></select></label><p class="subtle">No website login, database connection, or staff software setup is required. Imported data is not sent to a server.</p></div>
+<div><label class="field" for="csv-text">Or paste / correct the CSV<textarea class="source-editor" id="csv-text" spellcheck="false" wrap="off" aria-describedby="source-hint"></textarea></label><div class="row"><button id="validate" class="dark" type="button">Validate this source</button><span id="source-hint" class="subtle">Source edits invalidate the previous review.</span></div></div></div></section>
+<section class="section"><div class="section-head"><div class="section-title"><span class="number">02</span><h2>Match the columns.</h2></div><p class="help">Recognized headers map automatically. Choose ambiguous columns explicitly. An asterisk marks required fields.</p></div><div class="mapping-grid" id="mappings">Import a valid CSV to map columns.</div></section>
+<section class="section"><div class="section-head"><div class="section-title"><span class="number">03</span><h2>Give it their identity.</h2></div><p class="help">Use the customer's approved name, contact details, and sales terms. Branding edits clear final approval.</p></div>
+<form id="brand-form" onsubmit="return false"><div class="columns"><div><label class="field">Company name<input id="brand-company" maxlength="90" value="Northline Supply"></label><label class="field">Catalog title<input id="brand-title" maxlength="100" value="Workshop essentials."></label><div class="columns"><label class="field">Edition<input id="brand-edition" maxlength="60" value="October 2026"></label><label class="field">Accent color<input id="brand-color" type="color" value="#ba4c2f"></label></div></div>
+<div><label class="field">Contact line<input id="brand-contact" maxlength="140"></label><label class="field">Footer / sales terms<textarea id="brand-terms" maxlength="400" rows="4"></textarea></label></div></div></form></section>
+<section class="section"><div class="section-head"><div class="section-title"><span class="number">04</span><h2>Match approved photos.</h2></div><p class="help">Use customer-owned PNG, JPEG, or WebP files. Match the CSV image filename exactly. Missing photos are shown explicitly.</p></div>
+<div class="columns"><label class="field">Product photos · multiple files<input id="image-files" type="file" multiple accept="image/png,image/jpeg,image/webp"></label><label class="field">Company logo · optional<input id="logo-file" type="file" accept="image/png,image/jpeg,image/webp"></label></div><div class="row"><span class="subtle" id="asset-count">0 images loaded</span><button id="clear-images" class="small" type="button">Remove loaded images</button></div><p class="subtle">Maximum 10 MB per image; use compressed images for email-sized output. Revalidating pasted source clears matched photos. No image is downloaded from a URL.</p></section>
+<section class="section"><div class="section-head"><div class="section-title"><span class="number">05</span><h2>Resolve the exceptions.</h2></div><button id="exceptions-csv" type="button" class="small" data-requires-audit>Download exceptions CSV</button></div>
+<div class="table-wrap"><table><thead><tr><th scope="col">Severity</th><th scope="col">CSV line</th><th scope="col">SKU</th><th scope="col">Field</th><th scope="col">Action / explanation</th></tr></thead><tbody id="issue-body"></tbody></table></div>
+<details><summary>Inspect the normalized product rows</summary><p class="subtle" id="preview-note"></p><div class="table-wrap"><table><thead><tr><th scope="col">SKU</th><th scope="col">Name</th><th scope="col">Category</th><th scope="col">Selling unit</th><th scope="col">USD / selling unit</th></tr></thead><tbody id="product-body"></tbody></table></div></details></section>
+<section class="section"><div class="section-head"><div class="section-title"><span class="number">06</span><h2>Make the delivery.</h2></div><p class="help">Open the downloaded HTML to inspect it. Use its Print / Save PDF button for a digital PDF. Check every page before customer delivery.</p></div>
+<div class="release"><div class="export-set"><h3>First, a review proof.</h3><p class="subtle">Exports require zero blocking data issues. Drafts carry a visible review mark; fictional samples remain marked.</p><div class="row"><button id="draft-catalog" type="button" class="dark" data-requires-valid>Draft catalog HTML</button><button id="draft-prices" type="button" data-requires-valid>Draft price sheet HTML</button></div><div class="row"><button id="clean-csv" type="button" class="small" data-requires-valid>Cleaned CSV</button><button id="review-json" type="button" class="small" data-requires-audit>Review record JSON</button></div></div>
+<div class="export-set"><h3>Then, the approved edition.</h3><label class="check"><input id="approved" type="checkbox"><span>I checked prices, selling units, images, and every warning against the supplied source, inspected all PDF pages, and recorded the customer's approval separately.</span></label><div class="row"><button id="final-catalog" class="primary" type="button" disabled>Final catalog HTML</button><button id="final-prices" type="button" disabled>Final price sheet HTML</button></div><p class="subtle">This checkbox records your release review. It does not collect or verify customer approval. Save the review record with the delivery.</p></div></div></section>
+</div>
+<div data-panel="delivery" class="doc" hidden><p class="lead">Your customer receives finished files. You operate the studio and verify the result.</p>
+<section><h2>Before accepting a project</h2><ol><li>Obtain a permitted 10-product source sample. Confirm one row per SKU, one USD price tier, a stated selling unit, and usable product photos.</li><li>Agree on product count, layout, output formats, one revision round, and who approves product facts. Quote after inspecting the sample.</li><li>Use an existing invoicing provider. Confirm scope and payment before production. There is no payment checkout in this prototype.</li></ol></section>
+<section><h2>Production and review</h2><ol><li>Keep the original source unchanged in the customer's private project folder. Never commit customer files to this source repository.</li><li>Import the CSV, review mapping, load approved photos and logo, and resolve every blocking issue with the customer. Do not guess specifications or prices.</li><li>Export the exceptions report and cleaned CSV. Reconcile product count and each SKU, selling unit, and price with the source.</li><li>Export both draft HTML files. Open each locally, search for a SKU, and inspect every category. Print to A4 PDF with browser headers and footers off and background graphics on.</li><li>Inspect all PDF pages for clipped names, split cards, missing images, incorrect prices, and blank extra pages. Browser print settings vary; this step is mandatory.</li><li>Send the draft and collect written approval of content, images, prices, selling units, and acceptable warnings. Keep that approval outside the tool.</li><li>Acknowledge the release checkbox, regenerate both final files, save the final review record, and inspect the final PDFs again.</li></ol></section>
+<section><h2>Delivery package</h2><ul><li>Final digital catalog PDF and matching price sheet PDF, generated from the inspected HTML.</li><li>Self-contained catalog HTML and price sheet HTML for offline search and future PDF export.</li><li>Cleaned product CSV, exceptions CSV, and review record JSON. Import the SKU column into spreadsheet software as text to preserve leading zeros.</li><li>A short delivery note with edition date, approved unresolved warnings, and the update policy.</li></ul><p class="callout">Version 0.1 is an operator prototype. Real browser layout, printing, image import, and customer-data trials have not yet passed acceptance. Do not represent it as fully tested or sell an unattended service.</p></section>
+<section><h2>Checks you can run</h2><div class="test-box"><button id="engine-tests" type="button" class="dark">Run core engine checks</button><p id="test-result" class="subtle" aria-live="polite">Checks cover parsing, data validation, safe output, and export contents. They do not verify visual appearance.</p></div><p>Use the release checklist and the separate test plan for browser acceptance. Every new source or branding change clears final approval.</p></section></div>
+<div data-panel="selling" class="doc" hidden><p class="lead">Start with independent electrical and industrial distributors that have product data but weak or outdated sales materials.</p>
+<section><h2>What you are selling</h2><blockquote>“Send me the product spreadsheet and approved photos you already have. I turn them into a branded catalog and matching price sheet, check the product data, and deliver the finished files. Your team does not need to learn a new system.”</blockquote><p>Use this working offer only after the browser and delivery checks pass. Do not promise fully automatic production or higher sales.</p></section>
+<section><h2>Price and scope to validate</h2><div class="table-wrap"><table><thead><tr><th>Offer</th><th>Proposed price</th><th>Limit</th></tr></thead><tbody><tr><td>Founding paid pilot</td><td>$750</td><td>Up to 50 products; one layout; one revision; one USD price tier</td></tr><tr><td>Standard package after validation</td><td>$2,500 target</td><td>Up to 250 products; same workflow and revision limit</td></tr><tr><td>Small update batch</td><td>$250 target</td><td>Up to 50 changed rows; same layout and supplied assets</td></tr></tbody></table></div><p class="subtle">These are proposed test prices, not proven market rates or expected profit. Quote custom work separately. Validate with three unrelated businesses before offering larger packages.</p></section>
+<section><h2>Exactly what Tristan does next</h2><ol><li>Complete the browser acceptance checks with the fictional sample and deliberately broken sample.</li><li>Pick 10 suitable distributors. Prefer a clear evidence point: an outdated PDF, a confusing price sheet, or a supplier line without usable sales materials.</li><li>Prepare a 10-product proof only from public information you may use or a sample they explicitly authorize. Do not invent product facts or use unauthorized photos.</li><li>Send a small number of individual messages after checking applicable outreach requirements. Keep prospecting and sending manual for the pilot.</li><li>Show one source row beside the resulting catalog entry on a short call. Sell the finished package, then ask for a paid pilot.</li><li>Measure total production time and revision time. If 50 products take more than four operator hours, narrow scope or raise the price before repeating.</li></ol></section>
+<section><h2>First message to adapt</h2><blockquote>Hi [name] — I noticed [specific, verified issue with their current catalog]. I produce finished product catalogs and price sheets from an existing spreadsheet and approved photos. You receive the files; there is no new software for your staff to learn. Could I show you a small example using 10 products you approve?</blockquote><p class="subtle">This is a draft only. No outreach has been sent.</p></section>
+<section><h2>On the call</h2><blockquote>“Here is the source row, and here is the finished entry. The SKU, pack size, and price are preserved. Missing details are flagged for you instead of guessed. The pilot is $750 for up to 50 products, one layout, and one revision. I inspect your sample first, then confirm the scope and delivery date in writing.”</blockquote><p>Ask how they produce catalogs now, how often prices change, and who approves accuracy. If their existing process already works well, the offer may not solve a meaningful problem for them.</p></section></div>
+<footer class="footer"><span>FIELDNOTE / Internal working name · Operator prototype</span><span>No data uploads · No payments or outreach enabled</span></footer></main></div><script>/* Fieldnote Catalog Studio: dependency-free browser/CommonJS core. */
+(function(root,factory){if(typeof module==='object'&&module.exports)module.exports=factory();else root.CatalogCore=factory();})(typeof globalThis!=='undefined'?globalThis:this,function CatalogFactory(){
+'use strict';
+const VERSION='0.1.0';
+const LIMITS=Object.freeze({characters:5000000,rows:1000,columns:80,field:12000,assetCharacters:14000000,totalAssetCharacters:45000000});
+const FIELDS=Object.freeze(['sku','name','category','description','price','pack','image','brand','currency']);
+const REQUIRED=Object.freeze(['sku','name','category','pack']);
+const ALIASES={
+sku:['sku','item number','item no','item code','product code','part number','part no'],
+name:['name','product name','product','title','item name'],
+category:['category','product category','department','group'],
+description:['description','product description','details'],
+price:['price','unit price','list price','selling price','price usd'],
+pack:['pack','pack size','unit','uom','selling unit','unit of measure'],
+image:['image','image filename','image file','photo','photo filename'],
+brand:['brand','manufacturer','make'],
+currency:['currency','currency code']
+};
+function fail(message){throw new Error(message);}
+function str(value){return value==null?'':String(value);}
+function headerKey(value){return str(value).normalize('NFKC').toLowerCase().replace(/[_-]+/g,' ').replace(/\s+/g,' ').trim();}
+function textValue(value){return str(value).normalize('NFC').trim();}
+function escaped(value){return str(value).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+function meaningful(value){return !/^(?:|n\/a|na|null|undefined|tbd|unknown|-)$/i.test(textValue(value));}
+function detectDelimiter(input){
+const counts={',':0,';':0,'\t':0};let quoted=false;
+for(let i=0;i<input.length;i++){const c=input[i];if(c==='"'){if(quoted&&input[i+1]==='"')i++;else quoted=!quoted;}else if(!quoted){if(c==='\n'||c==='\r')break;if(c in counts)counts[c]++;}}
+return Object.keys(counts).sort(function(a,b){return counts[b]-counts[a];})[0];
+}
+function parseCSV(input,delimiter){
+if(typeof input!=='string')fail('CSV input must be text.');
+if(input.length>LIMITS.characters)fail('CSV exceeds the 5 million character limit.');
+let source=input.replace(/^\uFEFF/,'');
+if(!source.trim())fail('The CSV is empty.');
+if(source.indexOf('\0')!==-1)fail('CSV contains a null character.');
+delimiter=delimiter||detectDelimiter(source);
+if([',',';','\t'].indexOf(delimiter)===-1)fail('Delimiter must be comma, semicolon, or tab.');
+let records=[],lines=[],row=[],field='',inQuotes=false,closed=false,line=1,rowStart=1;
+function pushField(){if(field.length>LIMITS.field)fail('A field exceeds 12,000 characters near line '+rowStart+'.');row.push(field);if(row.length>LIMITS.columns)fail('CSV exceeds 80 columns.');field='';closed=false;}
+function pushRow(){pushField();if(row.some(function(x){return x.trim()!=='';})){records.push(row);lines.push(rowStart);if(records.length>LIMITS.rows+1)fail('CSV exceeds the 1,000 product limit.');}row=[];}
+for(let i=0;i<source.length;i++){
+const c=source[i];
+if(inQuotes){
+if(c==='"'){if(source[i+1]==='"'){field+='"';i++;}else{inQuotes=false;closed=true;}}
+else if(c==='\r'){if(source[i+1]==='\n')i++;field+='\n';line++;}
+else{field+=c;if(c==='\n')line++;}
+}else if(c===delimiter){pushField();}
+else if(c==='\n'||c==='\r'){pushRow();if(c==='\r'&&source[i+1]==='\n')i++;line++;rowStart=line;}
+else if(c==='"'){if(field||closed)fail('Unexpected quote on line '+line+'.');inQuotes=true;}
+else{if(closed)fail('Unexpected text after a closing quote on line '+line+'.');field+=c;}
+if(field.length>LIMITS.field)fail('A field exceeds 12,000 characters near line '+rowStart+'.');
+}
+if(inQuotes)fail('Unclosed quoted field near line '+rowStart+'.');
+if(field||row.length||closed)pushRow();
+if(records.length<2)fail('Add a header and at least one product row.');
+const headers=records[0].map(function(x){return textValue(x);});
+if(headers.some(function(x){return !x;}))fail('Every column needs a header.');
+const keys=headers.map(headerKey);
+if(new Set(keys).size!==keys.length)fail('Duplicate column headers. Rename them before importing.');
+records.slice(1).forEach(function(r,i){if(r.length!==headers.length)fail('Line '+lines[i+1]+' has '+r.length+' fields; expected '+headers.length+'.');});
+return {headers:headers,rows:records.slice(1),lines:lines.slice(1),delimiter:delimiter};
+}
+function autoMap(headers){
+const mapping={};
+FIELDS.forEach(function(field){const matches=headers.filter(function(h){return ALIASES[field].indexOf(headerKey(h))!==-1;});mapping[field]=matches.length===1?matches[0]:'';});
+return mapping;
+}
+function parsePrice(value){
+let s=textValue(value);
+if(!s)return null;
+if(s[0]==='$')s=s.slice(1);
+if(!/^(?:\d+|\d{1,3}(?:,\d{3})+)(?:\.\d{1,2})?$/.test(s))fail('Use a nonnegative USD amount, for example 12.50 or 1,234.50.');
+s=s.replace(/,/g,'');const parts=s.split('.');
+const cents=Number(parts[0])*100+Number(((parts[1]||'')+'00').slice(0,2));
+if(!Number.isSafeInteger(cents)||cents>999999999)fail('Price exceeds $9,999,999.99.');
+return cents;
+}
+function formatPrice(cents){return cents===null?'Price on request':new Intl.NumberFormat('en-US',{style:'currency',currency:'USD'}).format(cents/100);}
+function safeImageName(value){const s=textValue(value);return !s||(/^[^\\/:*?"<>|\u0000-\u001f]{1,160}$/.test(s)&&s!=='.'&&s!=='..'&&!s.startsWith('.'));}
+function isRasterDataURL(value){return typeof value==='string'&&value.length<=LIMITS.assetCharacters&&/^data:image\/(?:png|jpeg|webp);base64,[A-Za-z0-9+/]+={0,2}$/.test(value);}
+function own(object,key){return Object.prototype.hasOwnProperty.call(object||{},key);}
+function audit(table,mapping,assets){
+if(!table||!Array.isArray(table.headers)||!Array.isArray(table.rows))fail('Import a CSV first.');
+if(table.rows.length>LIMITS.rows)fail('Too many products.');
+const issues=[],products=[];
+function issue(level,code,row,sku,field,message){issues.push({level:level,code:code,row:row,sku:sku,field:field,message:message});}
+const active=Object.values(mapping||{}).filter(Boolean);
+REQUIRED.forEach(function(field){if(!mapping||!mapping[field]||table.headers.indexOf(mapping[field])<0)issue('error','mapping',0,'',field,'Map the '+field+' column.');});
+if(new Set(active).size!==active.length)issue('error','mapping',0,'','','Each source column can map to only one field.');
+FIELDS.forEach(function(field){if(mapping&&mapping[field]&&table.headers.indexOf(mapping[field])<0)issue('error','mapping',0,'',field,'Mapped column does not exist.');});
+if(issues.length)return {products:[],issues:issues,errors:issues.length,warnings:0,ready:false};
+const indexes={};FIELDS.forEach(function(f){indexes[f]=table.headers.indexOf(mapping[f]);});
+table.rows.forEach(function(row,i){
+const p={sourceLine:table.lines[i],sourceIndex:i,cents:null};
+FIELDS.forEach(function(f){p[f]=indexes[f]<0?'':textValue(row[indexes[f]]);});
+REQUIRED.forEach(function(f){if(!meaningful(p[f]))issue('error','required',p.sourceLine,p.sku,f,'Missing '+f+'. Supply it from the client; do not guess.');});
+FIELDS.forEach(function(f){if(/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/.test(p[f]))issue('error','control',p.sourceLine,p.sku,f,'Remove unsupported control characters.');});
+[['sku',80],['name',110],['category',70],['pack',65],['brand',80],['description',800]].forEach(function(spec){if(p[spec[0]].length>spec[1])issue('error','length',p.sourceLine,p.sku,spec[0],'Maximum '+spec[1]+' characters for '+spec[0]+'.');});
+if(p.description.split('\n').length>10)issue('error','length',p.sourceLine,p.sku,'description','Description supports at most 10 lines; shorten the approved source without inventing facts.');
+if(p.currency&&p.currency.toUpperCase()!=='USD')issue('error','currency',p.sourceLine,p.sku,'currency','Version 1 supports USD only; do not convert automatically.');
+try{p.cents=parsePrice(p.price);}catch(e){issue('error','price',p.sourceLine,p.sku,'price',e.message);}
+if(p.cents===null)issue('warning','no_price',p.sourceLine,p.sku,'price','No price supplied. Output will say "Price on request".');
+if(!p.description)issue('warning','no_description',p.sourceLine,p.sku,'description','No description supplied. No description will be invented.');
+if(!safeImageName(p.image))issue('error','image_path',p.sourceLine,p.sku,'image','Use a local image filename, not a URL or directory path.');
+else if(p.image&&(!own(assets,p.image)||!isRasterDataURL(assets[p.image])))issue('warning','no_image',p.sourceLine,p.sku,'image','Image file not loaded. Output will show "Image not supplied".');
+else if(!p.image)issue('warning','no_image',p.sourceLine,p.sku,'image','No approved image supplied. Output will show "Image not supplied".');
+products.push(p);
+});
+const groups=new Map();
+products.forEach(function(p){const key=p.sku.normalize('NFKC').toLowerCase();if(key){if(!groups.has(key))groups.set(key,[]);groups.get(key).push(p);}});
+groups.forEach(function(group){if(group.length>1)group.forEach(function(p){issue('error','duplicate_sku',p.sourceLine,p.sku,'sku','Duplicate SKU, including case and compatibility variants.');});});
+const errors=issues.filter(function(x){return x.level==='error';}).length;
+return {products:products,issues:issues,errors:errors,warnings:issues.length-errors,ready:errors===0&&products.length>0};
+}
+function csvCell(value){let s=str(value);if(/^[\s]*[=+\-@]/.test(s))s="'"+s;return '"'+s.replace(/"/g,'""')+'"';}
+function toCSV(rows){return rows.map(function(row){return row.map(csvCell).join(',');}).join('\r\n')+'\r\n';}
+function normalizedCSV(products){return toCSV([FIELDS].concat(products.map(function(p){return FIELDS.map(function(f){return f==='price'?(p.cents===null?'':(p.cents/100).toFixed(2)):f==='currency'?'USD':p[f];});})));}
+function issuesCSV(issues){const cols=['level','code','row','sku','field','message'];return toCSV([cols].concat(issues.map(function(x){return cols.map(function(k){return x[k];});})));}
+function slug(value){return str(value).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,60)||'catalog';}
+function normalizeBrand(input){
+input=input||{};
+const b={};
+[['company','Your company',90],['title','Product collection',100],['edition','Current edition',60],['contact','',140],['terms','Prices in USD per stated selling unit. Confirm availability and current terms before ordering.',400]].forEach(function(spec){b[spec[0]]=textValue(input[spec[0]])||spec[1];if(b[spec[0]].length>spec[2])fail(spec[0]+' is too long.');});
+b.color=/^#[0-9a-fA-F]{6}$/.test(input.color||'')?input.color:'#ba4c2f';
+return b;
+}
+const printStyle=String.raw`*{box-sizing:border-box}body{margin:0;color:#202520;background:#edece7;font-family:Arial,Helvetica,sans-serif;line-height:1.5}button,input{font:inherit}.toolbar{position:sticky;top:0;z-index:9;display:flex;gap:12px;justify-content:center;padding:14px;background:#202520;color:white}.toolbar input{width:min(50vw,380px);padding:8px;border:0;border-radius:3px}.toolbar button{padding:8px 14px;border:1px solid #aaa;background:white;color:#202520;border-radius:3px;cursor:pointer}.page{background:#fff;width:210mm;min-height:277mm;margin:22px auto;padding:16mm;position:relative;page-break-after:always;break-after:page}.page:last-child{page-break-after:auto;break-after:auto}.cover{display:flex;min-height:277mm;flex-direction:column;justify-content:space-between;background:var(--accent);color:white}.kicker{text-transform:uppercase;letter-spacing:.16em;font-size:11px}.cover h1{font-size:55px;line-height:1.04;letter-spacing:-.035em;overflow-wrap:anywhere;margin:24px 0}.cover .company{font-size:21px}.cover .bottom{border-top:1px solid #ffffff70;padding-top:20px}.cover .count{font-size:75px;font-weight:700;letter-spacing:-.05em}.logo{max-width:190px;max-height:70px;object-fit:contain;align-self:flex-start}.note{font-size:12px;opacity:.85;max-width:40em}.sheethead{border-top:5px solid var(--accent);padding-top:13px;display:flex;gap:15px;justify-content:space-between;align-items:flex-start;margin-bottom:24px;overflow-wrap:anywhere}.sheethead h2{margin:0;font-size:27px;line-height:1.15}.sheethead small{max-width:45%;text-align:right;color:#666}.grid{display:grid;grid-template-columns:1fr 1fr;gap:25px 24px}.product{min-width:0;border-bottom:1px solid #d8dbd5;padding-bottom:18px;break-inside:avoid}.image{height:115px;background:#f3f4ef;display:flex;align-items:center;justify-content:center;color:#757a70;font-size:11px}.image img{display:block;max-width:100%;height:100%;object-fit:contain}.sku{font:11px monospace;color:#686d64;margin:13px 0 4px;overflow-wrap:anywhere}.product h3{margin:0;font-size:17px;line-height:1.22;overflow-wrap:anywhere}.description{font-size:11px;color:#60675f;white-space:pre-line;overflow-wrap:anywhere;margin:8px 0}.selling{margin-top:12px;font-size:11px;overflow-wrap:anywhere}.selling strong{font-size:19px;display:block}.manufacturer{font-size:10px;color:#60675f}.pagefoot{margin-top:25px;padding-top:13px;border-top:1px solid #d8dbd5;display:flex;justify-content:space-between;gap:16px;color:#686d64;font-size:9px;overflow-wrap:anywhere}.pagefoot span:first-child{max-width:85%}.watermark{padding:7px;background:#fff0c5;color:#5b4200;font-size:10px;letter-spacing:.08em;text-align:center;margin-bottom:14px}.cover .watermark{background:#0003;color:white}.price-table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:11px}.price-table th{padding:9px 6px;text-align:left;background:#f0f1eb;color:#4c5549}.price-table td{padding:11px 6px;border-bottom:1px solid #e4e6e0;overflow-wrap:anywhere;vertical-align:top}.price-table th:first-child{width:20%}.price-table th:nth-child(2){width:40%}.price-table th:nth-child(3){width:20%}.price-table th:last-child{width:20%;text-align:right}.price-table td:last-child{text-align:right;font-variant-numeric:tabular-nums}.muted{font-size:10px;color:#697064}.page [hidden]{display:none!important}@media(max-width:850px){.page{width:100%;min-height:0;margin:0 0 16px;padding:24px}.cover{min-height:75vh}.cover h1{font-size:clamp(36px,9vw,55px)}.grid{gap:20px 16px}}@media(max-width:450px){.grid{grid-template-columns:1fr}.toolbar{flex-wrap:wrap}.toolbar input{width:100%}}@page{size:A4;margin:10mm 0}@media print{body{background:white;-webkit-print-color-adjust:exact;print-color-adjust:exact}.toolbar{display:none}.page{width:210mm;min-height:277mm;margin:0;padding:12mm 16mm;box-shadow:none}.cover{height:277mm}.grid{grid-template-columns:1fr 1fr}.product{break-inside:avoid}.page[hidden],.product[hidden],tr[hidden]{display:revert!important}}`;
+function buildCatalog(products,branding,assets,settings){
+settings=settings||{};assets=assets||{};
+const brand=normalizeBrand(branding);
+if(!Array.isArray(products)||!products.length)fail('No products to export.');
+const seen=new Set();
+products.forEach(function(p){if(!p||!REQUIRED.every(function(f){return meaningful(p[f]);})||p.cents!==null&&(!Number.isSafeInteger(p.cents)||p.cents<0||p.cents>999999999))fail('Invalid product; run validation before export.');const key=textValue(p.sku).normalize('NFKC').toLowerCase();if(seen.has(key))fail('Duplicate SKU in export.');seen.add(key);});
+const mode=settings.mode==='prices'?'prices':'catalog';
+const draft=settings.draft!==false,demo=settings.demo===true;
+const state=demo?'FICTIONAL DEMO • NOT FOR PRODUCT SELECTION OR ORDERS':draft?'DRAFT • FOR CUSTOMER REVIEW':'';
+const stamp=state?'<div class="watermark">'+escaped(state)+'</div>':'';
+const pageFooter=function(page){return '<footer class="pagefoot"><span>'+escaped(brand.terms)+'<br>'+escaped(brand.contact)+'</span><span>'+page+'</span></footer>';};
+const logo=isRasterDataURL(settings.logo)?'<img class="logo" src="'+settings.logo+'" alt="'+escaped(brand.company)+' logo">':'';
+let content='';
+if(mode==='catalog')content='<section class="page cover">'+stamp+'<div>'+logo+'<div class="kicker">'+escaped(brand.edition)+'</div><div class="company">'+escaped(brand.company)+'</div><h1>'+escaped(brand.title)+'</h1></div><div class="bottom"><div class="count">'+products.length+'</div><div class="kicker">Products in this edition</div><p class="note">'+escaped(brand.contact)+'</p></div></section>';
+const groups=new Map();products.forEach(function(p){if(!groups.has(p.category))groups.set(p.category,[]);groups.get(p.category).push(p);});
+let page=mode==='catalog'?2:1;
+groups.forEach(function(items,category){
+const count=mode==='prices'?8:2;
+for(let i=0;i<items.length;i+=count){
+const chunk=items.slice(i,i+count);
+let body='';
+if(mode==='prices'){
+body='<table class="price-table"><thead><tr><th scope="col">SKU</th><th scope="col">Product</th><th scope="col">Selling unit</th><th scope="col">USD / unit</th></tr></thead><tbody>'+chunk.map(function(p){return '<tr data-entry data-search="'+escaped([p.sku,p.name,p.category,p.description,p.brand].join(' ').toLowerCase())+'"><td>'+escaped(p.sku)+'</td><td>'+escaped(p.name)+'</td><td>'+escaped(p.pack)+'</td><td>'+(p.cents===null?'On request':escaped(formatPrice(p.cents)))+'</td></tr>';}).join('')+'</tbody></table>';
+}else{
+body='<div class="grid">'+chunk.map(function(p){const image=own(assets,p.image)&&isRasterDataURL(assets[p.image])?'<img src="'+assets[p.image]+'" alt="'+escaped(p.name)+'">':'<span>Image not supplied</span>';return '<article class="product" data-entry data-search="'+escaped([p.sku,p.name,p.category,p.description,p.brand].join(' ').toLowerCase())+'"><div class="image">'+image+'</div><div class="sku">'+escaped(p.sku)+'</div><h3>'+escaped(p.name)+'</h3>'+(p.brand?'<div class="manufacturer">'+escaped(p.brand)+'</div>':'')+(p.description?'<p class="description">'+escaped(p.description)+'</p>':'')+'<div class="selling"><strong>'+escaped(formatPrice(p.cents))+'</strong>Per '+escaped(p.pack)+'</div></article>';}).join('')+'</div>';
+}
+content+='<section class="page collection">'+stamp+'<header class="sheethead"><h2>'+escaped(category)+'</h2><small>'+escaped(brand.company)+'<br>'+escaped(brand.edition)+'</small></header>'+body+pageFooter(page++)+'</section>';
+}});
+const client=String.raw`(function(){'use strict';var input=document.getElementById('find'),previous='';function filter(q){q=q.toLowerCase();document.querySelectorAll('[data-entry]').forEach(function(el){el.hidden=el.dataset.search.indexOf(q)===-1;});document.querySelectorAll('.collection').forEach(function(el){el.hidden=!Array.from(el.querySelectorAll('[data-entry]')).some(function(x){return !x.hidden;});});document.getElementById('results').textContent=q?Array.from(document.querySelectorAll('[data-entry]')).filter(function(x){return !x.hidden;}).length+' matches':'';}input.addEventListener('input',function(){filter(input.value);});document.getElementById('print').addEventListener('click',function(){window.print();});window.addEventListener('beforeprint',function(){previous=input.value;filter('');});window.addEventListener('afterprint',function(){filter(previous);});})();`;
+return '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src \'none\'; script-src \'unsafe-inline\'; style-src \'unsafe-inline\'; img-src data:; connect-src \'none\'; base-uri \'none\'; form-action \'none\'; object-src \'none\'"><meta name="referrer" content="no-referrer"><title>'+escaped(brand.company)+' — '+(mode==='prices'?'Price sheet':escaped(brand.title))+'</title><style>:root{--accent:'+brand.color+'}'+printStyle+'</style></head><body><div class="toolbar"><label for="find">Find a product</label><input id="find" type="search" placeholder="SKU, name, or category"><button id="print" type="button">Print / Save PDF</button><span id="results" aria-live="polite"></span></div>'+content+'<script>'+client+'<\/script></body></html>';
+}
+function releaseReady(result,approved){return Boolean(result&&result.ready&&approved===true);}
+function manifest(table,mapping,result,branding,approved,settings){
+const brand=normalizeBrand(branding);return {schemaVersion:1,engineVersion:VERSION,approved:releaseReady(result,approved),demo:Boolean(settings&&settings.demo),source:{headers:table.headers,rows:table.rows,physicalLines:table.lines,delimiter:table.delimiter},mapping:mapping,brand:brand,products:result.products,issues:result.issues,note:'Review record, not proof of customer approval. Formula-safe CSV can prefix an apostrophe; JSON retains source text. Image bytes are not included.'};
+}
+return Object.freeze({VERSION:VERSION,LIMITS:LIMITS,FIELDS:FIELDS,REQUIRED:REQUIRED,escaped:escaped,parseCSV:parseCSV,autoMap:autoMap,parsePrice:parsePrice,formatPrice:formatPrice,safeImageName:safeImageName,isRasterDataURL:isRasterDataURL,audit:audit,toCSV:toCSV,normalizedCSV:normalizedCSV,issuesCSV:issuesCSV,slug:slug,normalizeBrand:normalizeBrand,buildCatalog:buildCatalog,releaseReady:releaseReady,manifest:manifest});
+});
+</script><script>window.FIELDNOTE_DEMO_CSV="\"sku\",\"name\",\"category\",\"description\",\"price\",\"pack\",\"image\",\"brand\",\"currency\"\r\n\"000101\",\"Reusable cable ties · black\",\"Cable management\",\"Reusable nylon ties for organizing general workshop cables. Fictional item; confirm suitability before use.\",\"8.50\",\"bag of 25\",\"\",\"Northline Demo\",\"USD\"\r\n\"000102\",\"Reusable cable ties · natural\",\"Cable management\",\"Reusable ties supplied in a natural finish. Fictional item; dimensions and ratings not specified.\",\"8.50\",\"bag of 25\",\"\",\"Northline Demo\",\"USD\"\r\n\"000103\",\"Adhesive cable clips\",\"Cable management\",\"Small clips for arranging lightweight cords on suitable surfaces. Fictional product example.\",\"12.25\",\"box of 20\",\"\",\"Northline Demo\",\"USD\"\r\n\"000104\",\"Cable identification sleeves\",\"Cable management\",\"Blank sleeves for customer labeling. Fictional product example; no certification implied.\",\"6.75\",\"bag of 50\",\"\",\"Northline Demo\",\"USD\"\r\n\"000201\",\"Workshop parts tray\",\"Workshop storage\",\"Open tray for keeping small parts together at a workbench. Fictional product example.\",\"14.00\",\"each\",\"\",\"Northline Demo\",\"USD\"\r\n\"000202\",\"Compartment organizer\",\"Workshop storage\",\"Portable organizer with separate compartments. Fictional product example; size not specified.\",\"24.50\",\"each\",\"\",\"Northline Demo\",\"USD\"\r\n\"000203\",\"Canvas tool pouch\",\"Workshop storage\",\"Soft pouch for storing hand tools. Fictional product example; tools not included.\",\"18.00\",\"each\",\"\",\"Northline Demo\",\"USD\"\r\n\"000204\",\"Shelf identification holders\",\"Workshop storage\",\"Holders for replaceable shelf labels. Fictional product example.\",\"9.25\",\"pack of 12\",\"\",\"Northline Demo\",\"USD\"\r\n\"000301\",\"Blank inventory labels\",\"Labels & identification\",\"Blank labels for general inventory organization. Fictional product example.\",\"7.50\",\"roll of 100\",\"\",\"Northline Demo\",\"USD\"\r\n\"000302\",\"Write-on cable tags\",\"Labels & identification\",\"Write-on tags supplied blank. Fictional product example; use customer-approved marking methods.\",\"11.00\",\"pack of 50\",\"\",\"Northline Demo\",\"USD\"\r\n\"000303\",\"Stock location cards\",\"Labels & identification\",\"Cards for identifying storage locations. Fictional product example.\",\"5.25\",\"pack of 25\",\"\",\"Northline Demo\",\"USD\"\r\n\"000304\",\"Custom label set\",\"Labels & identification\",\"Customer-specific label set. Request a written price and confirm the final specification.\",\"\",\"set\",\"\",\"Northline Demo\",\"USD\"\r\n";window.CatalogTestSuite=function CatalogTestSuite(C){
+'use strict';
+const tests=[];
+function test(name,fn){try{fn();tests.push({name:name,passed:true});}catch(e){tests.push({name:name,passed:false,error:e.message});}}
+function eq(a,b){if(JSON.stringify(a)!==JSON.stringify(b))throw Error('Expected '+JSON.stringify(b)+', got '+JSON.stringify(a));}
+function ok(value,msg){if(!value)throw Error(msg||'Assertion failed');}
+function throws(fn,part){let error;try{fn();}catch(e){error=e;}if(!error||part&&error.message.indexOf(part)===-1)throw Error('Expected error including '+part);}
+const base='sku,name,category,description,price,pack,image,brand,currency\n001,Clip,Accessories,Original description,12.50,bag of 10,,Northline,USD';
+function get(csv,assets){const t=C.parseCSV(csv||base);const m=C.autoMap(t.headers);return {t:t,m:m,a:C.audit(t,m,assets||{})};}
+const valid=get();
+const pixel='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+jRZkAAAAASUVORK5CYII=';
+test('CSV: BOM and CRLF preserve identifiers',function(){const t=C.parseCSV('\uFEFFsku,name\r\n0007,Clip\r\n');eq(t.rows,[['0007','Clip']]);eq(t.lines,[2]);});
+test('CSV: quoted comma',function(){eq(C.parseCSV('sku,name\nA,"Clip, black"').rows[0][1],'Clip, black');});
+test('CSV: escaped quote',function(){eq(C.parseCSV('sku,name\nA,"8"" clip"').rows[0][1],'8" clip');});
+test('CSV: embedded CRLF and source line numbers',function(){const t=C.parseCSV('sku,name\r\nA,"line 1\r\nline 2"\r\nB,Next');eq(t.rows[0][1],'line 1\nline 2');eq(t.lines,[2,4]);});
+test('CSV: semicolon detection ignores quoted separators',function(){const t=C.parseCSV('"sku";"name"\nA;"a,b,c"');eq(t.delimiter,';');eq(t.rows[0][1],'a,b,c');});
+test('CSV: tab import',function(){eq(C.parseCSV('sku\tname\nA\tClip').delimiter,'\t');});
+test('CSV: skip blank lines but retain physical lines',function(){eq(C.parseCSV('sku,name\n\nA,Clip\n\nB,Label').lines,[3,5]);});
+test('CSV: empty input fails',function(){throws(function(){C.parseCSV(' ');},'empty');});
+test('CSV: header only fails',function(){throws(function(){C.parseCSV('sku,name');},'at least one');});
+test('CSV: unclosed quote fails',function(){throws(function(){C.parseCSV('sku,name\nA,"Clip');},'Unclosed');});
+test('CSV: quote in unquoted value fails',function(){throws(function(){C.parseCSV('sku,name\nA,Cl"ip');},'Unexpected quote');});
+test('CSV: text after quote fails',function(){throws(function(){C.parseCSV('sku,name\nA,"Clip"x');},'closing quote');});
+test('CSV: short row fails',function(){throws(function(){C.parseCSV('sku,name\nA');},'expected 2');});
+test('CSV: long row fails',function(){throws(function(){C.parseCSV('sku,name\nA,B,C');},'expected 2');});
+test('CSV: empty header fails',function(){throws(function(){C.parseCSV('sku,\nA,B');},'header');});
+test('CSV: normalized duplicate headers fail',function(){throws(function(){C.parseCSV('Product_Name,product name\nA,B');},'Duplicate');});
+test('CSV: unsupported delimiter fails',function(){throws(function(){C.parseCSV('a,b\nc,d','|');},'Delimiter');});
+test('CSV: null character fails',function(){throws(function(){C.parseCSV('sku,name\nA,\0');},'null');});
+test('CSV: maximum field enforced',function(){throws(function(){C.parseCSV('sku,name\nA,'+'x'.repeat(12001));},'12,000');});
+test('CSV: maximum rows enforced',function(){throws(function(){C.parseCSV('sku,name\n'+Array.from({length:1001},function(_,i){return i+',x';}).join('\n'));},'1,000');});
+test('CSV: maximum columns enforced',function(){throws(function(){C.parseCSV(Array.from({length:81},function(_,i){return 'h'+i;}).join(',')+'\n'+Array(81).fill('x').join(','));},'80 columns');});
+test('CSV: maximum text size enforced',function(){throws(function(){C.parseCSV('x'.repeat(5000001));},'5 million');});
+test('Mapping: recognized export aliases',function(){eq(C.autoMap(['Part Number','Product_Name','Selling Unit','List Price']).sku,'Part Number');eq(C.autoMap(['Part Number','Product_Name','Selling Unit','List Price']).pack,'Selling Unit');});
+test('Mapping: ambiguous aliases need explicit choice',function(){eq(C.autoMap(['sku','part number']).sku,'');});
+test('Mapping: unmapped required field blocks',function(){const m=Object.assign({},valid.m,{pack:''});ok(!C.audit(valid.t,m,{}).ready);});
+test('Mapping: same source cannot fill two fields',function(){const m=Object.assign({},valid.m,{pack:'sku'});ok(C.audit(valid.t,m,{}).issues.some(function(x){return x.code==='mapping';}));});
+test('Mapping: nonexistent source blocks',function(){const m=Object.assign({},valid.m,{sku:'missing'});ok(!C.audit(valid.t,m,{}).ready);});
+test('Price: exact cents',function(){eq(C.parsePrice('12.34'),1234);eq(C.parsePrice('0.29'),29);eq(C.parsePrice('1.1'),110);});
+test('Price: USD grouping and currency symbol',function(){eq(C.parsePrice('$1,234.50'),123450);});
+test('Price: zero differs from missing',function(){eq(C.parsePrice('0'),0);eq(C.parsePrice(''),null);eq(C.formatPrice(0),'$0.00');});
+test('Price: negative rejected',function(){throws(function(){C.parsePrice('-1');},'nonnegative');});
+test('Price: exponent rejected',function(){throws(function(){C.parsePrice('1e3');},'nonnegative');});
+test('Price: extra precision rejected',function(){throws(function(){C.parsePrice('1.239');},'nonnegative');});
+test('Price: European decimal rejected',function(){throws(function(){C.parsePrice('1,23');},'nonnegative');});
+test('Price: invalid grouping rejected',function(){throws(function(){C.parsePrice('12,34.50');},'nonnegative');});
+test('Price: NaN and infinity rejected',function(){throws(function(){C.parsePrice('NaN');});throws(function(){C.parsePrice('Infinity');});});
+test('Price: upper bound',function(){eq(C.parsePrice('9,999,999.99'),999999999);throws(function(){C.parsePrice('10000000');},'exceeds');});
+test('Audit: valid data produces no hard errors',function(){eq(valid.a.errors,0);eq(valid.a.products[0].sku,'001');});
+test('Audit: missing pack blocks',function(){ok(get(base.replace('bag of 10','')).a.issues.some(function(x){return x.code==='required'&&x.field==='pack';}));});
+test('Audit: placeholder required values block',function(){ok(get(base.replace('bag of 10','TBD')).a.errors>0);});
+test('Audit: case insensitive duplicate flags every row',function(){const a=get(base+'\n001,Other,Accessories,Desc,12,each,,X,USD').a;eq(a.issues.filter(function(x){return x.code==='duplicate_sku';}).length,2);});
+test('Audit: Unicode compatibility duplicates flagged',function(){const a=get(base+'\n００１,Other,Accessories,Desc,12,each,,X,USD').a;eq(a.issues.filter(function(x){return x.code==='duplicate_sku';}).length,2);});
+test('Audit: non-USD currency blocks',function(){ok(get(base.replace(',USD',',EUR')).a.issues.some(function(x){return x.code==='currency';}));});
+test('Audit: absent price is a warning with explicit output',function(){const a=get(base.replace(',12.50,',',,')).a;eq(a.products[0].cents,null);eq(a.errors,0);ok(C.buildCatalog(a.products,{},{},{draft:true}).includes('Price on request'));});
+test('Audit: bad price is a hard error',function(){ok(get(base.replace(',12.50,',',12.345,')).a.issues.some(function(x){return x.code==='price'&&x.level==='error';}));});
+test('Audit: description not fabricated',function(){eq(get(base.replace('Original description','')).a.products[0].description,'');});
+test('Audit: text limits block overlong names and excess description lines',function(){ok(get(base.replace(',Clip,',','+'x'.repeat(111)+',')).a.issues.some(function(x){return x.code==='length';}));const rows=[C.FIELDS,['x','Name','Category',Array(11).fill('line').join('\n'),'1','each','','Brand','USD']];ok(get(C.toCSV(rows)).a.issues.some(function(x){return x.code==='length'&&x.field==='description';}));});
+test('Audit: control characters blocked',function(){ok(get(base.replace('Clip','Cl\u0007ip')).a.issues.some(function(x){return x.code==='control';}));});
+test('Images: unsafe paths blocked',function(){['https://host.test/a.png','../a.png','a/b.png','a\\b.png','javascript:alert(1)'].forEach(function(n){ok(!C.safeImageName(n));});});
+test('Images: local filename permitted',function(){ok(C.safeImageName('clip black-01.jpg'));});
+test('Images: SVG data and remote URLs rejected',function(){ok(!C.isRasterDataURL('data:image/svg+xml;base64,PHN2Zz4='));ok(!C.isRasterDataURL('https://host.test/p.png'));});
+test('Images: loaded raster matches by name',function(){const a=get(base.replace(',bag of 10,,',',bag of 10,clip.png,'),{'clip.png':pixel}).a;ok(!a.issues.some(function(x){return x.code==='no_image';}));ok(C.buildCatalog(a.products,{}, {'clip.png':pixel}).includes(pixel));});
+test('Images: missing match is explicit',function(){ok(get(base.replace(',bag of 10,,',',bag of 10,missing.png,')).a.issues.some(function(x){return x.code==='no_image';}));});
+test('CSV export: leading zeros retained as text bytes',function(){ok(C.normalizedCSV(valid.a.products).includes('"001"'));});
+test('CSV export: spreadsheet formula prefixes neutralized',function(){const csv=C.toCSV([['=HYPERLINK("x")',' +cmd','-1','@SUM(A1)']]);ok(csv.includes('"\'=HYPERLINK'));ok(csv.includes('"\' +cmd"'));ok(csv.includes('"\'-1"'));ok(csv.includes('"\'@SUM'));});
+test('CSV export: quotes and Unicode round trip',function(){const t=C.parseCSV(C.toCSV([['sku','name'],['0001','Café, "copper"']]));eq(t.rows[0],['0001','Café, "copper"']);});
+test('CSV export: no price converted to zero',function(){const a=get(base.replace(',12.50,',',,')).a;eq(C.parseCSV(C.normalizedCSV(a.products)).rows[0][4],'');});
+test('HTML: imported markup escaped in text and attributes',function(){const p=Object.assign({},valid.a.products[0],{name:'<img src=x onerror=alert(1)>',description:'<\/script><script>alert(1)<\/script>',category:'"><svg onload=alert(1)>'});const h=C.buildCatalog([p],{company:'<script>bad<\/script>',color:'red;position:fixed'},{},{draft:true});ok(!h.includes('<script>alert(1)<\/script>'));ok(!h.includes('<img src=x'));ok(h.includes('&lt;img'));ok(h.includes('--accent:#ba4c2f'));});
+test('HTML: output has restrictive CSP and no remote src',function(){const h=C.buildCatalog(valid.a.products,{},{});ok(h.includes('Content-Security-Policy'));ok(h.includes("connect-src 'none'"));ok(!/src=["']https?:/.test(h));});
+test('HTML: generated script parses',function(){const h=C.buildCatalog(valid.a.products,{},{});const scripts=Array.from(h.matchAll(/<script>([\s\S]*?)<\/script>/g));eq(scripts.length,1);new Function(scripts[0][1]);});
+test('HTML: draft is default',function(){ok(C.buildCatalog(valid.a.products,{},{}).includes('DRAFT • FOR CUSTOMER REVIEW'));});
+test('HTML: demo remains marked on final',function(){const h=C.buildCatalog(valid.a.products,{}, {},{demo:true,draft:false});ok(h.includes('FICTIONAL DEMO'));});
+test('HTML: release omits draft mark',function(){ok(!C.buildCatalog(valid.a.products,{}, {},{draft:false}).includes('DRAFT • FOR CUSTOMER REVIEW'));});
+test('HTML: SKU and pack preserved in both outputs',function(){['catalog','prices'].forEach(function(mode){const h=C.buildCatalog(valid.a.products,{}, {},{mode:mode});ok(h.includes('001'));ok(h.includes('bag of 10'));ok(h.includes('$12.50'));});});
+test('HTML: every SKU appears once in catalog',function(){const p=Array.from({length:13},function(_,i){return Object.assign({},valid.a.products[0],{sku:'UNIQUE-'+String(i).padStart(4,'0')});});const h=C.buildCatalog(p,{},{});p.forEach(function(x){eq(h.split('<div class="sku">'+x.sku+'</div>').length-1,1);});eq((h.match(/class="page collection"/g)||[]).length,7);});
+test('HTML: price sheet conservative pagination',function(){const p=Array.from({length:19},function(_,i){return Object.assign({},valid.a.products[0],{sku:'S'+i});});eq((C.buildCatalog(p,{}, {},{mode:'prices'}).match(/class="page collection"/g)||[]).length,3);});
+test('HTML: brand length guard',function(){throws(function(){C.buildCatalog(valid.a.products,{company:'x'.repeat(91)},{});},'too long');});
+test('HTML: empty export fails',function(){throws(function(){C.buildCatalog([],{},{});},'No products');});
+test('HTML: raw duplicate export fails',function(){throws(function(){C.buildCatalog([valid.a.products[0],valid.a.products[0]],{},{});},'Duplicate');});
+test('Release: review required even with clean audit',function(){eq(C.releaseReady(valid.a,false),false);eq(C.releaseReady(valid.a,true),true);});
+test('Release: errors block even after review',function(){eq(C.releaseReady(get(base.replace('bag of 10','')).a,true),false);});
+test('Manifest: retains original data and issue lines',function(){const m=C.manifest(valid.t,valid.m,valid.a,{},false,{});eq(m.source.rows[0][0],'001');eq(m.approved,false);eq(m.issues[0].row,2);});
+test('Manifest: no embedded asset bytes',function(){ok(!JSON.stringify(C.manifest(valid.t,valid.m,valid.a,{},true,{})).includes('data:image'));});
+test('Slugs: safe download names',function(){eq(C.slug('../../ Weird & Co '),'weird-co');eq(C.slug('☃'),'catalog');});
+test('Scale: 1000 rows audited and exported with unique SKUs',function(){const rows=[C.FIELDS].concat(Array.from({length:1000},function(_,i){return ['000'+i,'Clip '+i,'Accessories','Description','1.23','bag','','Northline','USD'];}));const a=get(C.toCSV(rows)).a;eq(a.products.length,1000);eq(a.errors,0);const h=C.buildCatalog(a.products,{},{});eq((h.match(/class="product"/g)||[]).length,1000);});
+return {engineVersion:C.VERSION,total:tests.length,passed:tests.filter(function(t){return t.passed;}).length,failed:tests.filter(function(t){return !t.passed;}),tests:tests};
+};</script><script>(function StudioApp(){
+'use strict';
+const C=window.CatalogCore;
+const $=function(id){return document.getElementById(id);};
+const state={table:null,mapping:{},result:null,assets:Object.create(null),logo:'',sourceName:'',demo:false,sourceRevision:0,assetRevision:0,pendingAssets:false,editing:false};
+const defaultBrand={company:'Northline Supply',title:'Workshop essentials.',edition:'October 2026 • Sample edition',contact:'Fictional demonstration business • No orders accepted',terms:'Fictional sample products and prices. Not for ordering, engineering selection, or safety decisions.',color:'#ba4c2f'};
+function say(message,isError){$('status').textContent=message;$('status').className=isError?'status error':'status';}
+function clearApproval(){$('approved').checked=false;}
+function invalidate(message){clearApproval();state.result=null;state.table=null;render();if(message)say(message);}
+function brand(){const b={};['company','title','edition','contact','terms','color'].forEach(function(k){b[k]=$('brand-'+k).value;});return C.normalizeBrand(b);}
+function download(name,content,type){const url=URL.createObjectURL(new Blob([content],{type:type||'text/plain;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(url);},30000);}
+function mapInputs(){
+$('mappings').innerHTML=C.FIELDS.map(function(field){
+return '<label class="mapping"><span>'+C.escaped(field)+(C.REQUIRED.includes(field)?' <b aria-label="required">*</b>':'')+'</span><select data-field="'+field+'"><option value="">Not supplied</option>'+state.table.headers.map(function(h){return '<option value="'+C.escaped(h)+'"'+(state.mapping[field]===h?' selected':'')+'>'+C.escaped(h)+'</option>';}).join('')+'</select></label>';
+}).join('');
+$('mappings').querySelectorAll('select').forEach(function(select){select.addEventListener('change',function(){state.mapping[select.dataset.field]=select.value;clearApproval();runAudit();});});
+}
+function importText(text,name,demo){
+state.sourceName=name;state.demo=demo;state.assets=Object.create(null);state.logo='';state.assetRevision++;state.pendingAssets=false;clearApproval();
+$('logo-file').value='';$('image-files').value='';
+try{
+const table=C.parseCSV(text,$('delimiter').value||undefined);
+state.table=table;state.mapping=C.autoMap(table.headers);
+mapInputs();runAudit();
+}catch(e){state.table=null;state.result=null;$('mappings').textContent='Import a valid CSV to map columns.';render();say(e.message,true);}
+}
+function runAudit(){try{state.result=C.audit(state.table,state.mapping,state.assets);render();say(state.result.errors?state.result.errors+' blocking issue(s). Correct the source and validate again.':state.result.warnings?'Ready for draft export. Review '+state.result.warnings+' warning(s) before delivery.':'Data checks passed. Review a draft before final export.',state.result.errors>0);}catch(e){state.result=null;render();say(e.message,true);}}
+function render(){
+const a=state.result;
+$('count-products').textContent=a?a.products.length:'—';
+$('count-errors').textContent=a?a.errors:'—';
+$('count-warnings').textContent=a?a.warnings:'—';
+$('count-categories').textContent=a?new Set(a.products.map(function(p){return p.category;})).size:'—';
+$('source-label').textContent=state.sourceName||'No file loaded';
+$('demo-badge').hidden=!state.demo;
+$('draft-badge').textContent=state.pendingAssets?'Checking images':a&&a.ready?'Ready for review':'Needs source review';
+$('asset-count').textContent=Object.keys(state.assets).length+' product image(s) loaded'+(state.logo?' · Logo loaded':'');
+const valid=Boolean(a&&a.ready&&!state.pendingAssets);
+document.querySelectorAll('[data-requires-valid]').forEach(function(el){el.disabled=!valid;});
+document.querySelectorAll('[data-requires-audit]').forEach(function(el){el.disabled=!a;});
+$('approved').disabled=!valid;
+$('final-catalog').disabled=!(valid&&C.releaseReady(a,$('approved').checked));
+$('final-prices').disabled=!(valid&&C.releaseReady(a,$('approved').checked));
+$('issue-body').innerHTML=a?(a.issues.length?a.issues.map(function(x){return '<tr><td><span class="severity '+x.level+'">'+x.level+'</span></td><td>'+C.escaped(x.row||'Mapping')+'</td><td class="mono">'+C.escaped(x.sku||'—')+'</td><td>'+C.escaped(x.field)+'</td><td>'+C.escaped(x.message)+'</td></tr>';}).join(''):'<tr><td colspan="5">No exceptions found. Customer review is still required.</td></tr>'):'<tr><td colspan="5">Validate the current source to see its exceptions.</td></tr>';
+$('product-body').innerHTML=a?a.products.slice(0,60).map(function(p){return '<tr><td class="mono">'+C.escaped(p.sku)+'</td><td>'+C.escaped(p.name)+'</td><td>'+C.escaped(p.category)+'</td><td>'+C.escaped(p.pack)+'</td><td>'+C.escaped(C.formatPrice(p.cents))+'</td></tr>';}).join(''):'<tr><td colspan="5">No current validated products.</td></tr>';
+$('preview-note').textContent=a&&a.products.length>60?'Showing the first 60 products. Exports include all '+a.products.length+'.':'Values come from the source. No product copy, ratings, or prices are invented.';
+}
+function exportDocument(mode,final){
+try{
+if(!state.result||!state.result.ready)throw Error('Resolve blocking source issues first.');
+if(state.pendingAssets)throw Error('Wait for image import to finish before exporting.');
+if(final&&!C.releaseReady(state.result,$('approved').checked))throw Error('Review and acknowledge all data and warnings before final export.');
+const b=brand(),name=C.slug(b.company)+'-'+mode+(state.demo?'-fictional-demo':final?'-final':'-draft')+'.html';
+const html=C.buildCatalog(state.result.products,b,state.assets,{mode:mode,draft:!final,demo:state.demo,logo:state.logo});
+if(html.length>55000000)throw Error('Output is too large. Resize photos and import smaller versions.');
+download(name,html,'text/html;charset=utf-8');say('Downloaded '+name+'. Open it in a browser to inspect, search, and save as PDF.');
+}catch(e){say(e.message,true);}
+}
+async function readRaster(file){
+if(!file||!['image/png','image/jpeg','image/webp'].includes(file.type))throw Error('Use PNG, JPEG, or WebP images. SVG and other formats are not accepted.');
+if(file.size>10000000)throw Error('Image exceeds 10 MB. Resize it before importing.');
+if(!C.safeImageName(file.name))throw Error('Rename the image to a plain local filename.');
+const bytes=new Uint8Array(await file.slice(0,12).arrayBuffer());
+const png=bytes[0]===137&&bytes[1]===80&&bytes[2]===78&&bytes[3]===71;
+const jpeg=bytes[0]===255&&bytes[1]===216&&bytes[2]===255;
+const webp=String.fromCharCode.apply(null,bytes.slice(0,4))==='RIFF'&&String.fromCharCode.apply(null,bytes.slice(8,12))==='WEBP';
+if(!(file.type==='image/png'&&png||file.type==='image/jpeg'&&jpeg||file.type==='image/webp'&&webp))throw Error('Image bytes do not match its file type.');
+const data=await new Promise(function(resolve,reject){const reader=new FileReader();reader.onerror=function(){reject(Error('Could not read image.'));};reader.onload=function(){resolve(reader.result);};reader.readAsDataURL(file);});
+if(!C.isRasterDataURL(data))throw Error('Image data is invalid or too large.');
+await new Promise(function(resolve,reject){const img=new Image();img.onerror=function(){reject(Error('Image could not be decoded.'));};img.onload=function(){if(img.naturalWidth>6000||img.naturalHeight>6000||img.naturalWidth*img.naturalHeight>20000000)reject(Error('Image dimensions are too large. Resize below 6000 px and 20 megapixels.'));else resolve();};img.src=data;});
+return data;
+}
+function loadDemo(){
+state.sourceRevision++;
+$('csv-file').value='';
+['company','title','edition','contact','terms','color'].forEach(function(k){$('brand-'+k).value=defaultBrand[k];});
+$('csv-text').value=window.FIELDNOTE_DEMO_CSV;
+importText(window.FIELDNOTE_DEMO_CSV,'Fictional sample · 12 products',true);
+}
+document.querySelectorAll('[data-view]').forEach(function(button){button.addEventListener('click',function(){document.querySelectorAll('[data-panel]').forEach(function(p){p.hidden=p.dataset.panel!==button.dataset.view;});document.querySelectorAll('[data-view]').forEach(function(b){b.setAttribute('aria-current',b===button?'page':'false');});$('main-heading').textContent=button.dataset.view==='workbench'?'Catalog production.':button.dataset.view==='delivery'?'Release with evidence.':'Sell a finished result.';});});
+$('load-demo').addEventListener('click',loadDemo);
+$('validate').addEventListener('click',function(){state.sourceRevision++;importText($('csv-text').value,'Pasted / edited CSV',state.demo);});
+$('csv-text').addEventListener('input',function(){state.sourceRevision++;invalidate('Source changed. Validate again before exporting.');});
+$('delimiter').addEventListener('change',function(){state.sourceRevision++;invalidate('Delimiter changed. Validate the source again.');});
+$('csv-file').addEventListener('change',async function(){
+const file=this.files[0];if(!file)return;
+const revision=++state.sourceRevision;invalidate('Reading CSV…');state.demo=false;state.sourceName=file.name;
+try{
+if(file.size>10000000)throw Error('CSV file exceeds 10 MB.');
+const text=await file.text();if(revision!==state.sourceRevision)return;
+$('csv-text').value=text;importText(text,file.name,false);
+}catch(e){if(revision===state.sourceRevision)say(e.message,true);}
+});
+$('image-files').addEventListener('change',async function(){
+if(!state.table){say('Import valid product data before matching photos.',true);return;}
+state.pendingAssets=true;clearApproval();render();say('Checking image files…');
+const revision=++state.assetRevision,sourceRevision=state.sourceRevision;const files=Array.from(this.files);
+try{
+const batch=Object.create(null);let total=Object.values(state.assets).reduce(function(sum,x){return sum+x.length;},0)+(state.logo?state.logo.length:0);
+for(const file of files){
+if(Object.prototype.hasOwnProperty.call(batch,file.name))throw Error('Two selected images share the filename '+file.name+'. Rename them.');
+batch[file.name]=await readRaster(file);
+total+=batch[file.name].length-(Object.prototype.hasOwnProperty.call(state.assets,file.name)?state.assets[file.name].length:0);
+if(total>C.LIMITS.totalAssetCharacters)throw Error('Images exceed the 45 million character budget. Resize them first.');
+}
+if(revision!==state.assetRevision||sourceRevision!==state.sourceRevision)return;
+state.pendingAssets=false;clearApproval();Object.keys(batch).forEach(function(k){state.assets[k]=batch[k];});runAudit();
+}catch(e){if(revision===state.assetRevision&&sourceRevision===state.sourceRevision){state.pendingAssets=false;clearApproval();render();say(e.message,true);}}
+});
+$('logo-file').addEventListener('change',async function(){
+const file=this.files[0];if(!file)return;
+state.pendingAssets=true;clearApproval();render();say('Checking image files…');const revision=++state.assetRevision,sourceRevision=state.sourceRevision;
+try{
+const data=await readRaster(file);
+if(revision!==state.assetRevision||sourceRevision!==state.sourceRevision)return;
+const total=Object.values(state.assets).reduce(function(sum,x){return sum+x.length;},0)+data.length;
+if(total>C.LIMITS.totalAssetCharacters)throw Error('Combined image budget exceeded. Resize images first.');
+state.pendingAssets=false;clearApproval();state.logo=data;render();say('Logo loaded. Review the exported draft before release.');
+}catch(e){if(revision===state.assetRevision&&sourceRevision===state.sourceRevision){state.pendingAssets=false;clearApproval();render();say(e.message,true);}}
+});
+$('clear-images').addEventListener('click',function(){state.assetRevision++;state.pendingAssets=false;state.assets=Object.create(null);state.logo='';$('image-files').value='';$('logo-file').value='';clearApproval();if(state.table)runAudit();else render();});
+$('brand-form').addEventListener('input',function(){clearApproval();render();});
+$('approved').addEventListener('change',render);
+$('draft-catalog').addEventListener('click',function(){exportDocument('catalog',false);});
+$('draft-prices').addEventListener('click',function(){exportDocument('prices',false);});
+$('final-catalog').addEventListener('click',function(){exportDocument('catalog',true);});
+$('final-prices').addEventListener('click',function(){exportDocument('prices',true);});
+$('clean-csv').addEventListener('click',function(){if(state.result&&state.result.ready)download('products-cleaned.csv',C.normalizedCSV(state.result.products),'text/csv;charset=utf-8');});
+$('exceptions-csv').addEventListener('click',function(){if(state.result)download('exceptions.csv',C.issuesCSV(state.result.issues),'text/csv;charset=utf-8');});
+$('review-json').addEventListener('click',function(){try{if(state.result)download('review-record.json',JSON.stringify(C.manifest(state.table,state.mapping,state.result,brand(),$('approved').checked,{demo:state.demo}),null,2),'application/json');}catch(e){say(e.message,true);}});
+$('template-csv').addEventListener('click',function(){download('product-intake-template.csv',C.toCSV([C.FIELDS,['YOUR-SKU','Product name','Category','Client-approved description','12.50','box of 10','photo.jpg','Manufacturer','USD']]),'text/csv;charset=utf-8');});
+$('engine-tests').addEventListener('click',function(){
+try{const report=window.CatalogTestSuite(C);$('test-result').textContent=report.passed+' / '+report.total+' engine checks passed. '+(report.failed.length?JSON.stringify(report.failed):'Browser layout, downloads, and PDF appearance still require manual checks.');}catch(e){$('test-result').textContent=e.message;}
+});
+$('reset').addEventListener('click',function(){
+state.sourceRevision++;state.assetRevision++;state.pendingAssets=false;state.table=null;state.mapping={};state.result=null;state.assets=Object.create(null);state.logo='';state.sourceName='';state.demo=false;
+$('csv-text').value='';$('csv-file').value='';$('image-files').value='';$('logo-file').value='';$('mappings').textContent='Import a valid CSV to map columns.';clearApproval();render();say('Session cleared. Downloaded files are still on your device.');
+});
+window.addEventListener('beforeunload',function(e){if(state.table&&!state.demo){e.preventDefault();e.returnValue='';}});
+loadDemo();
+})();
+</script></body></html>

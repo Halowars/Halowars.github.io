@@ -1,0 +1,441 @@
+{
+  "date": "2026-10-20",
+  "version": "0.1.0",
+  "execution": "JavaScript V8 orchestration runtime. Interface tests use a simulated DOM, FileReader, and image decoder. No real browser or native image decode was run.",
+  "core": {
+    "engineVersion": "0.1.0",
+    "total": 75,
+    "passed": 75,
+    "failed": [],
+    "tests": [
+      {
+        "name": "CSV: BOM and CRLF preserve identifiers",
+        "passed": true
+      },
+      {
+        "name": "CSV: quoted comma",
+        "passed": true
+      },
+      {
+        "name": "CSV: escaped quote",
+        "passed": true
+      },
+      {
+        "name": "CSV: embedded CRLF and source line numbers",
+        "passed": true
+      },
+      {
+        "name": "CSV: semicolon detection ignores quoted separators",
+        "passed": true
+      },
+      {
+        "name": "CSV: tab import",
+        "passed": true
+      },
+      {
+        "name": "CSV: skip blank lines but retain physical lines",
+        "passed": true
+      },
+      {
+        "name": "CSV: empty input fails",
+        "passed": true
+      },
+      {
+        "name": "CSV: header only fails",
+        "passed": true
+      },
+      {
+        "name": "CSV: unclosed quote fails",
+        "passed": true
+      },
+      {
+        "name": "CSV: quote in unquoted value fails",
+        "passed": true
+      },
+      {
+        "name": "CSV: text after quote fails",
+        "passed": true
+      },
+      {
+        "name": "CSV: short row fails",
+        "passed": true
+      },
+      {
+        "name": "CSV: long row fails",
+        "passed": true
+      },
+      {
+        "name": "CSV: empty header fails",
+        "passed": true
+      },
+      {
+        "name": "CSV: normalized duplicate headers fail",
+        "passed": true
+      },
+      {
+        "name": "CSV: unsupported delimiter fails",
+        "passed": true
+      },
+      {
+        "name": "CSV: null character fails",
+        "passed": true
+      },
+      {
+        "name": "CSV: maximum field enforced",
+        "passed": true
+      },
+      {
+        "name": "CSV: maximum rows enforced",
+        "passed": true
+      },
+      {
+        "name": "CSV: maximum columns enforced",
+        "passed": true
+      },
+      {
+        "name": "CSV: maximum text size enforced",
+        "passed": true
+      },
+      {
+        "name": "Mapping: recognized export aliases",
+        "passed": true
+      },
+      {
+        "name": "Mapping: ambiguous aliases need explicit choice",
+        "passed": true
+      },
+      {
+        "name": "Mapping: unmapped required field blocks",
+        "passed": true
+      },
+      {
+        "name": "Mapping: same source cannot fill two fields",
+        "passed": true
+      },
+      {
+        "name": "Mapping: nonexistent source blocks",
+        "passed": true
+      },
+      {
+        "name": "Price: exact cents",
+        "passed": true
+      },
+      {
+        "name": "Price: USD grouping and currency symbol",
+        "passed": true
+      },
+      {
+        "name": "Price: zero differs from missing",
+        "passed": true
+      },
+      {
+        "name": "Price: negative rejected",
+        "passed": true
+      },
+      {
+        "name": "Price: exponent rejected",
+        "passed": true
+      },
+      {
+        "name": "Price: extra precision rejected",
+        "passed": true
+      },
+      {
+        "name": "Price: European decimal rejected",
+        "passed": true
+      },
+      {
+        "name": "Price: invalid grouping rejected",
+        "passed": true
+      },
+      {
+        "name": "Price: NaN and infinity rejected",
+        "passed": true
+      },
+      {
+        "name": "Price: upper bound",
+        "passed": true
+      },
+      {
+        "name": "Audit: valid data produces no hard errors",
+        "passed": true
+      },
+      {
+        "name": "Audit: missing pack blocks",
+        "passed": true
+      },
+      {
+        "name": "Audit: placeholder required values block",
+        "passed": true
+      },
+      {
+        "name": "Audit: case insensitive duplicate flags every row",
+        "passed": true
+      },
+      {
+        "name": "Audit: Unicode compatibility duplicates flagged",
+        "passed": true
+      },
+      {
+        "name": "Audit: non-USD currency blocks",
+        "passed": true
+      },
+      {
+        "name": "Audit: absent price is a warning with explicit output",
+        "passed": true
+      },
+      {
+        "name": "Audit: bad price is a hard error",
+        "passed": true
+      },
+      {
+        "name": "Audit: description not fabricated",
+        "passed": true
+      },
+      {
+        "name": "Audit: text limits block overlong names and excess description lines",
+        "passed": true
+      },
+      {
+        "name": "Audit: control characters blocked",
+        "passed": true
+      },
+      {
+        "name": "Images: unsafe paths blocked",
+        "passed": true
+      },
+      {
+        "name": "Images: local filename permitted",
+        "passed": true
+      },
+      {
+        "name": "Images: SVG data and remote URLs rejected",
+        "passed": true
+      },
+      {
+        "name": "Images: loaded raster matches by name",
+        "passed": true
+      },
+      {
+        "name": "Images: missing match is explicit",
+        "passed": true
+      },
+      {
+        "name": "CSV export: leading zeros retained as text bytes",
+        "passed": true
+      },
+      {
+        "name": "CSV export: spreadsheet formula prefixes neutralized",
+        "passed": true
+      },
+      {
+        "name": "CSV export: quotes and Unicode round trip",
+        "passed": true
+      },
+      {
+        "name": "CSV export: no price converted to zero",
+        "passed": true
+      },
+      {
+        "name": "HTML: imported markup escaped in text and attributes",
+        "passed": true
+      },
+      {
+        "name": "HTML: output has restrictive CSP and no remote src",
+        "passed": true
+      },
+      {
+        "name": "HTML: generated script parses",
+        "passed": true
+      },
+      {
+        "name": "HTML: draft is default",
+        "passed": true
+      },
+      {
+        "name": "HTML: demo remains marked on final",
+        "passed": true
+      },
+      {
+        "name": "HTML: release omits draft mark",
+        "passed": true
+      },
+      {
+        "name": "HTML: SKU and pack preserved in both outputs",
+        "passed": true
+      },
+      {
+        "name": "HTML: every SKU appears once in catalog",
+        "passed": true
+      },
+      {
+        "name": "HTML: price sheet conservative pagination",
+        "passed": true
+      },
+      {
+        "name": "HTML: brand length guard",
+        "passed": true
+      },
+      {
+        "name": "HTML: empty export fails",
+        "passed": true
+      },
+      {
+        "name": "HTML: raw duplicate export fails",
+        "passed": true
+      },
+      {
+        "name": "Release: review required even with clean audit",
+        "passed": true
+      },
+      {
+        "name": "Release: errors block even after review",
+        "passed": true
+      },
+      {
+        "name": "Manifest: retains original data and issue lines",
+        "passed": true
+      },
+      {
+        "name": "Manifest: no embedded asset bytes",
+        "passed": true
+      },
+      {
+        "name": "Slugs: safe download names",
+        "passed": true
+      },
+      {
+        "name": "Scale: 1000 rows audited and exported with unique SKUs",
+        "passed": true
+      }
+    ]
+  },
+  "interfaceState": {
+    "kind": "simulated DOM state tests; not real browser QA",
+    "total": 18,
+    "passed": 18,
+    "failed": [],
+    "tests": [
+      {
+        "name": "Studio: fictional fixture initializes with 12 products",
+        "passed": true
+      },
+      {
+        "name": "Studio: final exports disabled until approval",
+        "passed": true
+      },
+      {
+        "name": "Studio: approving enables both final exports",
+        "passed": true
+      },
+      {
+        "name": "Studio: source editing immediately invalidates audit and approval",
+        "passed": true
+      },
+      {
+        "name": "Studio: malformed import cannot export stale dataset",
+        "passed": true
+      },
+      {
+        "name": "Studio: edits to fictional fixture retain its watermark",
+        "passed": true
+      },
+      {
+        "name": "Studio: brand changes revoke both final exports",
+        "passed": true
+      },
+      {
+        "name": "Studio: ambiguous mapping blocks and clears approval",
+        "passed": true
+      },
+      {
+        "name": "Studio: catalog download contains fixture SKUs and safe filename",
+        "passed": true
+      },
+      {
+        "name": "Studio: final download cannot bypass approval handler",
+        "passed": true
+      },
+      {
+        "name": "Studio: cleaned CSV and audit record use current data",
+        "passed": true
+      },
+      {
+        "name": "Studio: file import handles recognized aliases",
+        "passed": true
+      },
+      {
+        "name": "Studio: superseded async file read cannot replace newer data",
+        "passed": true
+      },
+      {
+        "name": "Studio: clearing session removes dataset and blocks all exports",
+        "passed": true
+      },
+      {
+        "name": "Studio: navigation selects intended panel",
+        "passed": true
+      },
+      {
+        "name": "Studio: image import blocks exports while pending and revokes approval on completion",
+        "passed": true
+      },
+      {
+        "name": "Studio: unsupported image type does not retain busy state",
+        "passed": true
+      },
+      {
+        "name": "Studio: load/reset protect against pending image work",
+        "passed": true
+      }
+    ]
+  },
+  "packaging": [
+    {
+      "name": "All three standalone script blocks parse",
+      "passed": true
+    },
+    {
+      "name": "No duplicate static element IDs",
+      "passed": true
+    },
+    {
+      "name": "All literal interface references exist",
+      "passed": true
+    },
+    {
+      "name": "All source wrappers compile",
+      "passed": true
+    },
+    {
+      "name": "Bundle rebuild is deterministic",
+      "passed": true
+    },
+    {
+      "name": "Standalone app has no external script or stylesheet dependency",
+      "passed": true
+    },
+    {
+      "name": "Every generated sample remains marked fictional",
+      "passed": true
+    },
+    {
+      "name": "Broken fixture produces seven blocking issues",
+      "passed": true
+    },
+    {
+      "name": "All non-CSV labels reference existing inputs",
+      "passed": true
+    }
+  ],
+  "automatedLogicAndStateTotal": 93,
+  "remaining": {
+    "shellNodeWrapper": "CI verification pending; see GitHub checks",
+    "realBrowser": "pending",
+    "nativeImageDecoding": "pending",
+    "actualFileDownloads": "pending",
+    "PDFVisualInspection": "pending",
+    "customerTrials": "pending"
+  },
+  "commercialStatus": "Proposed service; no customers, measured economics, or validated pricing."
+}

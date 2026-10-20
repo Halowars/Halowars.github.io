@@ -1,0 +1,28 @@
+name: Catalog Studio checks
+on:
+  push:
+    branches: [catalog-studio-v1]
+    paths:
+      - 'catalog-studio/**'
+      - '.github/workflows/catalog-studio-checks.yml'
+  pull_request:
+    paths:
+      - 'catalog-studio/**'
+      - '.github/workflows/catalog-studio-checks.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  dependency-free-checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Show JavaScript runtime
+        run: node --version
+      - name: Check core and simulated interface behavior
+        run: node catalog-studio/tests.cjs
+      - name: Rebuild standalone application
+        run: node catalog-studio/build.cjs
+      - name: Verify generated bundle matches source
+        run: git diff --exit-code -- catalog-studio/index.html
