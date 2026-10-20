@@ -1,0 +1,106 @@
+'use strict';
+const runCore = function CatalogTestSuite(C){
+'use strict';
+const tests=[];
+function test(name,fn){try{fn();tests.push({name:name,passed:true});}catch(e){tests.push({name:name,passed:false,error:e.message});}}
+function eq(a,b){if(JSON.stringify(a)!==JSON.stringify(b))throw Error('Expected '+JSON.stringify(b)+', got '+JSON.stringify(a));}
+function ok(value,msg){if(!value)throw Error(msg||'Assertion failed');}
+function throws(fn,part){let error;try{fn();}catch(e){error=e;}if(!error||part&&error.message.indexOf(part)===-1)throw Error('Expected error including '+part);}
+const base='sku,name,category,description,price,pack,image,brand,currency\n001,Clip,Accessories,Original description,12.50,bag of 10,,Northline,USD';
+function get(csv,assets){const t=C.parseCSV(csv||base);const m=C.autoMap(t.headers);return {t:t,m:m,a:C.audit(t,m,assets||{})};}
+const valid=get();
+const pixel='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+jRZkAAAAASUVORK5CYII=';
+test('CSV: BOM and CRLF preserve identifiers',function(){const t=C.parseCSV('\uFEFFsku,name\r\n0007,Clip\r\n');eq(t.rows,[['0007','Clip']]);eq(t.lines,[2]);});
+test('CSV: quoted comma',function(){eq(C.parseCSV('sku,name\nA,"Clip, black"').rows[0][1],'Clip, black');});
+test('CSV: escaped quote',function(){eq(C.parseCSV('sku,name\nA,"8"" clip"').rows[0][1],'8" clip');});
+test('CSV: embedded CRLF and source line numbers',function(){const t=C.parseCSV('sku,name\r\nA,"line 1\r\nline 2"\r\nB,Next');eq(t.rows[0][1],'line 1\nline 2');eq(t.lines,[2,4]);});
+test('CSV: semicolon detection ignores quoted separators',function(){const t=C.parseCSV('"sku";"name"\nA;"a,b,c"');eq(t.delimiter,';');eq(t.rows[0][1],'a,b,c');});
+test('CSV: tab import',function(){eq(C.parseCSV('sku\tname\nA\tClip').delimiter,'\t');});
+test('CSV: skip blank lines but retain physical lines',function(){eq(C.parseCSV('sku,name\n\nA,Clip\n\nB,Label').lines,[3,5]);});
+test('CSV: empty input fails',function(){throws(function(){C.parseCSV(' ');},'empty');});
+test('CSV: header only fails',function(){throws(function(){C.parseCSV('sku,name');},'at least one');});
+test('CSV: unclosed quote fails',function(){throws(function(){C.parseCSV('sku,name\nA,"Clip');},'Unclosed');});
+test('CSV: quote in unquoted value fails',function(){throws(function(){C.parseCSV('sku,name\nA,Cl"ip');},'Unexpected quote');});
+test('CSV: text after quote fails',function(){throws(function(){C.parseCSV('sku,name\nA,"Clip"x');},'closing quote');});
+test('CSV: short row fails',function(){throws(function(){C.parseCSV('sku,name\nA');},'expected 2');});
+test('CSV: long row fails',function(){throws(function(){C.parseCSV('sku,name\nA,B,C');},'expected 2');});
+test('CSV: empty header fails',function(){throws(function(){C.parseCSV('sku,\nA,B');},'header');});
+test('CSV: normalized duplicate headers fail',function(){throws(function(){C.parseCSV('Product_Name,product name\nA,B');},'Duplicate');});
+test('CSV: unsupported delimiter fails',function(){throws(function(){C.parseCSV('a,b\nc,d','|');},'Delimiter');});
+test('CSV: null character fails',function(){throws(function(){C.parseCSV('sku,name\nA,\0');},'null');});
+test('CSV: maximum field enforced',function(){throws(function(){C.parseCSV('sku,name\nA,'+'x'.repeat(12001));},'12,000');});
+test('CSV: maximum rows enforced',function(){throws(function(){C.parseCSV('sku,name\n'+Array.from({length:1001},function(_,i){return i+',x';}).join('\n'));},'1,000');});
+test('CSV: maximum columns enforced',function(){throws(function(){C.parseCSV(Array.from({length:81},function(_,i){return 'h'+i;}).join(',')+'\n'+Array(81).fill('x').join(','));},'80 columns');});
+test('CSV: maximum text size enforced',function(){throws(function(){C.parseCSV('x'.repeat(5000001));},'5 million');});
+test('Mapping: recognized export aliases',function(){eq(C.autoMap(['Part Number','Product_Name','Selling Unit','List Price']).sku,'Part Number');eq(C.autoMap(['Part Number','Product_Name','Selling Unit','List Price']).pack,'Selling Unit');});
+test('Mapping: ambiguous aliases need explicit choice',function(){eq(C.autoMap(['sku','part number']).sku,'');});
+test('Mapping: unmapped required field blocks',function(){const m=Object.assign({},valid.m,{pack:''});ok(!C.audit(valid.t,m,{}).ready);});
+test('Mapping: same source cannot fill two fields',function(){const m=Object.assign({},valid.m,{pack:'sku'});ok(C.audit(valid.t,m,{}).issues.some(function(x){return x.code==='mapping';}));});
+test('Mapping: nonexistent source blocks',function(){const m=Object.assign({},valid.m,{sku:'missing'});ok(!C.audit(valid.t,m,{}).ready);});
+test('Price: exact cents',function(){eq(C.parsePrice('12.34'),1234);eq(C.parsePrice('0.29'),29);eq(C.parsePrice('1.1'),110);});
+test('Price: USD grouping and currency symbol',function(){eq(C.parsePrice('$1,234.50'),123450);});
+test('Price: zero differs from missing',function(){eq(C.parsePrice('0'),0);eq(C.parsePrice(''),null);eq(C.formatPrice(0),'$0.00');});
+test('Price: negative rejected',function(){throws(function(){C.parsePrice('-1');},'nonnegative');});
+test('Price: exponent rejected',function(){throws(function(){C.parsePrice('1e3');},'nonnegative');});
+test('Price: extra precision rejected',function(){throws(function(){C.parsePrice('1.239');},'nonnegative');});
+test('Price: European decimal rejected',function(){throws(function(){C.parsePrice('1,23');},'nonnegative');});
+test('Price: invalid grouping rejected',function(){throws(function(){C.parsePrice('12,34.50');},'nonnegative');});
+test('Price: NaN and infinity rejected',function(){throws(function(){C.parsePrice('NaN');});throws(function(){C.parsePrice('Infinity');});});
+test('Price: upper bound',function(){eq(C.parsePrice('9,999,999.99'),999999999);throws(function(){C.parsePrice('10000000');},'exceeds');});
+test('Audit: valid data produces no hard errors',function(){eq(valid.a.errors,0);eq(valid.a.products[0].sku,'001');});
+test('Audit: missing pack blocks',function(){ok(get(base.replace('bag of 10','')).a.issues.some(function(x){return x.code==='required'&&x.field==='pack';}));});
+test('Audit: placeholder required values block',function(){ok(get(base.replace('bag of 10','TBD')).a.errors>0);});
+test('Audit: case insensitive duplicate flags every row',function(){const a=get(base+'\n001,Other,Accessories,Desc,12,each,,X,USD').a;eq(a.issues.filter(function(x){return x.code==='duplicate_sku';}).length,2);});
+test('Audit: Unicode compatibility duplicates flagged',function(){const a=get(base+'\n００１,Other,Accessories,Desc,12,each,,X,USD').a;eq(a.issues.filter(function(x){return x.code==='duplicate_sku';}).length,2);});
+test('Audit: non-USD currency blocks',function(){ok(get(base.replace(',USD',',EUR')).a.issues.some(function(x){return x.code==='currency';}));});
+test('Audit: absent price is a warning with explicit output',function(){const a=get(base.replace(',12.50,',',,')).a;eq(a.products[0].cents,null);eq(a.errors,0);ok(C.buildCatalog(a.products,{},{},{draft:true}).includes('Price on request'));});
+test('Audit: bad price is a hard error',function(){ok(get(base.replace(',12.50,',',12.345,')).a.issues.some(function(x){return x.code==='price'&&x.level==='error';}));});
+test('Audit: description not fabricated',function(){eq(get(base.replace('Original description','')).a.products[0].description,'');});
+test('Audit: text limits block overlong names and excess description lines',function(){ok(get(base.replace(',Clip,',','+'x'.repeat(111)+',')).a.issues.some(function(x){return x.code==='length';}));const rows=[C.FIELDS,['x','Name','Category',Array(11).fill('line').join('\n'),'1','each','','Brand','USD']];ok(get(C.toCSV(rows)).a.issues.some(function(x){return x.code==='length'&&x.field==='description';}));});
+test('Audit: control characters blocked',function(){ok(get(base.replace('Clip','Cl\u0007ip')).a.issues.some(function(x){return x.code==='control';}));});
+test('Images: unsafe paths blocked',function(){['https://host.test/a.png','../a.png','a/b.png','a\\b.png','javascript:alert(1)'].forEach(function(n){ok(!C.safeImageName(n));});});
+test('Images: local filename permitted',function(){ok(C.safeImageName('clip black-01.jpg'));});
+test('Images: SVG data and remote URLs rejected',function(){ok(!C.isRasterDataURL('data:image/svg+xml;base64,PHN2Zz4='));ok(!C.isRasterDataURL('https://host.test/p.png'));});
+test('Images: loaded raster matches by name',function(){const a=get(base.replace(',bag of 10,,',',bag of 10,clip.png,'),{'clip.png':pixel}).a;ok(!a.issues.some(function(x){return x.code==='no_image';}));ok(C.buildCatalog(a.products,{}, {'clip.png':pixel}).includes(pixel));});
+test('Images: missing match is explicit',function(){ok(get(base.replace(',bag of 10,,',',bag of 10,missing.png,')).a.issues.some(function(x){return x.code==='no_image';}));});
+test('CSV export: leading zeros retained as text bytes',function(){ok(C.normalizedCSV(valid.a.products).includes('"001"'));});
+test('CSV export: spreadsheet formula prefixes neutralized',function(){const csv=C.toCSV([['=HYPERLINK("x")',' +cmd','-1','@SUM(A1)']]);ok(csv.includes('"\'=HYPERLINK'));ok(csv.includes('"\' +cmd"'));ok(csv.includes('"\'-1"'));ok(csv.includes('"\'@SUM'));});
+test('CSV export: quotes and Unicode round trip',function(){const t=C.parseCSV(C.toCSV([['sku','name'],['0001','Café, "copper"']]));eq(t.rows[0],['0001','Café, "copper"']);});
+test('CSV export: no price converted to zero',function(){const a=get(base.replace(',12.50,',',,')).a;eq(C.parseCSV(C.normalizedCSV(a.products)).rows[0][4],'');});
+test('HTML: imported markup escaped in text and attributes',function(){const p=Object.assign({},valid.a.products[0],{name:'<img src=x onerror=alert(1)>',description:'</script><script>alert(1)</script>',category:'"><svg onload=alert(1)>'});const h=C.buildCatalog([p],{company:'<script>bad</script>',color:'red;position:fixed'},{},{draft:true});ok(!h.includes('<script>alert(1)</script>'));ok(!h.includes('<img src=x'));ok(h.includes('&lt;img'));ok(h.includes('--accent:#ba4c2f'));});
+test('HTML: output has restrictive CSP and no remote src',function(){const h=C.buildCatalog(valid.a.products,{},{});ok(h.includes('Content-Security-Policy'));ok(h.includes("connect-src 'none'"));ok(!/src=["']https?:/.test(h));});
+test('HTML: generated script parses',function(){const h=C.buildCatalog(valid.a.products,{},{});const scripts=Array.from(h.matchAll(/<script>([\s\S]*?)<\/script>/g));eq(scripts.length,1);new Function(scripts[0][1]);});
+test('HTML: draft is default',function(){ok(C.buildCatalog(valid.a.products,{},{}).includes('DRAFT • FOR CUSTOMER REVIEW'));});
+test('HTML: demo remains marked on final',function(){const h=C.buildCatalog(valid.a.products,{}, {},{demo:true,draft:false});ok(h.includes('FICTIONAL DEMO'));});
+test('HTML: release omits draft mark',function(){ok(!C.buildCatalog(valid.a.products,{}, {},{draft:false}).includes('DRAFT • FOR CUSTOMER REVIEW'));});
+test('HTML: SKU and pack preserved in both outputs',function(){['catalog','prices'].forEach(function(mode){const h=C.buildCatalog(valid.a.products,{}, {},{mode:mode});ok(h.includes('001'));ok(h.includes('bag of 10'));ok(h.includes('$12.50'));});});
+test('HTML: every SKU appears once in catalog',function(){const p=Array.from({length:13},function(_,i){return Object.assign({},valid.a.products[0],{sku:'UNIQUE-'+String(i).padStart(4,'0')});});const h=C.buildCatalog(p,{},{});p.forEach(function(x){eq(h.split('<div class="sku">'+x.sku+'</div>').length-1,1);});eq((h.match(/class="page collection"/g)||[]).length,7);});
+test('HTML: price sheet conservative pagination',function(){const p=Array.from({length:19},function(_,i){return Object.assign({},valid.a.products[0],{sku:'S'+i});});eq((C.buildCatalog(p,{}, {},{mode:'prices'}).match(/class="page collection"/g)||[]).length,3);});
+test('HTML: brand length guard',function(){throws(function(){C.buildCatalog(valid.a.products,{company:'x'.repeat(91)},{});},'too long');});
+test('HTML: empty export fails',function(){throws(function(){C.buildCatalog([],{},{});},'No products');});
+test('HTML: raw duplicate export fails',function(){throws(function(){C.buildCatalog([valid.a.products[0],valid.a.products[0]],{},{});},'Duplicate');});
+test('Release: review required even with clean audit',function(){eq(C.releaseReady(valid.a,false),false);eq(C.releaseReady(valid.a,true),true);});
+test('Release: errors block even after review',function(){eq(C.releaseReady(get(base.replace('bag of 10','')).a,true),false);});
+test('Manifest: retains original data and issue lines',function(){const m=C.manifest(valid.t,valid.m,valid.a,{},false,{});eq(m.source.rows[0][0],'001');eq(m.approved,false);eq(m.issues[0].row,2);});
+test('Manifest: no embedded asset bytes',function(){ok(!JSON.stringify(C.manifest(valid.t,valid.m,valid.a,{},true,{})).includes('data:image'));});
+test('Slugs: safe download names',function(){eq(C.slug('../../ Weird & Co '),'weird-co');eq(C.slug('☃'),'catalog');});
+test('Scale: 1000 rows audited and exported with unique SKUs',function(){const rows=[C.FIELDS].concat(Array.from({length:1000},function(_,i){return ['000'+i,'Clip '+i,'Accessories','Description','1.23','bag','','Northline','USD'];}));const a=get(C.toCSV(rows)).a;eq(a.products.length,1000);eq(a.errors,0);const h=C.buildCatalog(a.products,{},{});eq((h.match(/class="product"/g)||[]).length,1000);});
+return {engineVersion:C.VERSION,total:tests.length,passed:tests.filter(function(t){return t.passed;}).length,failed:tests.filter(function(t){return !t.passed;}),tests:tests};
+};
+module.exports = runCore;
+if (require.main === module) {
+  const fs = require('node:fs');
+  const path = require('node:path');
+  const C = require('./core.cjs');
+  const runUI = require('./ui-tests.cjs');
+  (async function () {
+    const core = runCore(C);
+    const ui = await runUI(C, fs.readFileSync(path.join(__dirname, 'studio.js'), 'utf8'), fs.readFileSync(path.join(__dirname, 'fixtures/demo-products.csv'), 'utf8'));
+    console.log('Core engine: ' + core.passed + '/' + core.total);
+    console.log('Simulated interface state: ' + ui.passed + '/' + ui.total);
+    console.log('Real browser/PDF checks: not covered by this command');
+    const failures = core.failed.concat(ui.failed);
+    failures.forEach(function (f) { console.error(f.name + ': ' + f.error); });
+    if (failures.length) process.exitCode = 1;
+  })().catch(function (error) { console.error(error); process.exitCode = 1; });
+}

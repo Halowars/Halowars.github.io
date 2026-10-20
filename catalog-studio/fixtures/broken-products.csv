@@ -1,0 +1,7 @@
+"sku","name","category","description","price","pack","image","brand","currency"
+"DUP-1","Cable clip","Accessories","Client-supplied description","12.50","","","Demo","USD"
+"dup-1","Cable clip duplicate","Accessories","Client-supplied description","12.50","each","","Demo","USD"
+"P-003","Label pack","Labels","Client-supplied description","1,23","pack of 10","","Demo","USD"
+"P-004","Storage tray","Storage","Client-supplied description","24.00","each","https://example.invalid/photo.jpg","Demo","USD"
+"P-005","","Storage","Client-supplied description","9.00","each","","Demo","USD"
+"P-006","Non-USD row","Storage","Client-supplied description","10.00","each","","Demo","EUR"
