@@ -2,9 +2,9 @@ name: Pricebook Studio checks
 on:
   push:
     branches: [pricebook-studio-v2]
-    paths: ['catalog-studio/**', '.github/workflows/pricebook-checks.yml']
+    paths: ['catalog-studio/**', '!catalog-studio/**/*.md', '!catalog-studio/**/*.zip', '!catalog-studio/**/*.json', '.github/workflows/pricebook-checks.yml']
   pull_request:
-    paths: ['catalog-studio/**', '.github/workflows/pricebook-checks.yml']
+    paths: ['catalog-studio/**', '!catalog-studio/**/*.md', '!catalog-studio/**/*.zip', '!catalog-studio/**/*.json', '.github/workflows/pricebook-checks.yml']
 permissions:
   contents: read
 jobs:
@@ -22,6 +22,7 @@ jobs:
       - run: node tests.cjs
       - run: node pricebook/tests.cjs
       - run: node pricebook/build.cjs
+      - run: git diff --exit-code -- pricebook/index.html pricebook/samples/
       - run: npm install --no-save --package-lock=false playwright@1.56.1
       - run: npx playwright install --with-deps chromium firefox
       - run: node pricebook/browser-tests.cjs

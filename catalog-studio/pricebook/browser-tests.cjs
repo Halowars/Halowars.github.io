@@ -6,7 +6,7 @@ const P=require('./pricebook.cjs'),C=require('../core.cjs');
 const out=path.join(__dirname,'qa');fs.mkdirSync(out,{recursive:true});
 const source='sku,name,category,description,price,pack,image,brand,currency,cost\n0001,Widget,Tools,Approved description,100.00,box of 10,,Example,USD,43.27';
 const fixture=n=>path.join(__dirname,'fixtures',n);
-const tests=[];let browser,engine;
+const tests=[],versions={};let browser,engine;
 const equalText=async(p,id,text)=>{await p.waitForFunction(([id,text])=>document.getElementById(id).textContent===text,[id,text]);};
 async function importCSV(p,text=source,name='products.csv'){await p.locator('#source-file').setInputFiles({name,mimeType:'text/csv',buffer:Buffer.from(text)});await equalText(p,'n-products',String(C.parseCSV(text).rows.length));}
 async function download(p,id){const pending=p.waitForEvent('download');await p.locator('#'+id).click();const d=await pending;const saved=await d.path();return {name:d.suggestedFilename(),text:fs.readFileSync(saved,'utf8')};}
@@ -46,6 +46,8 @@ async function suite(){
  }
 }
 (async()=>{
- for(const [name,kind]of [['chromium',chromium],['firefox',firefox]]){engine=name;try{browser=await kind.launch({headless:true});await suite();}catch(e){tests.push({engine,name:'Browser launch',passed:false,error:e.stack});}finally{if(browser)await browser.close();}}
- const report={total:tests.length,passed:tests.filter(t=>t.passed).length,failed:tests.filter(t=>!t.passed),tests};fs.writeFileSync(path.join(out,'browser-results.json'),JSON.stringify(report,null,2)+'\n');console.log('Real browser checks: '+report.passed+'/'+report.total);if(report.failed.length)process.exitCode=1;
+ const selected=(process.env.PRICEBOOK_BROWSERS||'chromium,firefox').split(',');
+ for(const [name,kind]of [['chromium',chromium],['firefox',firefox]].filter(([name])=>selected.includes(name))){engine=name;try{const options={headless:true};if(name==='chromium'&&process.env.PRICEBOOK_CHROMIUM_PATH){options.executablePath=process.env.PRICEBOOK_CHROMIUM_PATH;options.args=['--no-sandbox','--disable-dev-shm-usage','--disable-gpu','--no-zygote'];}browser=await kind.launch(options);versions[name]=await browser.version();await suite();}catch(e){tests.push({engine,name:'Browser launch',passed:false,error:e.stack});}finally{if(browser)await browser.close();}}
+ if(!tests.length)throw Error('No requested browser engine was selected.');
+ const report={node:process.version,platform:process.platform,versions,total:tests.length,passed:tests.filter(t=>t.passed).length,failed:tests.filter(t=>!t.passed),tests};fs.writeFileSync(path.join(out,'browser-results.json'),JSON.stringify(report,null,2)+'\n');console.log('Real browser checks: '+report.passed+'/'+report.total);if(report.failed.length)process.exitCode=1;
 })().catch(e=>{console.error(e);process.exitCode=1;});

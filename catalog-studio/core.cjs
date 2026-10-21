@@ -143,7 +143,9 @@ if(mode==='catalog')content='<section class="page cover">'+stamp+'<div>'+logo+'<
 const groups=new Map();products.forEach(function(p){if(!groups.has(p.category))groups.set(p.category,[]);groups.get(p.category).push(p);});
 let page=mode==='catalog'?2:1;
 groups.forEach(function(items,category){
-const count=mode==='prices'?8:2;
+// Long headings/terms or wrapped row fields need fewer rows so the footer stays on the same printed page.
+const longPriceText=settings.compactPrices===true&&(brand.company.length>45||brand.contact.length>100||brand.terms.length>250||category.length>40||items.some(function(p){return p.sku.length>30||p.name.length>70||p.pack.length>25;}));
+const count=mode==='prices'?(longPriceText?4:8):2;
 for(let i=0;i<items.length;i+=count){
 const chunk=items.slice(i,i+count);
 let body='';

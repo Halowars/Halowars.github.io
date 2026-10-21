@@ -5,7 +5,7 @@ import pymupdf
 
 base = Path(__file__).parent / 'qa'
 results = []
-for name, expected in [('sample-catalog', 7), ('sample-prices', 3), ('stress-catalog', 2), ('stress-prices', 1)]:
+for name, expected in [('sample-catalog', 7), ('sample-prices', 3), ('stress-catalog', 2), ('stress-prices', 2)]:
     pdf = pymupdf.open(base / f'{name}.pdf')
     assert len(pdf) == expected, f'{name}: expected {expected} pages, found {len(pdf)}'
     text = '\n'.join(page.get_text() for page in pdf)
@@ -27,6 +27,13 @@ for name, expected in [('sample-catalog', 7), ('sample-prices', 3), ('stress-cat
             assert text.count(sku) == 1, f'{name}: SKU {sku} missing or repeated'
         assert '$7.65' in text and '$18.00' in text, f'{name}: expected tier prices missing'
         assert 'FICTIONAL DEMO' in text
+    if name == 'stress-prices':
+        for n, page in enumerate(pdf):
+            page_text = page.get_text()
+            assert 'Terms' in page_text and 'Company' in page_text, 'Logical page header/footer must stay with its rows'
+            # Four maximum-length rows per logical page; exactly eight over the two physical pages.
+            for i in range(n*4, n*4+4):
+                assert str(i) + 'S' * 10 in page_text, f'Stress SKU {i} missing from expected page'
     results.append({'file': f'{name}.pdf', 'pages': len(pdf), 'passed': True})
 (base / 'pdf-results.json').write_text(json.dumps(results, indent=2) + '\n')
 print('PDF inspection: 4/4 documents passed page counts, A4 dimensions, text bounds and sample SKU/price reconciliation.')

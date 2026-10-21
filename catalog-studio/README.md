@@ -1,5 +1,7 @@
 # Fieldnote Catalog Studio — v0.1
 
+**Current direction:** [Pricebook Studio v0.2](pricebook/README.md) is the customer-operated, one-time software handover product. Start with [Tristan's current guide](pricebook/TRISTAN_START_HERE.md). Open `pricebook/index.html`. The older managed-service model and prices below describe the historical v0.1 prototype.
+
 A working operator prototype for a **managed product-catalog production service**.
 
 The customer sends an existing product spreadsheet, approved photos, and branding. Tristan produces the finished catalog, matching price sheet, cleaned data, and exceptions report. The customer does not operate this software or change their website.
@@ -77,3 +79,4 @@ The 93 checks passed in both the available V8 runtime and GitHub Actions on Node
 | `build.cjs` | Builds `index.html` without dependencies |
 
 All bundled product data, company names, prices, and sample content are fictional. This source repository is public. Keep real customer data and commercial project files in a private location.
+

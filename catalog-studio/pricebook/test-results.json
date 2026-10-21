@@ -1,7 +1,7 @@
 {
   "version": "0.2.0",
-  "total": 51,
-  "passed": 51,
+  "total": 52,
+  "passed": 52,
   "failed": [],
   "tests": [
     {
@@ -166,6 +166,10 @@
     },
     {
       "name": "Publishing: compact price layout and long edition retain selected tier name",
+      "passed": true
+    },
+    {
+      "name": "Publishing: long price rows paginate before they push a footer onto a second physical page",
       "passed": true
     },
     {
