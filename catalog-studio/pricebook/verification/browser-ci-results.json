@@ -1,0 +1,218 @@
+{
+  "node": "v22.23.3",
+  "platform": "linux",
+  "versions": {
+    "chromium": "141.0.7390.37",
+    "firefox": "142.0.1"
+  },
+  "total": 41,
+  "passed": 41,
+  "failed": [],
+  "tests": [
+    {
+      "engine": "chromium",
+      "name": "Offline initialization, counts and release gate",
+      "passed": true
+    },
+    {
+      "engine": "chromium",
+      "name": "Import aliases preserves leading-zero SKU and costs",
+      "passed": true
+    },
+    {
+      "engine": "chromium",
+      "name": "Malformed CSV disables stale customer export",
+      "passed": true
+    },
+    {
+      "engine": "chromium",
+      "name": "Duplicate SKU and low-margin dealer tier block publishing",
+      "passed": true
+    },
+    {
+      "engine": "chromium",
+      "name": "Missing and negative costs block rather than become zero",
+      "passed": true
+    },
+    {
+      "engine": "chromium",
+      "name": "Rules invalidate approval and reject overprecision",
+      "passed": true
+    },
+    {
+      "engine": "chromium",
+      "name": "Real PNG, JPEG, WebP and logo decoding",
+      "passed": true
+    },
+    {
+      "engine": "chromium",
+      "name": "Corrupt, oversized and excessive-dimension photos rejected atomically",
+      "passed": true
+    },
+    {
+      "engine": "chromium",
+      "name": "Private project download and restore retain photos, clear approvals",
+      "passed": true
+    },
+    {
+      "engine": "chromium",
+      "name": "Tampered project image fails actual decoding",
+      "passed": true
+    },
+    {
+      "engine": "chromium",
+      "name": "Previous edition removals require separate acknowledgement",
+      "passed": true
+    },
+    {
+      "engine": "chromium",
+      "name": "Failed previous project cannot silently remove comparison requirement",
+      "passed": true
+    },
+    {
+      "engine": "chromium",
+      "name": "Customer HTML and CSV contain selected price but no internal cost or other tiers",
+      "passed": true
+    },
+    {
+      "engine": "chromium",
+      "name": "Changes to brand and source revoke final review",
+      "passed": true
+    },
+    {
+      "engine": "chromium",
+      "name": "Fictional demo watermark survives final export",
+      "passed": true
+    },
+    {
+      "engine": "chromium",
+      "name": "Non-UTF8 input rejects without silent replacement",
+      "passed": true
+    },
+    {
+      "engine": "chromium",
+      "name": "Late CSV read cannot overwrite a newer sample",
+      "passed": true
+    },
+    {
+      "engine": "chromium",
+      "name": "Pending photo read cannot repopulate a cleared workspace",
+      "passed": true
+    },
+    {
+      "engine": "chromium",
+      "name": "No network requests from workspace or exported catalog",
+      "passed": true
+    },
+    {
+      "engine": "chromium",
+      "name": "Desktop and narrow screens have no page overflow",
+      "passed": true
+    },
+    {
+      "engine": "chromium",
+      "name": "Browser PDFs and worst-case text are generated for inspection",
+      "passed": true
+    },
+    {
+      "engine": "firefox",
+      "name": "Offline initialization, counts and release gate",
+      "passed": true
+    },
+    {
+      "engine": "firefox",
+      "name": "Import aliases preserves leading-zero SKU and costs",
+      "passed": true
+    },
+    {
+      "engine": "firefox",
+      "name": "Malformed CSV disables stale customer export",
+      "passed": true
+    },
+    {
+      "engine": "firefox",
+      "name": "Duplicate SKU and low-margin dealer tier block publishing",
+      "passed": true
+    },
+    {
+      "engine": "firefox",
+      "name": "Missing and negative costs block rather than become zero",
+      "passed": true
+    },
+    {
+      "engine": "firefox",
+      "name": "Rules invalidate approval and reject overprecision",
+      "passed": true
+    },
+    {
+      "engine": "firefox",
+      "name": "Real PNG, JPEG, WebP and logo decoding",
+      "passed": true
+    },
+    {
+      "engine": "firefox",
+      "name": "Corrupt, oversized and excessive-dimension photos rejected atomically",
+      "passed": true
+    },
+    {
+      "engine": "firefox",
+      "name": "Private project download and restore retain photos, clear approvals",
+      "passed": true
+    },
+    {
+      "engine": "firefox",
+      "name": "Tampered project image fails actual decoding",
+      "passed": true
+    },
+    {
+      "engine": "firefox",
+      "name": "Previous edition removals require separate acknowledgement",
+      "passed": true
+    },
+    {
+      "engine": "firefox",
+      "name": "Failed previous project cannot silently remove comparison requirement",
+      "passed": true
+    },
+    {
+      "engine": "firefox",
+      "name": "Customer HTML and CSV contain selected price but no internal cost or other tiers",
+      "passed": true
+    },
+    {
+      "engine": "firefox",
+      "name": "Changes to brand and source revoke final review",
+      "passed": true
+    },
+    {
+      "engine": "firefox",
+      "name": "Fictional demo watermark survives final export",
+      "passed": true
+    },
+    {
+      "engine": "firefox",
+      "name": "Non-UTF8 input rejects without silent replacement",
+      "passed": true
+    },
+    {
+      "engine": "firefox",
+      "name": "Late CSV read cannot overwrite a newer sample",
+      "passed": true
+    },
+    {
+      "engine": "firefox",
+      "name": "Pending photo read cannot repopulate a cleared workspace",
+      "passed": true
+    },
+    {
+      "engine": "firefox",
+      "name": "No network requests from workspace or exported catalog",
+      "passed": true
+    },
+    {
+      "engine": "firefox",
+      "name": "Desktop and narrow screens have no page overflow",
+      "passed": true
+    }
+  ]
+}

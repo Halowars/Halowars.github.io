@@ -1,0 +1,13 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),C=require('../core.cjs'),P=require('./pricebook.cjs');
+const read=f=>fs.readFileSync(path.join(__dirname,f),'utf8');
+const script=s=>s.replace(/<\/script/gi,'<\\/script');
+const data=JSON.stringify(read('fixtures/current.csv')).replace(/</g,'\\u003c').replace(/\u2028/g,'\\u2028').replace(/\u2029/g,'\\u2029');
+const csp="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; connect-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'";
+const html='<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="'+csp+'"><meta name="referrer" content="no-referrer"><title>Fieldnote · Pricebook Studio</title><style>'+read('style.css')+'</style></head><body>'+read('shell.html')+'<script>'+script(read('../core.cjs'))+'</script><script>'+script(read('pricebook.cjs'))+'</script><script>window.PRICEBOOK_DEMO='+data+';</script><script>'+script(read('app.js'))+'</script></body></html>';
+fs.writeFileSync(path.join(__dirname,'index.html'),html);
+const r=P.audit(read('fixtures/current.csv'),null,{}, {margin:'20',change:'20',tiers:[{name:'Trade',discount:'10'},{name:'Partner',discount:'15'}]},'');
+const brand={company:'Northline Supply',title:'Workshop essentials.',edition:'October 2026 · Sample',contact:'Fictional demonstration business · No orders accepted',terms:'Fictional sample products and prices. Not for ordering, engineering or safety decisions.',color:'#245847'};
+fs.mkdirSync(path.join(__dirname,'samples'),{recursive:true});
+for(const mode of ['catalog','prices'])fs.writeFileSync(path.join(__dirname,'samples','trade-'+mode+'.html'),P.customerHTML(r,1,brand,{}, {mode,draft:true,demo:true}));
+console.log('Built standalone Pricebook Studio '+P.VERSION+' ('+html.length+' characters).');

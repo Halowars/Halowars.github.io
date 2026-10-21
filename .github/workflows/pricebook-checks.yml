@@ -1,0 +1,37 @@
+name: Pricebook Studio checks
+on:
+  push:
+    branches: [pricebook-studio-v2]
+    paths: ['catalog-studio/**', '!catalog-studio/**/*.md', '!catalog-studio/**/*.zip', '!catalog-studio/**/*.json', '.github/workflows/pricebook-checks.yml']
+  pull_request:
+    paths: ['catalog-studio/**', '!catalog-studio/**/*.md', '!catalog-studio/**/*.zip', '!catalog-studio/**/*.json', '.github/workflows/pricebook-checks.yml']
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: catalog-studio
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node tests.cjs
+      - run: node pricebook/tests.cjs
+      - run: node pricebook/build.cjs
+      - run: git diff --exit-code -- pricebook/index.html pricebook/samples/
+      - run: npm install --no-save --package-lock=false playwright@1.56.1
+      - run: npx playwright install --with-deps chromium firefox
+      - run: node pricebook/browser-tests.cjs
+      - run: python3 -m pip install --disable-pip-version-check pymupdf==1.26.4
+      - run: python3 pricebook/verify-pdf.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pricebook-qa
+          path: |
+            catalog-studio/pricebook/qa/
+            catalog-studio/pricebook/test-results.json

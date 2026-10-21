@@ -132,6 +132,7 @@ if(!Array.isArray(products)||!products.length)fail('No products to export.');
 const seen=new Set();
 products.forEach(function(p){if(!p||!REQUIRED.every(function(f){return meaningful(p[f]);})||p.cents!==null&&(!Number.isSafeInteger(p.cents)||p.cents<0||p.cents>999999999))fail('Invalid product; run validation before export.');const key=textValue(p.sku).normalize('NFKC').toLowerCase();if(seen.has(key))fail('Duplicate SKU in export.');seen.add(key);});
 const mode=settings.mode==='prices'?'prices':'catalog';
+const densityStyle=mode==='prices'&&settings.compactPrices===true?'.price-table{font-size:10.5px;line-height:1.4}.price-table td{padding:7px 6px}.price-table th{padding:8px 6px}.sheethead h2{font-size:22px}.sheethead{margin-bottom:18px}':'';
 const draft=settings.draft!==false,demo=settings.demo===true;
 const state=demo?'FICTIONAL DEMO • NOT FOR PRODUCT SELECTION OR ORDERS':draft?'DRAFT • FOR CUSTOMER REVIEW':'';
 const stamp=state?'<div class="watermark">'+escaped(state)+'</div>':'';
@@ -142,7 +143,9 @@ if(mode==='catalog')content='<section class="page cover">'+stamp+'<div>'+logo+'<
 const groups=new Map();products.forEach(function(p){if(!groups.has(p.category))groups.set(p.category,[]);groups.get(p.category).push(p);});
 let page=mode==='catalog'?2:1;
 groups.forEach(function(items,category){
-const count=mode==='prices'?8:2;
+// Long headings/terms or wrapped row fields need fewer rows so the footer stays on the same printed page.
+const longPriceText=settings.compactPrices===true&&(brand.company.length>45||brand.contact.length>100||brand.terms.length>250||category.length>40||items.some(function(p){return p.sku.length>30||p.name.length>70||p.pack.length>25;}));
+const count=mode==='prices'?(longPriceText?4:8):2;
 for(let i=0;i<items.length;i+=count){
 const chunk=items.slice(i,i+count);
 let body='';
@@ -154,7 +157,7 @@ body='<div class="grid">'+chunk.map(function(p){const image=own(assets,p.image)&
 content+='<section class="page collection">'+stamp+'<header class="sheethead"><h2>'+escaped(category)+'</h2><small>'+escaped(brand.company)+'<br>'+escaped(brand.edition)+'</small></header>'+body+pageFooter(page++)+'</section>';
 }});
 const client=String.raw`(function(){'use strict';var input=document.getElementById('find'),previous='';function filter(q){q=q.toLowerCase();document.querySelectorAll('[data-entry]').forEach(function(el){el.hidden=el.dataset.search.indexOf(q)===-1;});document.querySelectorAll('.collection').forEach(function(el){el.hidden=!Array.from(el.querySelectorAll('[data-entry]')).some(function(x){return !x.hidden;});});document.getElementById('results').textContent=q?Array.from(document.querySelectorAll('[data-entry]')).filter(function(x){return !x.hidden;}).length+' matches':'';}input.addEventListener('input',function(){filter(input.value);});document.getElementById('print').addEventListener('click',function(){window.print();});window.addEventListener('beforeprint',function(){previous=input.value;filter('');});window.addEventListener('afterprint',function(){filter(previous);});})();`;
-return '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src \'none\'; script-src \'unsafe-inline\'; style-src \'unsafe-inline\'; img-src data:; connect-src \'none\'; base-uri \'none\'; form-action \'none\'; object-src \'none\'"><meta name="referrer" content="no-referrer"><title>'+escaped(brand.company)+' — '+(mode==='prices'?'Price sheet':escaped(brand.title))+'</title><style>:root{--accent:'+brand.color+'}'+printStyle+'</style></head><body><div class="toolbar"><label for="find">Find a product</label><input id="find" type="search" placeholder="SKU, name, or category"><button id="print" type="button">Print / Save PDF</button><span id="results" aria-live="polite"></span></div>'+content+'<script>'+client+'</script></body></html>';
+return '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src \'none\'; script-src \'unsafe-inline\'; style-src \'unsafe-inline\'; img-src data:; connect-src \'none\'; base-uri \'none\'; form-action \'none\'; object-src \'none\'"><meta name="referrer" content="no-referrer"><title>'+escaped(brand.company)+' — '+(mode==='prices'?'Price sheet':escaped(brand.title))+'</title><style>:root{--accent:'+brand.color+'}'+printStyle+densityStyle+'</style></head><body><div class="toolbar"><label for="find">Find a product</label><input id="find" type="search" placeholder="SKU, name, or category"><button id="print" type="button">Print / Save PDF</button><span id="results" aria-live="polite"></span></div>'+content+'<script>'+client+'</script></body></html>';
 }
 function releaseReady(result,approved){return Boolean(result&&result.ready&&approved===true);}
 function manifest(table,mapping,result,branding,approved,settings){
@@ -162,3 +165,4 @@ const brand=normalizeBrand(branding);return {schemaVersion:1,engineVersion:VERSI
 }
 return Object.freeze({VERSION:VERSION,LIMITS:LIMITS,FIELDS:FIELDS,REQUIRED:REQUIRED,escaped:escaped,parseCSV:parseCSV,autoMap:autoMap,parsePrice:parsePrice,formatPrice:formatPrice,safeImageName:safeImageName,isRasterDataURL:isRasterDataURL,audit:audit,toCSV:toCSV,normalizedCSV:normalizedCSV,issuesCSV:issuesCSV,slug:slug,normalizeBrand:normalizeBrand,buildCatalog:buildCatalog,releaseReady:releaseReady,manifest:manifest});
 });
+

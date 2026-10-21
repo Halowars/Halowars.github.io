@@ -1,0 +1,521 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; connect-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'"><meta name="referrer" content="no-referrer"><title>Fieldnote · Pricebook Studio</title><style>:root{--ink:#192c26;--green:#245847;--cream:#f5f4ee;--line:#d8ddd3;--muted:#667369;--red:#9c3028;--white:#fff;--orange:#bc663c}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--ink);background:var(--cream);font:14px/1.55 Arial,Helvetica,sans-serif}button,input,textarea,select{font:inherit}button,.file-button{padding:10px 15px;border:1px solid #b8c4b9;border-radius:4px;background:transparent;color:var(--ink);cursor:pointer;font-weight:600;line-height:1.3;display:inline-block;text-align:center}button:hover:not(:disabled),.file-button:hover{background:#e8ece3}button:disabled{opacity:.4;cursor:not-allowed}.dark,.primary{background:var(--green);border-color:var(--green);color:white}.dark:hover:not(:disabled),.primary:hover:not(:disabled){background:#173f32}.small{font-size:12px;padding:7px 10px}.quiet{border-color:transparent;font-weight:400}a{color:inherit}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible,.file-button:focus-within{outline:3px solid #b65d34;outline-offset:3px}.sidebar{width:236px;position:fixed;inset:0 auto 0 0;padding:36px 27px;background:var(--ink);color:#f1f2e9;display:flex;flex-direction:column;z-index:3}.wordmark{font-size:23px;text-decoration:none;letter-spacing:-1px;display:flex;align-items:center;gap:8px;font-weight:bold}.mark{width:27px;height:31px;background:#d5dfb5;color:var(--ink);font-size:22px;text-align:center;line-height:32px;font-family:Georgia,serif}.dot{color:#d5dfb5;margin-left:-8px}.product-label{letter-spacing:.12em;font-size:9px;opacity:.75;margin:13px 0 45px}.product-label span{float:right}nav{display:grid;gap:7px}nav a{font-size:13px;text-decoration:none;padding:12px 0;border-bottom:1px solid #ffffff17}nav a:hover{color:#d5dfb5}nav b{font-weight:400;opacity:.5;font-size:10px;margin-right:15px}.sidebar-note{margin-top:auto;font-size:11px;color:#c3cebf;padding-top:40px}.sidebar-note p{color:#93a99b;margin:9px 0}.local-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#cadb8a;margin-right:7px}main{margin-left:236px;padding:0 48px;max-width:1600px}.topbar{border-bottom:1px solid var(--line);display:flex;justify-content:space-between;padding:21px 0;font-size:9px;letter-spacing:.13em;color:var(--muted)}.privacy{color:var(--green)}.intro{display:flex;align-items:center;justify-content:space-between;padding:45px 0 30px;gap:45px}.eyebrow{color:var(--green);letter-spacing:.14em;font-size:10px;font-weight:bold}h1{font:normal clamp(34px,4vw,58px)/1.03 Georgia,'Times New Roman',serif;letter-spacing:-1.8px;margin:15px 0 21px}h1 em{font-weight:normal;color:var(--green)}.lead{color:var(--muted);font-size:14px;max-width:410px}.edition-card{background:#dce4c7;min-width:185px;min-height:218px;padding:23px;color:#1f4e3d;border-left:9px solid #afbd91;box-shadow:5px 5px 0 #d6dacf;font-family:Georgia,serif;transform:rotate(3deg);margin-right:15px}.edition-card>span{font:8px Arial;letter-spacing:.13em}.edition-card>div{font-size:43px;line-height:.9;letter-spacing:-2px;margin:21px 0}.edition-card p{font:9px Arial;margin-bottom:12px}.edition-card i{font:7px Arial;opacity:.7}.project-bar,.actions{display:flex;align-items:center;gap:9px;flex-wrap:wrap}.project-bar{padding:13px 0 3px}.file-button input{position:absolute;width:1px;height:1px;opacity:0}.file-note{font-size:11px;color:var(--muted);margin:8px 0 18px}#status{padding:12px 15px;background:#e6ecdd;border-left:3px solid var(--green);font-size:13px;min-height:45px}.error#status{color:#832b24;background:#f6e8e2;border-color:#a24635}.stats{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);margin:24px 0 14px;background:#fff9}.stats>div{padding:17px 20px;border-right:1px solid var(--line)}.stats>div:last-child{border:0}.stats strong{display:block;font:32px/1.1 Georgia,serif}.stats span{font-size:10px;color:var(--muted);display:block;margin-top:8px}.stats .problem strong{color:var(--red)}.context{display:flex;align-items:center;gap:14px;font-size:10px;color:var(--muted)}#review-state{margin-left:auto}.badge{font-size:8px;letter-spacing:.08em;background:#f2ddbb;color:#7b4a19;padding:4px 8px}.badge[hidden]{display:none}section{padding:30px 0;border-top:1px solid var(--line);margin-top:24px;scroll-margin-top:20px}.section-heading{display:flex;align-items:flex-start;gap:14px;margin-bottom:23px}.section-heading>div{flex:1}.step{border:1px solid #b4c5b5;padding:3px 6px;font-size:9px;margin-top:4px}h2{font:normal 25px/1.2 Georgia,serif;letter-spacing:-.4px;margin:0 0 8px}h3{font-size:14px;margin:0 0 8px}.section-heading p,p.muted{margin:0;color:var(--muted);font-size:12px;max-width:760px}.two-col{display:grid;grid-template-columns:1fr 1fr;gap:24px}.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px}.field{display:flex;flex-direction:column;gap:7px;font-size:11px;font-weight:bold;margin-bottom:17px}input:not([type=checkbox]):not([type=file]):not([type=color]),textarea,select{padding:10px;border:1px solid #bbc7ba;border-radius:3px;color:var(--ink);background:#fff;max-width:100%;width:100%;font-weight:400}input[type=color]{width:100%;height:42px;border:1px solid #bbc7ba;background:white;padding:4px}textarea{resize:vertical}input[type=file]{font-size:11px;max-width:100%;font-weight:400}input[type=file]::file-selector-button{border:1px solid #c6cfc1;padding:8px;background:#fff;color:var(--ink);margin-right:8px;border-radius:3px}.upload{border:1px dashed #a8bca7;padding:20px;background:#eef1e7}.upload>label{display:block;margin-bottom:13px;font-weight:bold;font-size:12px}.upload>p{font-size:11px;color:var(--muted)}.upload .field{margin-top:15px;max-width:220px;margin-bottom:0}.muted{font-size:11px;color:var(--muted);font-weight:normal}.actions .muted{font-size:10px}#source-text{font-family:monospace;font-size:11px;line-height:1.6}details{border-top:1px solid var(--line);margin-top:24px;padding-top:14px}summary{cursor:pointer;font-size:12px;font-weight:bold;margin-bottom:15px}.mapping-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.mapping-grid label{font-size:10px;display:grid;gap:5px}.mapping-grid b{color:var(--red)}.baseline{margin-top:26px;background:#e9ede2;padding:20px;display:grid;grid-template-columns:1fr 1fr;gap:24px}.baseline p{font-size:11px;color:var(--muted);margin:6px 0}.baseline .small{margin-top:8px}.table-scroll{overflow:auto;max-height:440px;background:#fffa;border:1px solid var(--line)}table{border-collapse:collapse;width:100%;font-size:11px}th,td{padding:10px 12px;text-align:left;border-bottom:1px solid #dde2d7;vertical-align:top;min-width:60px;overflow-wrap:anywhere}th{position:sticky;top:0;background:#e7ece0;z-index:1;font-size:9px;text-transform:uppercase;letter-spacing:.05em}td:last-child{min-width:220px}.level{padding:3px 6px;font-size:9px;background:#f1e2bd;color:#72501c;border-radius:3px}.level.error{background:#f2ddd6;color:#8d3226}.mono{font-family:monospace}.publish-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}.proof,.release{padding:24px;background:#fff;border:1px solid var(--line)}.release{background:#e9efe0;border-color:#c8d6ba}.proof>p,.release>p{font-size:11px;color:var(--muted)}.proof>.eyebrow,.release>.eyebrow{color:var(--green);font-size:9px}.checkbox{display:flex;gap:10px;font-size:12px;margin:17px 0}.checkbox input{width:16px;height:16px;flex-shrink:0;accent-color:var(--green);margin-top:3px}.quick-guide{padding:28px;background:#e9ede2;font-size:12px;margin-bottom:32px}.quick-guide ol{padding-left:20px;display:grid;gap:12px;max-width:800px}.quick-guide>p{color:var(--muted);font-size:11px}footer{border-top:1px solid var(--line);padding:22px 0 30px;display:flex;justify-content:space-between;gap:20px;font-size:8px;letter-spacing:.08em;color:var(--muted)}[hidden]{display:none!important}@media(min-width:1450px){main{padding:0 70px}}@media(max-width:1080px){.sidebar{width:190px;padding:30px 20px}main{margin-left:190px;padding:0 30px}.intro{gap:20px}.edition-card{min-width:150px;min-height:195px;margin-right:0}.three-col{grid-template-columns:1fr 1fr}.three-col>.field:last-child{grid-column:1/-1}.publish-grid{grid-template-columns:1fr}.mapping-grid{grid-template-columns:1fr 1fr}}@media(max-width:760px){.sidebar{position:relative;width:100%;padding:17px 22px;display:block}.wordmark{font-size:21px}.product-label{position:absolute;right:22px;top:18px;margin:0;font-size:8px}.product-label span{margin-left:12px}.sidebar nav{display:flex;gap:18px;margin-top:17px;flex-wrap:wrap}.sidebar nav a{padding:0;border:0;font-size:11px}.sidebar nav b{margin-right:4px}.sidebar-note{display:none}main{margin-left:0;padding:0 22px}.intro{padding-top:26px}.edition-card{display:none}h1{font-size:41px}.topbar{font-size:8px}.two-col,.three-col,.baseline{grid-template-columns:1fr;gap:15px}.three-col>.field:last-child{grid-column:auto}.stats>div{padding:13px 9px}.stats strong{font-size:27px}.stats span{font-size:8px}.project-bar button,.file-button{font-size:11px}.context{flex-wrap:wrap}#review-state{margin-left:0}.section-heading{gap:9px}.section-heading .small{max-width:110px}.section-heading h2{font-size:22px}.mapping-grid{grid-template-columns:1fr 1fr}.quick-guide{padding:20px}.proof,.release{padding:20px}footer{flex-direction:column;gap:8px}button{min-height:38px}.file-note{font-size:10px}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}@media print{.sidebar,.project-bar{display:none}main{margin-left:0}#status:before{content:'INTERNAL WORKSPACE / COST DATA — ';font-weight:bold}}
+</style></head><body><aside class="sidebar">
+ <a class="wordmark" href="#top"><span class="mark">F</span>Fieldnote<span class="dot">.</span></a>
+ <p class="product-label">PRICEBOOK STUDIO <span>0.2</span></p>
+ <nav aria-label="Workflow"><a href="#source"><b>01</b> Product data</a><a href="#pricing"><b>02</b> Pricing rules</a><a href="#identity"><b>03</b> Brand &amp; photos</a><a href="#review"><b>04</b> Review</a><a href="#publish"><b>05</b> Publish</a></nav>
+ <div class="sidebar-note"><span class="local-dot"></span> Runs on your computer<p>No account. No uploads.<br>Save a project before closing.</p><a href="#help">Quick guide ↓</a></div>
+</aside>
+<main id="top">
+ <header class="topbar"><span>YOUR DATA → YOUR PRICE BOOKS</span><span class="privacy">LOCAL PROCESSING</span></header>
+ <div class="intro"><div><p class="eyebrow">Distributor edition workspace</p><h1>Publish with<br><em>the numbers checked.</em></h1><p class="lead">One product source. Clear margin checks. Separate books for every dealer tier.</p></div><div class="edition-card" aria-hidden="true"><span>FIELDNOTE / STUDIO</span><div>Price<br>book.</div><p>Import · Review · Publish</p><i>USD / Per selling unit</i></div></div>
+ <div class="project-bar"><button id="save-project" class="dark" type="button">Save project backup</button><label class="file-button" for="restore-project">Open saved project<input id="restore-project" type="file" accept=".json,application/json"></label><button id="sample" type="button">Load fictional sample</button><button id="clear" class="quiet" type="button">Clear workspace</button></div>
+ <p class="file-note">Project backups contain internal costs and photos. Keep them private. Customer export buttons are separate below.</p>
+ <p id="status" role="status" aria-live="polite">Starting workspace…</p>
+ <div class="stats" aria-label="Validation results"><div><strong id="n-products">—</strong><span>Products</span></div><div><strong id="n-tiers">—</strong><span>Price tiers</span></div><div class="problem"><strong id="n-errors">—</strong><span>Blocking issues</span></div><div><strong id="n-warnings">—</strong><span>Review warnings</span></div></div>
+ <p class="context"><span id="demo" class="badge">FICTIONAL DEMO</span><span id="source-name">No source imported</span><span id="review-state">Review required</span></p>
+ <section id="source"><div class="section-heading"><span class="step">01</span><div><h2>Start with the full product list.</h2><p>Use a UTF-8 CSV export, up to 1,000 products. Each row is one SKU. Price and cost must refer to the same selling unit, in USD.</p></div><button id="template" class="small" type="button">CSV template ↓</button></div>
+ <div class="two-col"><div class="upload"><label for="source-file">Import current product CSV</label><input id="source-file" type="file" accept=".csv,.tsv,text/csv,text/tab-separated-values"><p>Required: SKU, name, category, selling unit, list price, internal cost. Excel users: save a copy as CSV UTF-8.</p><label class="field">Separator<select id="delimiter"><option value="">Detect automatically</option><option value=",">Comma</option><option value=";">Semicolon</option><option value="&#9;">Tab</option></select></label></div><div><label class="field">Or paste / correct your source<textarea id="source-text" spellcheck="false" wrap="off" rows="7" aria-describedby="edit-hint"></textarea></label><div class="actions"><button id="validate" class="dark" type="button">Validate current data</button><span id="edit-hint" class="muted">Edits clear the previous review.</span></div></div></div>
+ <details open class="mapping-details"><summary>Match spreadsheet columns</summary><div id="mappings" class="mapping-grid">Import data to select columns.</div></details>
+ <div class="baseline"><div><h3>Compare with a previous edition <span class="muted">optional</span></h3><p>Use a saved project for an exact comparison, or a full previous CSV with recognized headers. Files are compared as complete snapshots; absent SKUs are flagged as removals.</p></div><div><input id="baseline-file" type="file" accept=".csv,.tsv,.json,text/csv,application/json"><button id="clear-baseline" class="small" type="button">Remove comparison</button><p id="baseline-name" class="muted">No previous edition loaded.</p></div></div>
+ </section>
+ <section id="pricing"><div class="section-heading"><span class="step">02</span><div><h2>Set the commercial rules.</h2><p>Dealer prices are discounts from your supplied list price. Gross margin = (selling price − cost) ÷ selling price. Values below your minimum block customer exports.</p></div></div>
+ <div class="three-col"><label class="field">Minimum gross margin %<input id="margin" inputmode="decimal" value="20.00" maxlength="6"><span class="muted">0–99%; checked for every SKU and tier.</span></label><label class="field">Flag list-price changes above %<input id="change" inputmode="decimal" value="20.00" maxlength="6"><span class="muted">Only used when comparing editions.</span></label><label class="field">Dealer tiers: name | discount %<textarea id="tiers" rows="3" spellcheck="false">Trade | 10.00
+Partner | 15.00</textarea><span class="muted">One per line; up to four. List is always included. Prices round to the nearest cent, half up.</span></label></div>
+ <button id="apply-rules" type="button">Check these rules</button><p class="muted">Prices are never changed to meet a margin target automatically. Correct your source or approved discounts.</p></section>
+ <section id="identity"><div class="section-heading"><span class="step">03</span><div><h2>Make it your edition.</h2><p>Branding and approved local photos travel with your project. Photos match the exact filename in the product CSV.</p></div></div>
+ <form id="brand-form"><div class="three-col"><label class="field">Company<input id="brand-company" maxlength="90"></label><label class="field">Book title<input id="brand-title" maxlength="100"></label><label class="field">Edition<input id="brand-edition" maxlength="60"></label></div><div class="three-col"><label class="field">Contact<input id="brand-contact" maxlength="140"></label><label class="field">Sales terms<textarea id="brand-terms" maxlength="400" rows="3"></textarea></label><label class="field">Accent color<input id="brand-color" type="color" value="#245847"></label></div></form>
+ <div class="two-col"><label class="field">Product photos · PNG, JPEG or WebP<input id="photos" type="file" multiple accept="image/png,image/jpeg,image/webp"></label><label class="field">Company logo<input id="logo" type="file" accept="image/png,image/jpeg,image/webp"></label></div><div class="actions"><span id="photo-count" class="muted">No photos loaded</span><button id="clear-photos" class="small" type="button">Remove photos &amp; logo</button></div><p class="muted">10 MB per image; up to 6,000 pixels on either side and 20 megapixels total. Missing photos stay visibly marked in the books.</p></section>
+ <section id="review"><div class="section-heading"><span class="step">04</span><div><h2>Review before you release.</h2><p id="audit-summary">Validate data to see the current checks.</p></div><button id="issues-csv" class="small" type="button">Internal issues CSV ↓</button></div>
+ <div class="table-scroll"><table><thead><tr><th>Level</th><th>Line</th><th>SKU</th><th>Check</th><th>Action</th></tr></thead><tbody id="issues"></tbody></table></div>
+ <details><summary id="changes-summary">Edition comparison</summary><div class="actions"><button id="changes-csv" class="small" type="button">Internal changes CSV ↓</button></div><div class="table-scroll"><table><thead><tr><th>Change</th><th>SKU</th><th>Fields changed</th><th>Previous list</th><th>Current list</th></tr></thead><tbody id="changes"></tbody></table></div></details>
+ <details><summary>Inspect prices and internal costs</summary><p class="muted">First 40 products shown; all products are checked and exported. Internal costs appear only here and in private project / audit files.</p><div class="table-scroll"><table><thead id="price-head"></thead><tbody id="price-rows"></tbody></table></div></details>
+ </section>
+ <section id="publish"><div class="section-heading"><span class="step">05</span><div><h2>Publish one dealer tier at a time.</h2><p>Customer files include the selected tier's selling prices. Internal costs, margins, source rows, and other tiers are excluded.</p></div></div>
+ <div class="publish-grid"><div class="proof"><p class="eyebrow">CUSTOMER FILES</p><label class="field">Selected price tier<select id="selected-tier"><option>Validate data first</option></select></label><h3>Check a proof.</h3><p>Open the exported HTML, inspect its pages, then use Print / Save PDF. Use A4, turn browser headers and footers off, and enable backgrounds.</p><div class="actions"><button id="draft-catalog" class="dark" type="button">Draft catalog HTML</button><button id="draft-prices" type="button">Draft price sheet HTML</button><button id="public-csv" class="small" type="button">Selected tier CSV</button></div></div>
+ <div class="release"><p class="eyebrow">FINAL RELEASE</p><label class="checkbox"><input id="reviewed" type="checkbox"><span>I checked all SKUs, costs, selling units, every tier, branding and warning against our approved source, and inspected the output pages.</span></label><label class="checkbox"><input id="changes-reviewed" type="checkbox"><span>I reviewed the changes from the previous edition, including removed SKUs and changes to selling units.</span></label><div class="actions"><button id="final-catalog" class="primary" type="button">Final catalog HTML</button><button id="final-prices" type="button">Final price sheet HTML</button></div><p class="muted">Every data, rule, brand, photo or comparison change clears release review. A restored project also needs fresh review.</p></div></div>
+ <details><summary>Internal handover files</summary><p>These contain business information. Keep them separate from customer books.</p><div class="actions"><button id="internal-master" type="button">Internal master CSV</button><button id="review-record" type="button">Internal review record</button></div><p class="muted">Use project backups to preserve exact source text and images. Spreadsheet-safe CSV may prefix formula-like cells with an apostrophe; import SKU columns as text to keep leading zeros.</p></details>
+ </section>
+ <section id="help" class="quick-guide"><p class="eyebrow">QUICK GUIDE</p><h2>A repeatable publishing cycle.</h2><ol><li><strong>Open last project's backup</strong>, or import a full product CSV and match its columns. Use only approved data.</li><li><strong>Check your rules.</strong> Costs and selling prices must use the same currency and selling unit. Clear each blocking issue.</li><li><strong>Inspect every tier's proof.</strong> Missing images are explicit. Verify the HTML and printed PDF against your source.</li><li><strong>Release and save.</strong> Export customer books separately. Save a private project backup, source files and review record before closing.</li></ol><p>No website integration or server is needed. This version does not synchronize computers, connect to an ERP, change inventory, calculate taxes, convert selling units, or send customer messages. Share exported customer files through your existing channels.</p><p>Closing the tab clears the workspace. Backups are ordinary files on your device and contain costs; use your business's normal device security and backups.</p></section>
+ <footer><span>FIELDNOTE / PRICEBOOK STUDIO · 0.2.0 CANDIDATE</span><span>Local files. Explicit review. Your edition.</span></footer>
+</main>
+<script>/* Fieldnote Catalog Studio: dependency-free browser/CommonJS core. */
+(function(root,factory){if(typeof module==='object'&&module.exports)module.exports=factory();else root.CatalogCore=factory();})(typeof globalThis!=='undefined'?globalThis:this,function CatalogFactory(){
+'use strict';
+const VERSION='0.1.0';
+const LIMITS=Object.freeze({characters:5000000,rows:1000,columns:80,field:12000,assetCharacters:14000000,totalAssetCharacters:45000000});
+const FIELDS=Object.freeze(['sku','name','category','description','price','pack','image','brand','currency']);
+const REQUIRED=Object.freeze(['sku','name','category','pack']);
+const ALIASES={
+sku:['sku','item number','item no','item code','product code','part number','part no'],
+name:['name','product name','product','title','item name'],
+category:['category','product category','department','group'],
+description:['description','product description','details'],
+price:['price','unit price','list price','selling price','price usd'],
+pack:['pack','pack size','unit','uom','selling unit','unit of measure'],
+image:['image','image filename','image file','photo','photo filename'],
+brand:['brand','manufacturer','make'],
+currency:['currency','currency code']
+};
+function fail(message){throw new Error(message);}
+function str(value){return value==null?'':String(value);}
+function headerKey(value){return str(value).normalize('NFKC').toLowerCase().replace(/[_-]+/g,' ').replace(/\s+/g,' ').trim();}
+function textValue(value){return str(value).normalize('NFC').trim();}
+function escaped(value){return str(value).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+function meaningful(value){return !/^(?:|n\/a|na|null|undefined|tbd|unknown|-)$/i.test(textValue(value));}
+function detectDelimiter(input){
+const counts={',':0,';':0,'\t':0};let quoted=false;
+for(let i=0;i<input.length;i++){const c=input[i];if(c==='"'){if(quoted&&input[i+1]==='"')i++;else quoted=!quoted;}else if(!quoted){if(c==='\n'||c==='\r')break;if(c in counts)counts[c]++;}}
+return Object.keys(counts).sort(function(a,b){return counts[b]-counts[a];})[0];
+}
+function parseCSV(input,delimiter){
+if(typeof input!=='string')fail('CSV input must be text.');
+if(input.length>LIMITS.characters)fail('CSV exceeds the 5 million character limit.');
+let source=input.replace(/^\uFEFF/,'');
+if(!source.trim())fail('The CSV is empty.');
+if(source.indexOf('\0')!==-1)fail('CSV contains a null character.');
+delimiter=delimiter||detectDelimiter(source);
+if([',',';','\t'].indexOf(delimiter)===-1)fail('Delimiter must be comma, semicolon, or tab.');
+let records=[],lines=[],row=[],field='',inQuotes=false,closed=false,line=1,rowStart=1;
+function pushField(){if(field.length>LIMITS.field)fail('A field exceeds 12,000 characters near line '+rowStart+'.');row.push(field);if(row.length>LIMITS.columns)fail('CSV exceeds 80 columns.');field='';closed=false;}
+function pushRow(){pushField();if(row.some(function(x){return x.trim()!=='';})){records.push(row);lines.push(rowStart);if(records.length>LIMITS.rows+1)fail('CSV exceeds the 1,000 product limit.');}row=[];}
+for(let i=0;i<source.length;i++){
+const c=source[i];
+if(inQuotes){
+if(c==='"'){if(source[i+1]==='"'){field+='"';i++;}else{inQuotes=false;closed=true;}}
+else if(c==='\r'){if(source[i+1]==='\n')i++;field+='\n';line++;}
+else{field+=c;if(c==='\n')line++;}
+}else if(c===delimiter){pushField();}
+else if(c==='\n'||c==='\r'){pushRow();if(c==='\r'&&source[i+1]==='\n')i++;line++;rowStart=line;}
+else if(c==='"'){if(field||closed)fail('Unexpected quote on line '+line+'.');inQuotes=true;}
+else{if(closed)fail('Unexpected text after a closing quote on line '+line+'.');field+=c;}
+if(field.length>LIMITS.field)fail('A field exceeds 12,000 characters near line '+rowStart+'.');
+}
+if(inQuotes)fail('Unclosed quoted field near line '+rowStart+'.');
+if(field||row.length||closed)pushRow();
+if(records.length<2)fail('Add a header and at least one product row.');
+const headers=records[0].map(function(x){return textValue(x);});
+if(headers.some(function(x){return !x;}))fail('Every column needs a header.');
+const keys=headers.map(headerKey);
+if(new Set(keys).size!==keys.length)fail('Duplicate column headers. Rename them before importing.');
+records.slice(1).forEach(function(r,i){if(r.length!==headers.length)fail('Line '+lines[i+1]+' has '+r.length+' fields; expected '+headers.length+'.');});
+return {headers:headers,rows:records.slice(1),lines:lines.slice(1),delimiter:delimiter};
+}
+function autoMap(headers){
+const mapping={};
+FIELDS.forEach(function(field){const matches=headers.filter(function(h){return ALIASES[field].indexOf(headerKey(h))!==-1;});mapping[field]=matches.length===1?matches[0]:'';});
+return mapping;
+}
+function parsePrice(value){
+let s=textValue(value);
+if(!s)return null;
+if(s[0]==='$')s=s.slice(1);
+if(!/^(?:\d+|\d{1,3}(?:,\d{3})+)(?:\.\d{1,2})?$/.test(s))fail('Use a nonnegative USD amount, for example 12.50 or 1,234.50.');
+s=s.replace(/,/g,'');const parts=s.split('.');
+const cents=Number(parts[0])*100+Number(((parts[1]||'')+'00').slice(0,2));
+if(!Number.isSafeInteger(cents)||cents>999999999)fail('Price exceeds $9,999,999.99.');
+return cents;
+}
+function formatPrice(cents){return cents===null?'Price on request':new Intl.NumberFormat('en-US',{style:'currency',currency:'USD'}).format(cents/100);}
+function safeImageName(value){const s=textValue(value);return !s||(/^[^\\/:*?"<>|\u0000-\u001f]{1,160}$/.test(s)&&s!=='.'&&s!=='..'&&!s.startsWith('.'));}
+function isRasterDataURL(value){return typeof value==='string'&&value.length<=LIMITS.assetCharacters&&/^data:image\/(?:png|jpeg|webp);base64,[A-Za-z0-9+/]+={0,2}$/.test(value);}
+function own(object,key){return Object.prototype.hasOwnProperty.call(object||{},key);}
+function audit(table,mapping,assets){
+if(!table||!Array.isArray(table.headers)||!Array.isArray(table.rows))fail('Import a CSV first.');
+if(table.rows.length>LIMITS.rows)fail('Too many products.');
+const issues=[],products=[];
+function issue(level,code,row,sku,field,message){issues.push({level:level,code:code,row:row,sku:sku,field:field,message:message});}
+const active=Object.values(mapping||{}).filter(Boolean);
+REQUIRED.forEach(function(field){if(!mapping||!mapping[field]||table.headers.indexOf(mapping[field])<0)issue('error','mapping',0,'',field,'Map the '+field+' column.');});
+if(new Set(active).size!==active.length)issue('error','mapping',0,'','','Each source column can map to only one field.');
+FIELDS.forEach(function(field){if(mapping&&mapping[field]&&table.headers.indexOf(mapping[field])<0)issue('error','mapping',0,'',field,'Mapped column does not exist.');});
+if(issues.length)return {products:[],issues:issues,errors:issues.length,warnings:0,ready:false};
+const indexes={};FIELDS.forEach(function(f){indexes[f]=table.headers.indexOf(mapping[f]);});
+table.rows.forEach(function(row,i){
+const p={sourceLine:table.lines[i],sourceIndex:i,cents:null};
+FIELDS.forEach(function(f){p[f]=indexes[f]<0?'':textValue(row[indexes[f]]);});
+REQUIRED.forEach(function(f){if(!meaningful(p[f]))issue('error','required',p.sourceLine,p.sku,f,'Missing '+f+'. Supply it from the client; do not guess.');});
+FIELDS.forEach(function(f){if(/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/.test(p[f]))issue('error','control',p.sourceLine,p.sku,f,'Remove unsupported control characters.');});
+[['sku',80],['name',110],['category',70],['pack',65],['brand',80],['description',800]].forEach(function(spec){if(p[spec[0]].length>spec[1])issue('error','length',p.sourceLine,p.sku,spec[0],'Maximum '+spec[1]+' characters for '+spec[0]+'.');});
+if(p.description.split('\n').length>10)issue('error','length',p.sourceLine,p.sku,'description','Description supports at most 10 lines; shorten the approved source without inventing facts.');
+if(p.currency&&p.currency.toUpperCase()!=='USD')issue('error','currency',p.sourceLine,p.sku,'currency','Version 1 supports USD only; do not convert automatically.');
+try{p.cents=parsePrice(p.price);}catch(e){issue('error','price',p.sourceLine,p.sku,'price',e.message);}
+if(p.cents===null)issue('warning','no_price',p.sourceLine,p.sku,'price','No price supplied. Output will say "Price on request".');
+if(!p.description)issue('warning','no_description',p.sourceLine,p.sku,'description','No description supplied. No description will be invented.');
+if(!safeImageName(p.image))issue('error','image_path',p.sourceLine,p.sku,'image','Use a local image filename, not a URL or directory path.');
+else if(p.image&&(!own(assets,p.image)||!isRasterDataURL(assets[p.image])))issue('warning','no_image',p.sourceLine,p.sku,'image','Image file not loaded. Output will show "Image not supplied".');
+else if(!p.image)issue('warning','no_image',p.sourceLine,p.sku,'image','No approved image supplied. Output will show "Image not supplied".');
+products.push(p);
+});
+const groups=new Map();
+products.forEach(function(p){const key=p.sku.normalize('NFKC').toLowerCase();if(key){if(!groups.has(key))groups.set(key,[]);groups.get(key).push(p);}});
+groups.forEach(function(group){if(group.length>1)group.forEach(function(p){issue('error','duplicate_sku',p.sourceLine,p.sku,'sku','Duplicate SKU, including case and compatibility variants.');});});
+const errors=issues.filter(function(x){return x.level==='error';}).length;
+return {products:products,issues:issues,errors:errors,warnings:issues.length-errors,ready:errors===0&&products.length>0};
+}
+function csvCell(value){let s=str(value);if(/^[\s]*[=+\-@]/.test(s))s="'"+s;return '"'+s.replace(/"/g,'""')+'"';}
+function toCSV(rows){return rows.map(function(row){return row.map(csvCell).join(',');}).join('\r\n')+'\r\n';}
+function normalizedCSV(products){return toCSV([FIELDS].concat(products.map(function(p){return FIELDS.map(function(f){return f==='price'?(p.cents===null?'':(p.cents/100).toFixed(2)):f==='currency'?'USD':p[f];});})));}
+function issuesCSV(issues){const cols=['level','code','row','sku','field','message'];return toCSV([cols].concat(issues.map(function(x){return cols.map(function(k){return x[k];});})));}
+function slug(value){return str(value).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,60)||'catalog';}
+function normalizeBrand(input){
+input=input||{};
+const b={};
+[['company','Your company',90],['title','Product collection',100],['edition','Current edition',60],['contact','',140],['terms','Prices in USD per stated selling unit. Confirm availability and current terms before ordering.',400]].forEach(function(spec){b[spec[0]]=textValue(input[spec[0]])||spec[1];if(b[spec[0]].length>spec[2])fail(spec[0]+' is too long.');});
+b.color=/^#[0-9a-fA-F]{6}$/.test(input.color||'')?input.color:'#ba4c2f';
+return b;
+}
+const printStyle=String.raw`*{box-sizing:border-box}body{margin:0;color:#202520;background:#edece7;font-family:Arial,Helvetica,sans-serif;line-height:1.5}button,input{font:inherit}.toolbar{position:sticky;top:0;z-index:9;display:flex;gap:12px;justify-content:center;padding:14px;background:#202520;color:white}.toolbar input{width:min(50vw,380px);padding:8px;border:0;border-radius:3px}.toolbar button{padding:8px 14px;border:1px solid #aaa;background:white;color:#202520;border-radius:3px;cursor:pointer}.page{background:#fff;width:210mm;min-height:277mm;margin:22px auto;padding:16mm;position:relative;page-break-after:always;break-after:page}.page:last-child{page-break-after:auto;break-after:auto}.cover{display:flex;min-height:277mm;flex-direction:column;justify-content:space-between;background:var(--accent);color:white}.kicker{text-transform:uppercase;letter-spacing:.16em;font-size:11px}.cover h1{font-size:55px;line-height:1.04;letter-spacing:-.035em;overflow-wrap:anywhere;margin:24px 0}.cover .company{font-size:21px}.cover .bottom{border-top:1px solid #ffffff70;padding-top:20px}.cover .count{font-size:75px;font-weight:700;letter-spacing:-.05em}.logo{max-width:190px;max-height:70px;object-fit:contain;align-self:flex-start}.note{font-size:12px;opacity:.85;max-width:40em}.sheethead{border-top:5px solid var(--accent);padding-top:13px;display:flex;gap:15px;justify-content:space-between;align-items:flex-start;margin-bottom:24px;overflow-wrap:anywhere}.sheethead h2{margin:0;font-size:27px;line-height:1.15}.sheethead small{max-width:45%;text-align:right;color:#666}.grid{display:grid;grid-template-columns:1fr 1fr;gap:25px 24px}.product{min-width:0;border-bottom:1px solid #d8dbd5;padding-bottom:18px;break-inside:avoid}.image{height:115px;background:#f3f4ef;display:flex;align-items:center;justify-content:center;color:#757a70;font-size:11px}.image img{display:block;max-width:100%;height:100%;object-fit:contain}.sku{font:11px monospace;color:#686d64;margin:13px 0 4px;overflow-wrap:anywhere}.product h3{margin:0;font-size:17px;line-height:1.22;overflow-wrap:anywhere}.description{font-size:11px;color:#60675f;white-space:pre-line;overflow-wrap:anywhere;margin:8px 0}.selling{margin-top:12px;font-size:11px;overflow-wrap:anywhere}.selling strong{font-size:19px;display:block}.manufacturer{font-size:10px;color:#60675f}.pagefoot{margin-top:25px;padding-top:13px;border-top:1px solid #d8dbd5;display:flex;justify-content:space-between;gap:16px;color:#686d64;font-size:9px;overflow-wrap:anywhere}.pagefoot span:first-child{max-width:85%}.watermark{padding:7px;background:#fff0c5;color:#5b4200;font-size:10px;letter-spacing:.08em;text-align:center;margin-bottom:14px}.cover .watermark{background:#0003;color:white}.price-table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:11px}.price-table th{padding:9px 6px;text-align:left;background:#f0f1eb;color:#4c5549}.price-table td{padding:11px 6px;border-bottom:1px solid #e4e6e0;overflow-wrap:anywhere;vertical-align:top}.price-table th:first-child{width:20%}.price-table th:nth-child(2){width:40%}.price-table th:nth-child(3){width:20%}.price-table th:last-child{width:20%;text-align:right}.price-table td:last-child{text-align:right;font-variant-numeric:tabular-nums}.muted{font-size:10px;color:#697064}.page [hidden]{display:none!important}@media(max-width:850px){.page{width:100%;min-height:0;margin:0 0 16px;padding:24px}.cover{min-height:75vh}.cover h1{font-size:clamp(36px,9vw,55px)}.grid{gap:20px 16px}}@media(max-width:450px){.grid{grid-template-columns:1fr}.toolbar{flex-wrap:wrap}.toolbar input{width:100%}}@page{size:A4;margin:10mm 0}@media print{body{background:white;-webkit-print-color-adjust:exact;print-color-adjust:exact}.toolbar{display:none}.page{width:210mm;min-height:277mm;margin:0;padding:12mm 16mm;box-shadow:none}.cover{height:277mm}.grid{grid-template-columns:1fr 1fr}.product{break-inside:avoid}.page[hidden],.product[hidden],tr[hidden]{display:revert!important}}`;
+function buildCatalog(products,branding,assets,settings){
+settings=settings||{};assets=assets||{};
+const brand=normalizeBrand(branding);
+if(!Array.isArray(products)||!products.length)fail('No products to export.');
+const seen=new Set();
+products.forEach(function(p){if(!p||!REQUIRED.every(function(f){return meaningful(p[f]);})||p.cents!==null&&(!Number.isSafeInteger(p.cents)||p.cents<0||p.cents>999999999))fail('Invalid product; run validation before export.');const key=textValue(p.sku).normalize('NFKC').toLowerCase();if(seen.has(key))fail('Duplicate SKU in export.');seen.add(key);});
+const mode=settings.mode==='prices'?'prices':'catalog';
+const densityStyle=mode==='prices'&&settings.compactPrices===true?'.price-table{font-size:10.5px;line-height:1.4}.price-table td{padding:7px 6px}.price-table th{padding:8px 6px}.sheethead h2{font-size:22px}.sheethead{margin-bottom:18px}':'';
+const draft=settings.draft!==false,demo=settings.demo===true;
+const state=demo?'FICTIONAL DEMO • NOT FOR PRODUCT SELECTION OR ORDERS':draft?'DRAFT • FOR CUSTOMER REVIEW':'';
+const stamp=state?'<div class="watermark">'+escaped(state)+'</div>':'';
+const pageFooter=function(page){return '<footer class="pagefoot"><span>'+escaped(brand.terms)+'<br>'+escaped(brand.contact)+'</span><span>'+page+'</span></footer>';};
+const logo=isRasterDataURL(settings.logo)?'<img class="logo" src="'+settings.logo+'" alt="'+escaped(brand.company)+' logo">':'';
+let content='';
+if(mode==='catalog')content='<section class="page cover">'+stamp+'<div>'+logo+'<div class="kicker">'+escaped(brand.edition)+'</div><div class="company">'+escaped(brand.company)+'</div><h1>'+escaped(brand.title)+'</h1></div><div class="bottom"><div class="count">'+products.length+'</div><div class="kicker">Products in this edition</div><p class="note">'+escaped(brand.contact)+'</p></div></section>';
+const groups=new Map();products.forEach(function(p){if(!groups.has(p.category))groups.set(p.category,[]);groups.get(p.category).push(p);});
+let page=mode==='catalog'?2:1;
+groups.forEach(function(items,category){
+// Long headings/terms or wrapped row fields need fewer rows so the footer stays on the same printed page.
+const longPriceText=settings.compactPrices===true&&(brand.company.length>45||brand.contact.length>100||brand.terms.length>250||category.length>40||items.some(function(p){return p.sku.length>30||p.name.length>70||p.pack.length>25;}));
+const count=mode==='prices'?(longPriceText?4:8):2;
+for(let i=0;i<items.length;i+=count){
+const chunk=items.slice(i,i+count);
+let body='';
+if(mode==='prices'){
+body='<table class="price-table"><thead><tr><th scope="col">SKU</th><th scope="col">Product</th><th scope="col">Selling unit</th><th scope="col">USD / unit</th></tr></thead><tbody>'+chunk.map(function(p){return '<tr data-entry data-search="'+escaped([p.sku,p.name,p.category,p.description,p.brand].join(' ').toLowerCase())+'"><td>'+escaped(p.sku)+'</td><td>'+escaped(p.name)+'</td><td>'+escaped(p.pack)+'</td><td>'+(p.cents===null?'On request':escaped(formatPrice(p.cents)))+'</td></tr>';}).join('')+'</tbody></table>';
+}else{
+body='<div class="grid">'+chunk.map(function(p){const image=own(assets,p.image)&&isRasterDataURL(assets[p.image])?'<img src="'+assets[p.image]+'" alt="'+escaped(p.name)+'">':'<span>Image not supplied</span>';return '<article class="product" data-entry data-search="'+escaped([p.sku,p.name,p.category,p.description,p.brand].join(' ').toLowerCase())+'"><div class="image">'+image+'</div><div class="sku">'+escaped(p.sku)+'</div><h3>'+escaped(p.name)+'</h3>'+(p.brand?'<div class="manufacturer">'+escaped(p.brand)+'</div>':'')+(p.description?'<p class="description">'+escaped(p.description)+'</p>':'')+'<div class="selling"><strong>'+escaped(formatPrice(p.cents))+'</strong>Per '+escaped(p.pack)+'</div></article>';}).join('')+'</div>';
+}
+content+='<section class="page collection">'+stamp+'<header class="sheethead"><h2>'+escaped(category)+'</h2><small>'+escaped(brand.company)+'<br>'+escaped(brand.edition)+'</small></header>'+body+pageFooter(page++)+'</section>';
+}});
+const client=String.raw`(function(){'use strict';var input=document.getElementById('find'),previous='';function filter(q){q=q.toLowerCase();document.querySelectorAll('[data-entry]').forEach(function(el){el.hidden=el.dataset.search.indexOf(q)===-1;});document.querySelectorAll('.collection').forEach(function(el){el.hidden=!Array.from(el.querySelectorAll('[data-entry]')).some(function(x){return !x.hidden;});});document.getElementById('results').textContent=q?Array.from(document.querySelectorAll('[data-entry]')).filter(function(x){return !x.hidden;}).length+' matches':'';}input.addEventListener('input',function(){filter(input.value);});document.getElementById('print').addEventListener('click',function(){window.print();});window.addEventListener('beforeprint',function(){previous=input.value;filter('');});window.addEventListener('afterprint',function(){filter(previous);});})();`;
+return '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src \'none\'; script-src \'unsafe-inline\'; style-src \'unsafe-inline\'; img-src data:; connect-src \'none\'; base-uri \'none\'; form-action \'none\'; object-src \'none\'"><meta name="referrer" content="no-referrer"><title>'+escaped(brand.company)+' — '+(mode==='prices'?'Price sheet':escaped(brand.title))+'</title><style>:root{--accent:'+brand.color+'}'+printStyle+densityStyle+'</style></head><body><div class="toolbar"><label for="find">Find a product</label><input id="find" type="search" placeholder="SKU, name, or category"><button id="print" type="button">Print / Save PDF</button><span id="results" aria-live="polite"></span></div>'+content+'<script>'+client+'<\/script></body></html>';
+}
+function releaseReady(result,approved){return Boolean(result&&result.ready&&approved===true);}
+function manifest(table,mapping,result,branding,approved,settings){
+const brand=normalizeBrand(branding);return {schemaVersion:1,engineVersion:VERSION,approved:releaseReady(result,approved),demo:Boolean(settings&&settings.demo),source:{headers:table.headers,rows:table.rows,physicalLines:table.lines,delimiter:table.delimiter},mapping:mapping,brand:brand,products:result.products,issues:result.issues,note:'Review record, not proof of customer approval. Formula-safe CSV can prefix an apostrophe; JSON retains source text. Image bytes are not included.'};
+}
+return Object.freeze({VERSION:VERSION,LIMITS:LIMITS,FIELDS:FIELDS,REQUIRED:REQUIRED,escaped:escaped,parseCSV:parseCSV,autoMap:autoMap,parsePrice:parsePrice,formatPrice:formatPrice,safeImageName:safeImageName,isRasterDataURL:isRasterDataURL,audit:audit,toCSV:toCSV,normalizedCSV:normalizedCSV,issuesCSV:issuesCSV,slug:slug,normalizeBrand:normalizeBrand,buildCatalog:buildCatalog,releaseReady:releaseReady,manifest:manifest});
+});
+
+</script><script>/* Local, deterministic pricebook calculations. No network or runtime dependencies. */
+(function(root,factory){if(typeof module==='object'&&module.exports)module.exports=factory(require('../core.cjs'));else root.PricebookCore=factory(root.CatalogCore);})(typeof globalThis!=='undefined'?globalThis:this,function(C){
+'use strict';
+const VERSION='0.2.0';
+const MAX_PROJECT=65000000;
+const FIELDS=Object.freeze(C.FIELDS.concat(['cost']));
+const key=x=>String(x||'').normalize('NFKC').toLowerCase().trim();
+const own=(o,k)=>Object.prototype.hasOwnProperty.call(o||{},k);
+function fail(s){throw Error(s);}
+function plain(o){return o!==null&&typeof o==='object'&&!Array.isArray(o);}
+function percent(value,max){
+ const s=String(value).trim();
+ if(!/^\d{1,3}(?:\.\d{1,2})?$/.test(s))fail('Use a percentage with at most two decimal places.');
+ const bps=C.parsePrice(s);
+ if(bps>max)fail('Percentage is outside its permitted range.');
+ return bps;
+}
+function rules(input){
+ input=input||{};
+ const floorBps=percent(input.margin===undefined?'20':input.margin,9900);
+ const changeBps=percent(input.change===undefined?'20':input.change,10000);
+ const extra=input.tiers===undefined?[]:input.tiers;
+ if(!Array.isArray(extra)||extra.length>4)fail('Use at most four dealer tiers in addition to List.');
+ const tiers=[{name:'List',discountBps:0}];const names=new Set(['list']);
+ extra.forEach(t=>{
+  if(!plain(t)||typeof t.name!=='string')fail('Each tier needs a name and discount.');
+  const name=t.name.normalize('NFC').trim();
+  if(!name||name.length>40||/[\u0000-\u001f\u007f]/.test(name))fail('Tier names must contain 1–40 ordinary characters.');
+  if(names.has(key(name)))fail('Tier names must be unique, including List.');
+  names.add(key(name));tiers.push({name,discountBps:percent(t.discount,10000)});
+ });
+ return {floorBps,changeBps,tiers};
+}
+function discount(cents,bps){
+ if(!Number.isSafeInteger(cents)||cents<0||cents>999999999||!Number.isInteger(bps)||bps<0||bps>10000)fail('Invalid price or discount.');
+ return Number((BigInt(cents)*BigInt(10000-bps)+5000n)/10000n);
+}
+function floorPrice(cost,bps){return Number((BigInt(cost)*10000n+BigInt(10000-bps)-1n)/BigInt(10000-bps));}
+function marginText(sell,cost){return sell===0?'Undefined (zero price)':((sell-cost)*100/sell).toFixed(2)+'%';}
+function autoMap(headers){
+ const m=C.autoMap(headers);
+ const matches=headers.filter(h=>['cost','unit cost','landed cost','cost usd'].includes(key(h).replace(/[_-]+/g,' ').replace(/\s+/g,' ')));
+ m.cost=matches.length===1?matches[0]:'';return m;
+}
+function dataset(source,mapping,assets,delimiter){
+ const table=C.parseCSV(source,delimiter||undefined);mapping=mapping||autoMap(table.headers);
+ const baseMap={};C.FIELDS.forEach(f=>{baseMap[f]=mapping[f]||'';});
+ const a=C.audit(table,baseMap,assets||{});
+ function issue(level,code,p,field,message){a.issues.push({level,code,row:p?p.sourceLine:0,sku:p?p.sku:'',field,message});}
+ const index=table.headers.indexOf(mapping.cost);
+ if(index<0)issue('error','cost_mapping',null,'cost','Map the internal cost column. Costs are required for margin checks.');
+ else if(Object.values(baseMap).includes(mapping.cost))issue('error','cost_mapping',null,'cost','Cost must use its own source column.');
+ a.products.forEach(p=>{
+  p.costCents=null;
+  if(index>=0){try{p.costCents=C.parsePrice(table.rows[p.sourceIndex][index]);if(p.costCents===null)issue('error','missing_cost',p,'cost','Supply a cost per the same selling unit as the list price.');else if(p.costCents===0)issue('warning','zero_cost',p,'cost','Zero cost supplied. Verify this is intentional.');}catch(e){issue('error','invalid_cost',p,'cost',e.message);}}
+  if(p.cents===null)issue('error','missing_price',p,'price','Supply a numeric list price. This pricebook requires priced products.');
+ });
+ a.errors=a.issues.filter(i=>i.level==='error').length;a.warnings=a.issues.length-a.errors;a.ready=a.errors===0&&a.products.length>0;
+ return {table,mapping,result:a};
+}
+function compare(before,after,threshold){
+ const old=new Map(before.map(p=>[key(p.sku),p]));const current=new Set();const changes=[];
+ after.forEach(p=>{
+  const k=key(p.sku),prev=old.get(k);current.add(k);
+  if(!prev){changes.push({kind:'added',sku:p.sku,line:p.sourceLine,fields:['new SKU'],oldCents:null,newCents:p.cents,large:false});return;}
+  const fields=C.FIELDS.filter(f=>f==='price'?prev.cents!==p.cents:prev[f]!==p[f]);
+  if(prev.costCents!==p.costCents)fields.push('cost');
+  if(fields.length){const large=prev.cents===0?p.cents!==0:Math.abs(p.cents-prev.cents)*10000>prev.cents*threshold;
+   changes.push({kind:'changed',sku:p.sku,line:p.sourceLine,fields,oldCents:prev.cents,newCents:p.cents,oldCost:prev.costCents,newCost:p.costCents,large});}
+ });
+ before.forEach(p=>{if(!current.has(key(p.sku)))changes.push({kind:'removed',sku:p.sku,line:0,fields:['removed SKU'],oldCents:p.cents,newCents:null,large:false});});
+ return changes;
+}
+function parseBaseline(text){
+ if(text.trim().startsWith('{')){let b;try{b=JSON.parse(text);}catch{fail('Invalid previous-edition data.');}
+  if(!plain(b)||b.format!=='fieldnote-baseline'||typeof b.source!=='string'||!plain(b.mapping)||typeof b.delimiter!=='string')fail('Invalid previous-edition data.');
+  C.parseCSV(b.source,b.delimiter||undefined);return b;
+ }
+ return {source:text,mapping:null,delimiter:''};
+}
+function makeBaseline(projectText){const o=restore(projectText);return JSON.stringify({format:'fieldnote-baseline',source:o.source,mapping:o.mapping,delimiter:o.delimiter});}
+function audit(source,mapping,assets,inputRules,baseline,delimiter){
+ const parsed=dataset(source,mapping,assets,delimiter),r=rules(inputRules),a=parsed.result;
+ let changes=[],previous=null;
+ if(baseline){
+  const b=parseBaseline(baseline);previous=dataset(b.source,b.mapping,{},b.delimiter);
+  // Baseline photos are irrelevant. Structural and monetary errors still block comparison.
+  if(previous.result.errors)previous.result.issues.filter(i=>i.level==='error').forEach(i=>a.issues.push({...i,code:'baseline_'+i.code,message:'Previous edition: '+i.message}));
+  else changes=compare(previous.result.products,a.products,r.changeBps);
+ }
+ const tiers=r.tiers.map(t=>({...t,rows:a.products.map(p=>({sku:p.sku,cents:p.cents===null?null:discount(p.cents,t.discountBps),cost:p.costCents}))}));
+ tiers.forEach(t=>t.rows.forEach((v,index)=>{
+  if(v.cents===null||v.cost===null)return;
+  const p=a.products[index];
+  if(v.cents===0||BigInt(v.cents)*BigInt(10000-r.floorBps)<BigInt(v.cost)*10000n){
+   a.issues.push({level:'error',code:'margin_floor',row:p.sourceLine,sku:p.sku,field:t.name,message:t.name+': '+C.formatPrice(v.cents)+' gives '+marginText(v.cents,v.cost)+' gross margin; minimum '+(r.floorBps/100).toFixed(2)+'%. Required selling price: '+C.formatPrice(floorPrice(v.cost,r.floorBps))+'. Change the source price or discount after review.'});
+  }
+ }));
+ changes.forEach(d=>{
+  let message='';
+  if(d.kind==='removed')message='SKU is absent from this full snapshot and will not appear in the new books. Verify removal.';
+  else if(d.fields.includes('pack'))message='Selling unit changed. Reconcile price and cost to the new unit; no conversion is inferred.';
+  else if(d.large)message='List price changed more than '+(r.changeBps/100).toFixed(2)+'%. Verify against the approved supplier data.';
+  if(message)a.issues.push({level:'warning',code:'edition_change',row:d.line,sku:d.sku,field:'comparison',message});
+ });
+ a.errors=a.issues.filter(i=>i.level==='error').length;a.warnings=a.issues.length-a.errors;a.ready=a.errors===0&&a.products.length>0;
+ return {...parsed,result:a,rules:r,tiers,changes,hasBaseline:Boolean(baseline)};
+}
+function publicProducts(report,tierIndex){
+ if(!report||!report.result.ready)fail('Resolve blocking issues before creating customer files.');
+ const tier=report.tiers[tierIndex];if(!tier)fail('Choose a valid price tier.');
+ // Whitelist fields. Cost, source rows, other tiers and internal audit data never reach customer documents.
+ return report.result.products.map((p,i)=>{const o={};C.FIELDS.forEach(f=>{o[f]=f==='currency'?'USD':f==='price'?(tier.rows[i].cents/100).toFixed(2):p[f];});o.cents=tier.rows[i].cents;return o;});
+}
+function customerHTML(report,tierIndex,brand,assets,settings){
+ const tier=report.tiers[tierIndex];if(!tier)fail('Choose a valid price tier.');
+ const b=C.normalizeBrand(brand);b.edition=b.edition.slice(0,60-tier.name.length-3)+' / '+tier.name;
+ return C.buildCatalog(publicProducts(report,tierIndex),b,assets,{...settings,compactPrices:true});
+}
+function masterCSV(report){
+ if(!report)fail('Validate product data first.');
+ if(report.result.products.some(p=>p.costCents===null||p.cents===null)||report.result.issues.some(i=>i.level==='error'&&i.code!=='margin_floor'&&!i.code.startsWith('baseline_')))fail('Correct structural and monetary errors before saving an internal master.');
+ return C.toCSV([FIELDS,...report.result.products.map(p=>FIELDS.map(f=>f==='cost'?(p.costCents/100).toFixed(2):f==='price'?(p.cents/100).toFixed(2):f==='currency'?'USD':p[f]))]);
+}
+function changesCSV(report){
+ return C.toCSV([['change','sku','changed_fields','old_list_usd','new_list_usd','old_cost_usd','new_cost_usd','large_price_change'],...report.changes.map(d=>[d.kind,d.sku,d.fields.join('; '),d.oldCents===null?'':(d.oldCents/100).toFixed(2),d.newCents===null?'':(d.newCents/100).toFixed(2),d.oldCost===undefined?'':(d.oldCost/100).toFixed(2),d.newCost===undefined?'':(d.newCost/100).toFixed(2),d.large?'yes':'no'])]);
+}
+function project(input){
+ const obj={format:'fieldnote-pricebook',version:2,source:input.source,mapping:input.mapping,delimiter:input.delimiter||'',baseline:input.baseline||'',rules:input.rules,brand:C.normalizeBrand(input.brand),assets:input.assets||{},logo:input.logo||'',demo:input.demo===true};
+ validateProject(obj);
+ const out=JSON.stringify(obj,null,2);if(new TextEncoder().encode(out).length>MAX_PROJECT)fail('Project is too large. Reduce photo sizes.');return out;
+}
+function validateProject(o){
+ if(!plain(o)||o.format!=='fieldnote-pricebook'||o.version!==2)fail('Unsupported project format or version.');
+ if(typeof o.source!=='string'||typeof o.delimiter!=='string'||typeof o.baseline!=='string'||!plain(o.mapping)||!plain(o.rules)||!plain(o.brand)||!plain(o.assets)||typeof o.logo!=='string'||typeof o.demo!=='boolean')fail('Project has invalid fields.');
+ for(const f of Object.keys(o.mapping))if(!FIELDS.includes(f)||typeof o.mapping[f]!=='string')fail('Invalid project column mapping.');
+ C.parseCSV(o.source,o.delimiter||undefined);if(o.baseline)parseBaseline(o.baseline);rules(o.rules);C.normalizeBrand(o.brand);
+ let budget=o.logo.length;
+ if(o.logo&&!C.isRasterDataURL(o.logo))fail('Invalid project logo.');
+ if(Object.keys(o.assets).length>1000)fail('Too many project photos.');
+ for(const [name,data]of Object.entries(o.assets)){if(!C.safeImageName(name)||!C.isRasterDataURL(data))fail('Invalid project photo.');budget+=data.length;}
+ if(budget>C.LIMITS.totalAssetCharacters)fail('Project image budget exceeded.');
+ return o;
+}
+function restore(text){
+ if(typeof text!=='string'||text.length>MAX_PROJECT)fail('Project exceeds the size limit.');
+ let o;try{o=JSON.parse(text);}catch{fail('Project is not valid JSON.');}
+ validateProject(o);
+ // Drop unknown properties, including any claimed approval. A restore always requires fresh review.
+ const r=rules(o.rules),canonicalRules={margin:(r.floorBps/100).toFixed(2),change:(r.changeBps/100).toFixed(2),tiers:r.tiers.slice(1).map(t=>({name:t.name,discount:(t.discountBps/100).toFixed(2)}))};
+ return {source:o.source,mapping:o.mapping,delimiter:o.delimiter,baseline:o.baseline,rules:canonicalRules,brand:C.normalizeBrand(o.brand),assets:o.assets,logo:o.logo,demo:o.demo};
+}
+return Object.freeze({VERSION,FIELDS,MAX_PROJECT,percent,rules,discount,floorPrice,marginText,autoMap,dataset,compare,audit,publicProducts,customerHTML,masterCSV,changesCSV,project,restore,makeBaseline});
+});
+</script><script>window.PRICEBOOK_DEMO="sku,name,category,description,price,pack,image,brand,currency,cost\n000101,Reusable cable ties · black,Cable management,Fictional workshop item. Confirm suitability before use.,8.50,bag of 25,,Northline Demo,USD,3.40\n000102,Reusable cable ties · natural,Cable management,Fictional workshop item. Dimensions and ratings not specified.,8.50,bag of 25,,Northline Demo,USD,3.40\n000103,Adhesive cable clips,Cable management,Fictional clips for arranging lightweight cords.,12.25,box of 20,,Northline Demo,USD,4.90\n000104,Cable identification sleeves,Cable management,Fictional blank sleeves for customer labeling.,6.75,bag of 50,,Northline Demo,USD,2.70\n000201,Workshop parts tray,Workshop storage,Fictional open tray for small workshop parts.,14.00,each,,Northline Demo,USD,5.60\n000202,Compartment organizer,Workshop storage,Fictional portable organizer. Size not specified.,24.50,each,,Northline Demo,USD,9.80\n000203,Canvas tool pouch,Workshop storage,Fictional soft pouch. Tools not included.,18.00,each,,Northline Demo,USD,7.20\n000204,Shelf identification holders,Workshop storage,Fictional holders for replaceable shelf labels.,9.25,pack of 12,,Northline Demo,USD,3.70\n000301,Blank inventory labels,Labels & identification,Fictional blank labels for inventory organization.,7.50,roll of 100,,Northline Demo,USD,3.00\n000302,Write-on cable tags,Labels & identification,Fictional blank tags. Use approved marking methods.,11.00,pack of 50,,Northline Demo,USD,4.40\n000303,Stock location cards,Labels & identification,Fictional cards for identifying storage locations.,5.25,pack of 25,,Northline Demo,USD,2.10\n000304,Custom label set,Labels & identification,Fictional custom label set. Confirm the approved specification.,20.00,set,,Northline Demo,USD,8.00\n";</script><script>(function PricebookApp(){
+'use strict';
+const C=window.CatalogCore,P=window.PricebookCore,$=id=>document.getElementById(id),esc=C.escaped;
+const state={mapping:null,report:null,assets:Object.create(null),logo:'',baseline:'',baselineName:'',baselineError:false,sourceName:'',demo:false,epoch:0,assetEpoch:0,busy:false,dirty:false};
+const brandFields=['company','title','edition','contact','terms','color'];
+const sampleBrand={company:'Northline Supply',title:'Workshop essentials.',edition:'October 2026 · Sample',contact:'Fictional demonstration business · No orders accepted',terms:'Fictional products and prices. Not for orders, product selection or engineering decisions.',color:'#245847'};
+function say(text,error){$('status').textContent=text;$('status').className=error?'error':'';}
+function resetReview(){ $('reviewed').checked=false;$('changes-reviewed').checked=false; }
+function touch(){state.dirty=true;resetReview();}
+function invalidate(message){touch();state.report=null;render();if(message)say(message);}
+function cancelReads(){state.epoch++;state.assetEpoch++;state.busy=false;}
+function rawBrand(){const b={};brandFields.forEach(k=>{b[k]=$('brand-'+k).value;});return b;}
+function inputRules(){
+ const tiers=$('tiers').value.trim().split('\n').filter(s=>s.trim()).map(line=>{const i=line.lastIndexOf('|');if(i<0)throw Error('Each dealer tier needs a name | discount, for example Trade | 10.00.');return {name:line.slice(0,i).trim(),discount:line.slice(i+1).trim()};});
+ return {margin:$('margin').value,change:$('change').value,tiers};
+}
+function tierIndex(){return Number($('selected-tier').value);}
+function finalReady(){return Boolean(state.report&&state.report.result.ready&&!state.busy&&$('reviewed').checked&&(!state.report.changes.length||$('changes-reviewed').checked));}
+function download(name,data,type){const url=URL.createObjectURL(new Blob([data],{type:type||'text/plain;charset=utf-8'}));const a=document.createElement('a');a.download=name;a.href=url;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),30000);}
+async function readUTF8(file){const bytes=await file.arrayBuffer();try{return new TextDecoder('utf-8',{fatal:true}).decode(bytes);}catch{throw Error('File must be valid UTF-8. Export a CSV UTF-8 copy and try again.');}}
+function guarded(fn){return async function(){try{await fn.call(this);}catch(e){say(e.message,true);}};}
+function maps(){
+ const table=C.parseCSV($('source-text').value,$('delimiter').value||undefined);state.mapping=state.mapping||P.autoMap(table.headers);
+ $('mappings').innerHTML=P.FIELDS.map(f=>'<label>'+esc(f)+(C.REQUIRED.includes(f)||['price','cost'].includes(f)?' <b>*</b>':'')+'<select data-field="'+f+'"><option value="">Not supplied</option>'+table.headers.map(h=>'<option value="'+esc(h)+'"'+(state.mapping[f]===h?' selected':'')+'>'+esc(h)+'</option>').join('')+'</select></label>').join('');
+ $('mappings').querySelectorAll('select').forEach(el=>el.addEventListener('change',()=>{state.mapping[el.dataset.field]=el.value;touch();run();}));
+}
+function run(){
+ resetReview();
+ try{if(state.baselineError)throw Error('Previous edition failed to load. Import a valid file or explicitly remove the comparison.');state.report=P.audit($('source-text').value,state.mapping,state.assets,inputRules(),state.baseline,$('delimiter').value);render();say(state.report.result.errors?state.report.result.errors+' blocking issue(s). Correct the source or rules before creating customer files.':'Checks complete. Review warnings and inspect a proof for every price tier.',state.report.result.errors>0);}
+ catch(e){state.report=null;render();say(e.message,true);}
+}
+function validate(){touch();try{maps();run();}catch(e){state.report=null;render();say(e.message,true);}}
+function render(){
+ const r=state.report,a=r&&r.result,valid=Boolean(a&&a.ready&&!state.busy);
+ $('n-products').textContent=a?a.products.length:'—';$('n-tiers').textContent=r?r.tiers.length:'—';$('n-errors').textContent=a?a.errors:'—';$('n-warnings').textContent=a?a.warnings:'—';
+ $('source-name').textContent=state.sourceName||'No source imported';$('demo').hidden=!state.demo;$('baseline-name').textContent=state.baselineName||'No previous edition loaded.';
+ $('review-state').textContent=state.busy?'Reading files…':finalReady()?'Reviewed for release':'Review required';
+ $('photo-count').textContent=Object.keys(state.assets).length+' product photo(s)'+(state.logo?' · Logo loaded':'');
+ for(const id of ['draft-catalog','draft-prices','public-csv'])$(id).disabled=!valid;
+ for(const id of ['final-catalog','final-prices'])$(id).disabled=!finalReady();
+ $('reviewed').disabled=!valid;$('changes-reviewed').disabled=!(valid&&r.changes.length);
+ for(const id of ['issues-csv','changes-csv','review-record','internal-master'])$(id).disabled=!r||state.busy;
+ $('save-project').disabled=state.busy||!$('source-text').value.trim();
+ for(const id of ['photos','logo'])$(id).disabled=state.busy||!a;
+ const oldTier=$('selected-tier').value;
+ $('selected-tier').innerHTML=r?r.tiers.map((t,i)=>'<option value="'+i+'">'+esc(t.name)+' · '+(t.discountBps/100).toFixed(2)+'% discount</option>').join(''):'<option value="0">Validate data first</option>';
+ if(r&&r.tiers[Number(oldTier)])$('selected-tier').value=oldTier;
+ $('issues').innerHTML=a?(a.issues.length?a.issues.slice(0,500).map(i=>'<tr><td><span class="level '+i.level+'">'+i.level+'</span></td><td>'+esc(i.row||'Mapping')+'</td><td class="mono">'+esc(i.sku||'—')+'</td><td>'+esc(i.field)+'</td><td>'+esc(i.message)+'</td></tr>').join(''):'<tr><td colspan="5">No issues found. Source and output review is still required.</td></tr>'):'<tr><td colspan="5">Validate the current source to see its checks.</td></tr>';
+ $('audit-summary').textContent=a?(a.issues.length>500?'Showing the first 500 issues. The internal CSV includes all '+a.issues.length+'.':a.errors+' blocking issues · '+a.warnings+' warnings. All '+a.products.length+' products and '+r.tiers.length+' tiers checked.'):'Validate data to see the current checks.';
+ $('changes-summary').textContent=r&&r.hasBaseline?'Edition comparison · '+r.changes.length+' changed, added or removed SKU(s)':'Edition comparison · No previous edition';
+ $('changes').innerHTML=r&&r.hasBaseline?(r.changes.length?r.changes.slice(0,500).map(d=>'<tr><td>'+d.kind+'</td><td>'+esc(d.sku)+'</td><td>'+esc(d.fields.join(', '))+'</td><td>'+esc(d.oldCents===null?'—':C.formatPrice(d.oldCents))+'</td><td>'+esc(d.newCents===null?'—':C.formatPrice(d.newCents))+'</td></tr>').join(''):'<tr><td colspan="5">No source values changed. Pricing rules are reviewed separately.</td></tr>'):'<tr><td colspan="5">Import a previous full CSV or project to compare.</td></tr>';
+ $('price-head').innerHTML=r?'<tr><th>SKU</th><th>Selling unit</th><th>Internal cost</th>'+r.tiers.map(t=>'<th>'+esc(t.name)+'</th>').join('')+'</tr>':'';
+ $('price-rows').innerHTML=r?r.result.products.slice(0,40).map((p,i)=>'<tr><td>'+esc(p.sku)+'</td><td>'+esc(p.pack)+'</td><td>'+esc(C.formatPrice(p.costCents))+'</td>'+r.tiers.map(t=>'<td>'+esc(C.formatPrice(t.rows[i].cents))+'</td>').join('')+'</tr>').join(''):'';
+}
+function exportBook(mode,final){
+ if(state.busy)throw Error('Wait for file validation to finish.');
+ if(final&&!finalReady())throw Error('Complete the current release review first.');
+ if(!state.report||!state.report.result.ready)throw Error('Resolve blocking issues before exporting.');
+ const i=tierIndex(),tier=state.report.tiers[i],brand=rawBrand();
+ const out=P.customerHTML(state.report,i,brand,state.assets,{mode,draft:!final,demo:state.demo,logo:state.logo});
+ if(out.length>55000000)throw Error('Customer file is too large. Resize photos before exporting.');
+ const name=C.slug(brand.company)+'-'+(i+1)+'-'+C.slug(tier.name)+'-'+mode+(state.demo?'-fictional-demo':final?'-final':'-draft')+'.html';
+ download(name,out,'text/html;charset=utf-8');say('Downloaded '+name+'. Open and inspect the HTML, then print to PDF.');
+}
+async function decodeRaster(data){
+ if(!C.isRasterDataURL(data))throw Error('Invalid photo data.');
+ const type=data.slice(5,data.indexOf(';')),raw=atob(data.slice(data.indexOf(',')+1)),b=Uint8Array.from(raw,c=>c.charCodeAt(0));
+ if(b.length>10000000)throw Error('Image exceeds 10 MB.');
+ const png=b[0]===137&&b[1]===80&&b[2]===78&&b[3]===71&&b[4]===13&&b[5]===10&&b[6]===26&&b[7]===10;
+ const jpeg=b[0]===255&&b[1]===216&&b[2]===255;
+ const webp=String.fromCharCode(...b.slice(0,4))==='RIFF'&&String.fromCharCode(...b.slice(8,12))==='WEBP';
+ if(!(type==='image/png'&&png||type==='image/jpeg'&&jpeg||type==='image/webp'&&webp))throw Error('Image bytes do not match its file type.');
+ await new Promise((resolve,reject)=>{const img=new Image();img.onerror=()=>reject(Error('Image could not be decoded.'));img.onload=()=>{if(!img.naturalWidth||!img.naturalHeight||img.naturalWidth>6000||img.naturalHeight>6000||img.naturalWidth*img.naturalHeight>20000000)reject(Error('Image dimensions exceed 6,000 px or 20 megapixels.'));else resolve();};img.src=data;});
+ return data;
+}
+async function readPhoto(f){
+ if(!['image/png','image/jpeg','image/webp'].includes(f.type)||!C.safeImageName(f.name))throw Error('Use named local PNG, JPEG or WebP images.');
+ if(f.size>10000000)throw Error('Image exceeds 10 MB.');
+ const data=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onerror=()=>reject(Error('Could not read image.'));reader.onload=()=>resolve(reader.result);reader.readAsDataURL(f);});
+ return decodeRaster(data);
+}
+async function photos(isLogo,files){
+ if(state.busy)throw Error('Wait for the current file operation to finish.');
+ if(!state.report)throw Error('Validate product data before importing photos.');
+ const epoch=state.epoch,token=++state.assetEpoch;state.busy=true;touch();render();say('Checking photos…');
+ try{
+  const next=Object.assign(Object.create(null),state.assets);let logo=state.logo;const names=new Set();
+  for(const f of files){if(names.has(f.name))throw Error('Two photos share a filename. Rename them.');names.add(f.name);const d=await readPhoto(f);if(isLogo)logo=d;else next[f.name]=d;}
+  const total=Object.values(next).reduce((n,d)=>n+d.length,0)+logo.length;
+  if(total>C.LIMITS.totalAssetCharacters)throw Error('Photo budget exceeded. Resize photos first.');
+  if(epoch!==state.epoch||token!==state.assetEpoch)return;
+  state.assets=next;state.logo=logo;state.busy=false;run();
+ }catch(e){if(epoch===state.epoch&&token===state.assetEpoch){state.busy=false;render();say(e.message,true);}}
+}
+function loadSample(){
+ cancelReads();state.assets=Object.create(null);state.logo='';state.baseline='';state.baselineName='';state.baselineError=false;state.sourceName='Fictional sample · 12 products';state.demo=true;state.mapping=null;
+ $('source-text').value=window.PRICEBOOK_DEMO;$('delimiter').value='';$('margin').value='20.00';$('change').value='20.00';$('tiers').value='Trade | 10.00\nPartner | 15.00';
+ brandFields.forEach(k=>$('brand-'+k).value=sampleBrand[k]);for(const id of ['source-file','baseline-file','photos','logo','restore-project'])$(id).value='';
+ validate();state.dirty=false;
+}
+$('brand-form').addEventListener('submit',e=>e.preventDefault());
+$('source-text').addEventListener('input',()=>{cancelReads();state.mapping=null;invalidate('Source changed. Validate current data before exporting.');});
+$('delimiter').addEventListener('change',()=>{cancelReads();state.mapping=null;invalidate('Separator changed. Validate current data again.');});
+for(const id of ['margin','change','tiers'])$(id).addEventListener('input',()=>invalidate('Pricing rules changed. Check these rules before exporting.'));
+$('brand-form').addEventListener('input',()=>{touch();render();});
+$('validate').addEventListener('click',validate);$('apply-rules').addEventListener('click',validate);
+for(const id of ['reviewed','changes-reviewed'])$(id).addEventListener('change',render);
+$('source-file').addEventListener('change',guarded(async function(){
+ const f=this.files[0];if(!f)return;cancelReads();const epoch=state.epoch;state.sourceName=f.name;state.demo=false;state.mapping=null;state.busy=true;$('source-text').value='';invalidate('Reading product CSV…');
+ try{if(f.size>10000000)throw Error('CSV exceeds 10 MB.');
+ const text=await readUTF8(f);if(epoch!==state.epoch)return;
+ state.assets=Object.create(null);state.logo='';$('photos').value='';$('logo').value='';$('source-text').value=text;state.busy=false;validate();}
+ catch(e){if(epoch===state.epoch){state.busy=false;state.report=null;render();say(e.message,true);}}
+}));
+$('baseline-file').addEventListener('change',guarded(async function(){
+ const f=this.files[0];if(!f)return;cancelReads();const epoch=state.epoch;state.baseline='';state.baselineName=f.name;state.baselineError=true;state.busy=true;invalidate('Reading previous edition…');
+ try{if(f.size>P.MAX_PROJECT)throw Error('Previous edition file exceeds the size limit.');const text=await readUTF8(f);if(epoch!==state.epoch)return;state.baseline=f.name.toLowerCase().endsWith('.json')?P.makeBaseline(text):text;state.baselineError=false;state.busy=false;validate();}
+ catch(e){if(epoch===state.epoch){state.busy=false;state.baseline='';state.baselineName='Previous edition failed to load. Choose it again.';state.report=null;render();say(e.message,true);}}
+}));
+$('clear-baseline').addEventListener('click',()=>{cancelReads();state.baseline='';state.baselineName='';state.baselineError=false;$('baseline-file').value='';validate();});
+$('photos').addEventListener('change',guarded(async function(){if(this.files.length)await photos(false,Array.from(this.files));this.value='';}));
+$('logo').addEventListener('change',guarded(async function(){if(this.files.length)await photos(true,[this.files[0]]);this.value='';}));
+$('clear-photos').addEventListener('click',()=>{state.assetEpoch++;state.busy=false;state.assets=Object.create(null);state.logo='';$('photos').value='';$('logo').value='';touch();run();});
+for(const mode of ['catalog','prices']){ $('draft-'+mode).addEventListener('click',guarded(()=>exportBook(mode,false)));$('final-'+mode).addEventListener('click',guarded(()=>exportBook(mode,true))); }
+$('public-csv').addEventListener('click',guarded(()=>{if(state.busy)throw Error('Wait for file validation.');const i=tierIndex(),products=P.publicProducts(state.report,i);download('customer-'+(i+1)+'-'+C.slug(state.report.tiers[i].name)+(state.demo?'-fictional-demo':finalReady()?'-reviewed':'-draft')+'.csv',C.normalizedCSV(products),'text/csv;charset=utf-8');}));
+$('issues-csv').addEventListener('click',guarded(()=>{if(state.report)download('INTERNAL-issues.csv',C.issuesCSV(state.report.result.issues),'text/csv;charset=utf-8');}));
+$('changes-csv').addEventListener('click',guarded(()=>{if(state.report)download('INTERNAL-edition-changes.csv',P.changesCSV(state.report),'text/csv;charset=utf-8');}));
+$('internal-master').addEventListener('click',guarded(()=>download('INTERNAL-master-with-costs.csv',P.masterCSV(state.report),'text/csv;charset=utf-8')));
+$('review-record').addEventListener('click',guarded(()=>{if(!state.report)return;download('INTERNAL-review-record.json',JSON.stringify({format:'fieldnote-review',version:2,engine:P.VERSION,demo:state.demo,reviewed:finalReady(),rules:state.report.rules,brand:C.normalizeBrand(rawBrand()),products:state.report.result.products,issues:state.report.result.issues,changes:state.report.changes,note:'Local operator review; not a signature, customer consent, tamper-evident record or independent verification of supplied data.'},null,2),'application/json');}));
+$('save-project').addEventListener('click',guarded(()=>{
+ if(state.busy)throw Error('Wait for file validation before saving.');
+ if(state.baselineError)throw Error('Resolve the failed previous-edition import before saving this project.');const source=$('source-text').value,mapping=state.mapping||P.autoMap(C.parseCSV(source,$('delimiter').value||undefined).headers);
+ const text=P.project({source,mapping,delimiter:$('delimiter').value,baseline:state.baseline,rules:inputRules(),brand:rawBrand(),assets:state.assets,logo:state.logo,demo:state.demo});
+ download('INTERNAL-'+C.slug(rawBrand().company)+'.pricebook.json',text,'application/json');state.dirty=false;say('Project backup downloaded. It contains internal costs and photos. Keep it private.');
+}));
+$('restore-project').addEventListener('change',guarded(async function(){
+ const f=this.files[0];if(!f)return;cancelReads();const epoch=state.epoch;state.busy=true;invalidate('Checking saved project and photos…');
+ try{
+  if(f.size>P.MAX_PROJECT)throw Error('Project file exceeds the size limit.');const text=await readUTF8(f);const o=P.restore(text);
+  for(const data of Object.values(o.assets))await decodeRaster(data);if(o.logo)await decodeRaster(o.logo);
+  if(epoch!==state.epoch)return;
+  $('source-text').value=o.source;$('delimiter').value=o.delimiter;state.mapping=o.mapping;state.baseline=o.baseline;state.baselineName=o.baseline?'Previous edition restored from project':'';state.baselineError=false;
+  state.assets=Object.assign(Object.create(null),o.assets);state.logo=o.logo;state.demo=o.demo;state.sourceName=f.name;
+  $('margin').value=o.rules.margin;$('change').value=o.rules.change;$('tiers').value=o.rules.tiers.map(t=>t.name+' | '+t.discount).join('\n');brandFields.forEach(k=>$('brand-'+k).value=o.brand[k]);
+  for(const id of ['source-file','baseline-file','photos','logo'])$(id).value='';state.busy=false;validate();state.dirty=false;say('Project restored and rechecked. Release review has been cleared. Inspect each tier before publishing.');
+ }catch(e){if(epoch===state.epoch){state.busy=false;state.report=null;render();say('Project was not restored: '+e.message,true);}}
+ this.value='';
+}));
+$('template').addEventListener('click',()=>download('product-pricebook-template.csv',C.toCSV([P.FIELDS,['YOUR-SKU','Approved product name','Category','Approved product description','100.00','box of 10','approved-photo.jpg','Manufacturer','USD','50.00']]),'text/csv;charset=utf-8'));
+$('sample').addEventListener('click',()=>{if(state.dirty&&!window.confirm('Replace this workspace with the fictional sample? Save a project backup first to keep your work.'))return;loadSample();});
+$('clear').addEventListener('click',()=>{
+ if(state.dirty&&!window.confirm('Clear this workspace? Unsaved changes will be lost.'))return;
+ cancelReads();state.mapping=null;state.report=null;state.assets=Object.create(null);state.logo='';state.baseline='';state.baselineName='';state.baselineError=false;state.sourceName='';state.demo=false;state.dirty=false;resetReview();
+ for(const id of ['source-text','source-file','baseline-file','photos','logo','restore-project'])$(id).value='';$('mappings').textContent='Import data to select columns.';render();say('Workspace cleared. Downloaded files remain on your device.');
+});
+window.addEventListener('beforeunload',e=>{if(state.dirty){e.preventDefault();e.returnValue='';}});
+loadSample();
+})();
+</script></body></html>
