@@ -115,7 +115,7 @@ function publicProducts(report,tierIndex){
 function customerHTML(report,tierIndex,brand,assets,settings){
  const tier=report.tiers[tierIndex];if(!tier)fail('Choose a valid price tier.');
  const b=C.normalizeBrand(brand);b.edition=b.edition.slice(0,60-tier.name.length-3)+' / '+tier.name;
- return C.buildCatalog(publicProducts(report,tierIndex),b,assets,settings);
+ return C.buildCatalog(publicProducts(report,tierIndex),b,assets,{...settings,compactPrices:true});
 }
 function masterCSV(report){
  if(!report)fail('Validate product data first.');

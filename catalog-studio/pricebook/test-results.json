@@ -1,7 +1,7 @@
 {
   "version": "0.2.0",
-  "total": 50,
-  "passed": 50,
+  "total": 51,
+  "passed": 51,
   "failed": [],
   "tests": [
     {
@@ -162,6 +162,10 @@
     },
     {
       "name": "Publishing: invalid tier fails explicitly",
+      "passed": true
+    },
+    {
+      "name": "Publishing: compact price layout and long edition retain selected tier name",
       "passed": true
     },
     {

@@ -40,7 +40,7 @@ async function suite(){
    const product={...P.publicProducts(P.audit(source,null,{},{}),0)[0],sku:'S'.repeat(80),name:'N'.repeat(110),description:Array(10).fill('D'.repeat(70)).join('\n'),pack:'P'.repeat(65),category:'C'.repeat(70),brand:'B'.repeat(80)};
    const brand={company:'Company '.repeat(10).trim(),title:'Collection '.repeat(9).trim(),edition:'Edition '.repeat(7).trim(),contact:'Contact '.repeat(17).trim(),terms:'Terms '.repeat(66).trim()};
    for(const mode of ['catalog','prices']){
-    const count=mode==='prices'?8:2;const rows=Array.from({length:count},(_,i)=>({...product,sku:String(i)+product.sku.slice(1)}));const location=path.join(out,'stress-'+mode+'.html');fs.writeFileSync(location,C.buildCatalog(rows,brand,{}, {mode,draft:true}));await p.goto(pathToFileURL(location).href);await p.pdf({path:path.join(out,'stress-'+mode+'.pdf'),format:'A4',printBackground:true,preferCSSPageSize:true,displayHeaderFooter:false});
+    const count=mode==='prices'?8:2;const rows=Array.from({length:count},(_,i)=>({...product,sku:String(i)+product.sku.slice(1),cost:'43.27'}));const csv=C.toCSV([P.FIELDS,...rows.map(p=>P.FIELDS.map(f=>p[f]))]);const report=P.audit(csv,null,{},{});const location=path.join(out,'stress-'+mode+'.html');fs.writeFileSync(location,P.customerHTML(report,0,brand,{}, {mode,draft:true}));await p.goto(pathToFileURL(location).href);await p.pdf({path:path.join(out,'stress-'+mode+'.pdf'),format:'A4',printBackground:true,preferCSSPageSize:true,displayHeaderFooter:false});
    }
   });
  }
