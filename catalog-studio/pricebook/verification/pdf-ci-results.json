@@ -1,0 +1,22 @@
+[
+  {
+    "file": "sample-catalog.pdf",
+    "pages": 7,
+    "passed": true
+  },
+  {
+    "file": "sample-prices.pdf",
+    "pages": 3,
+    "passed": true
+  },
+  {
+    "file": "stress-catalog.pdf",
+    "pages": 2,
+    "passed": true
+  },
+  {
+    "file": "stress-prices.pdf",
+    "pages": 2,
+    "passed": true
+  }
+]

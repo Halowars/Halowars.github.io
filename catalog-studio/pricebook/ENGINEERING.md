@@ -1,5 +1,7 @@
 # Source and maintenance handover
 
+In a delivery ZIP, begin in `source/catalog-studio`. The root `index.html` is the ready-to-run copy; `node pricebook/build.cjs` regenerates it as `source/catalog-studio/pricebook/index.html`.
+
 ## Runtime
 
 The application is a single generated HTML file with embedded CSS and JavaScript. It uses File/FileReader, Blob downloads, TextDecoder, image decoding and BigInt. No third-party package runs in the delivered application. The Content Security Policy disallows network connections, remote assets, form submission and object embedding. Inline script/style are allowed for local standalone operation.
