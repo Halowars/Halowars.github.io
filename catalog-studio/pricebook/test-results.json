@@ -1,0 +1,208 @@
+{
+  "version": "0.2.0",
+  "total": 50,
+  "passed": 50,
+  "failed": [],
+  "tests": [
+    {
+      "name": "Sample: 12 products and three tiers have no blocking issues",
+      "passed": true
+    },
+    {
+      "name": "Percentages: exact basis points and strict input",
+      "passed": true
+    },
+    {
+      "name": "Rules: margin bound excludes 100 percent",
+      "passed": true
+    },
+    {
+      "name": "Rules: changes outside 0–100 reject",
+      "passed": true
+    },
+    {
+      "name": "Rules: all five tiers supported",
+      "passed": true
+    },
+    {
+      "name": "Rules: excessive tier count blocks",
+      "passed": true
+    },
+    {
+      "name": "Rules: duplicate Unicode names and reserved List block",
+      "passed": true
+    },
+    {
+      "name": "Rules: invalid tier names and discounts block",
+      "passed": true
+    },
+    {
+      "name": "Money: half-cent rounds up, not bankers rounding",
+      "passed": true
+    },
+    {
+      "name": "Money: zero and full discount boundaries",
+      "passed": true
+    },
+    {
+      "name": "Money: invalid nonintegers and excessive cents reject",
+      "passed": true
+    },
+    {
+      "name": "Money: monotonic and bounded across 20,000 varied cases",
+      "passed": true
+    },
+    {
+      "name": "Margins: exact floor passes at 20 percent",
+      "passed": true
+    },
+    {
+      "name": "Margins: one cent under floor blocks",
+      "passed": true
+    },
+    {
+      "name": "Margins: discount tiers also enforce floor",
+      "passed": true
+    },
+    {
+      "name": "Margins: zero selling price always blocks",
+      "passed": true
+    },
+    {
+      "name": "Margins: zero cost warned and permitted at positive price",
+      "passed": true
+    },
+    {
+      "name": "Margins: 100 percent tier discount blocks publishing",
+      "passed": true
+    },
+    {
+      "name": "Margins: floor selling price rounds up",
+      "passed": true
+    },
+    {
+      "name": "Input: missing cost and missing price are blocking",
+      "passed": true
+    },
+    {
+      "name": "Input: negative, ambiguous and overprecise costs block",
+      "passed": true
+    },
+    {
+      "name": "Input: cost aliases and ambiguous cost mapping",
+      "passed": true
+    },
+    {
+      "name": "Input: cost mapping cannot reuse list column",
+      "passed": true
+    },
+    {
+      "name": "Input: leading zeros stay intact",
+      "passed": true
+    },
+    {
+      "name": "Input: duplicate normalized SKU blocks all customer exports",
+      "passed": true
+    },
+    {
+      "name": "Input: non-USD and selling unit omissions block",
+      "passed": true
+    },
+    {
+      "name": "Comparison: detects price and cost changes separately",
+      "passed": true
+    },
+    {
+      "name": "Comparison: exact threshold is not over-threshold",
+      "passed": true
+    },
+    {
+      "name": "Comparison: price decrease is checked",
+      "passed": true
+    },
+    {
+      "name": "Comparison: new and removed SKUs are explicit",
+      "passed": true
+    },
+    {
+      "name": "Comparison: changed selling units produce a warning",
+      "passed": true
+    },
+    {
+      "name": "Comparison: invalid prior data blocks current release",
+      "passed": true
+    },
+    {
+      "name": "Comparison: old low margin does not block corrected new edition",
+      "passed": true
+    },
+    {
+      "name": "Comparison: approved old project preserves explicit mappings",
+      "passed": true
+    },
+    {
+      "name": "Comparison: project baselines avoid formula-safe CSV mutation",
+      "passed": true
+    },
+    {
+      "name": "Publishing: tier prices match independent golden values",
+      "passed": true
+    },
+    {
+      "name": "Publishing: field whitelist excludes all internal data",
+      "passed": true
+    },
+    {
+      "name": "Publishing: each HTML and CSV contains no cost or other tier",
+      "passed": true
+    },
+    {
+      "name": "Publishing: markup remains escaped",
+      "passed": true
+    },
+    {
+      "name": "Publishing: invalid tier fails explicitly",
+      "passed": true
+    },
+    {
+      "name": "Backup: exact source, cost, mapping and Unicode round trip",
+      "passed": true
+    },
+    {
+      "name": "Backup: restored claimed approval is dropped",
+      "passed": true
+    },
+    {
+      "name": "Backup: unsupported schema and malformed JSON fail",
+      "passed": true
+    },
+    {
+      "name": "Backup: bad assets and remote URLs fail",
+      "passed": true
+    },
+    {
+      "name": "Backup: traversal and invalid mapping are rejected",
+      "passed": true
+    },
+    {
+      "name": "Backup: oversized file fails before JSON parsing",
+      "passed": true
+    },
+    {
+      "name": "Backup: minimal valid rules restored canonically",
+      "passed": true
+    },
+    {
+      "name": "Master CSV: costs retained and formula prefixes neutralized",
+      "passed": true
+    },
+    {
+      "name": "Changes CSV: includes added/removed values and safe identifiers",
+      "passed": true
+    },
+    {
+      "name": "Scale: 1000 products times five tiers audited and emitted",
+      "passed": true
+    }
+  ]
+}
